@@ -1,0 +1,25 @@
+<h2>検索結果</h2>
+<% if logged_in? %>
+<hr>
+<% if @search_microposts %>
+<% @search_microposts.each do |micropost| %>
+<span class="user"><a href="/users/<%= micropost.user.id %>"><%= micropost.user.user_name %></a></span>
+<br>
+<span class="image"><a href="/microposts/<%= micropost.id %>"><%= image_tag(micropost.image,size:"600x400") if micropost.image.attached? %></a></span>
+<br>
+<span class="content"><%= micropost.content %></span>
+<br>
+<% end %>
+<% else %>
+<% @microposts.each do |micropot| %>
+<span class="user"><a href="/users/<%= micropost.user.id %>"><%= micropost.user.user_name %></a></span>
+<br>
+<span class="image"><a href="/microposts/<%= micropost.id %>"><%= image_tag(micropost.image,size:"600x400") if micropost.image.attached? %></a></span>
+<br>
+<span class="content"><%= micropost.content %></span>
+<% end %>
+<% end %>
+<% else %>
+<%= link_to "ユーザー登録", new_user_registration_path %>
+<%= link_to "ログイン", new_user_session_path %>
+<% end %>

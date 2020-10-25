@@ -1,0 +1,16 @@
+<div id="micropost-<%= micropost.id %>" data-micropost-id="<%= micropost.id %>">
+  <span class="user"><a href="/users/<%= micropost.user.id %>"><%= micropost.user.user_name %></a></span>
+  <br>
+  <span class="image"><a href="/microposts/<%= micropost.id %>"><%= image_tag(micropost.image) if micropost.image.attached? %></a></span>
+  <br>
+  <span class="content"><%= micropost.content %></span>
+  <br>
+  <span class="timestamp">
+    <%= time_ago_in_words(micropost.created_at)%>前.
+    <% if current_user?(micropost.user) %>
+    <%= link_to "delete", micropost, method: :delete,
+    data: { confirm: "本当に削除しますか?" } %>
+    <% end %>
+  </span>
+  <%= render "likes/like", micropost: micropost %>
+</div>

@@ -1,0 +1,55 @@
+<% if logged_in? %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <%= render 'shared/user_info' %>
+    </section>
+    <%= link_to "プロフィール編集", edit_user_path(current_user) %>
+    <p>ユーザーネーム:<%= @user.user_name %></p>
+    <p>ウェブサイト:</p><%= @user.weburl %>
+    <p>自己紹介</p>
+    <% if @user.selfintroduction.blank?%>
+    <p>よろしくお願いします。</p>
+    <% end %>
+    <%= @user.selfintroduction %>
+
+    <section class="stats">
+      <%= render 'shared/stats' %>
+    </section>
+  </aside>
+  <div class="col-md-8">
+    <% if @follow_users %>
+    <% @follow_users.each do |user| %>
+    <% user.microposts.each do |micropost| %>
+    <ol>
+      <span class="user"><a href="/users/<%= micropost.user.id %>"><%= micropost.user.user_name %></a></span>
+      <br>
+      <span class="image"><a href="/microposts/<%= micropost.id %>"><%= image_tag(micropost.image,size:"600x400") if micropost.image.attached? %></a></span>
+      <br>
+      <span class="content"><%= micropost.content %></span>
+      <br>
+      <%= render "likes/like", micropost: micropost %>
+      <span class="timestamp"><%= time_ago_in_words(micropost.created_at) %> 前.</span>
+    </ol>
+    <% end %>
+    <% end %>
+  </div>
+  <% else %>
+  <h3>投稿なし</h3>
+  <% end %>
+</div>
+</div>
+<% else %>
+<div class="center jumbotron">
+  <h1>バンドやろうぜ！！</h1>
+  <h2>
+    思い立ったら、始めよう
+  </h2>
+  <%= link_to "募集記事を探す", signup_path, class: "btn btn-lg btn-primary" %>
+  <%= link_to "加入記事を探す", "/auth/facebook",class:"btn btn-lg btn-primary" %>
+  <%= link_to "最新記事を探す", "/auth",class:"btn btn-lg btn-primary" %>
+  <%= link_to "アーティスト検索", "/auth",class:"btn btn-lg btn-primary" %>
+</div>
+
+<%= link_to image_tag("icon.png", alt: "insta logo", width: "200px") %>
+<% end %>

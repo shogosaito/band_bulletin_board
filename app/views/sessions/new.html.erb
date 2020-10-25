@@ -1,0 +1,23 @@
+<% provide(:title, "Log in") %>
+<h1>ログイン</h1>
+
+<div class="row">
+  <%= link_to "Twitterでログイン", user_twitter_omniauth_authorize_path , class:"btn btn-lg btn-primary" %>
+  <%= link_to "Facebookでログイン", user_facebook_omniauth_authorize_path, class:"btn btn-lg btn-primary" %>
+  <%= link_to 'Googleでログイン', user_google_oauth2_omniauth_authorize_path, class:"btn btn-lg btn-primary" %>
+  <%= link_to image_tag("login_btn.png") %>
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(url: login_path, scope: :session, local: true) do |f| %>
+
+    <%= f.label :メールアドレス %>
+    <%= f.email_field :email, class: 'form-control' %>
+
+    <%= f.label :パスワード %>
+    <%= f.password_field :password, class: 'form-control' %>
+
+      <%= f.submit "ログイン", class: "btn btn-primary" %>
+    <% end %>
+
+    <p><%= link_to "新規登録はこちら", signup_path %></p>
+  </div>
+</div>

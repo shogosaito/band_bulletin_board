@@ -1,0 +1,22 @@
+<h1>投稿詳細ページ</h1>
+  <%= render @micropost %>
+
+
+<h2>いいねしたユーザ</h2>
+<% @micropost.liked_users.each do |f| %>
+  <a href="/users/"><%= f.user_name %></a>
+<% end %>
+
+
+<h2>コメント一覧</h2>
+<% @comments.each do |f| %>
+  <a href="/users/<%= @micropost.user.id %>"><%= f.user.user_name %></a>
+  <p><%= f.content %></p>
+<% end %>
+
+<%= form_with model: [@micropost, @comment] do |f| %>
+<%= f.text_field :content %>
+<%= f.submit 'コメントする',class: "btn btn-primary" %>
+<% end %>
+
+<%= link_to "ホーム", root_path %>

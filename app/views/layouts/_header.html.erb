@@ -1,0 +1,30 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <%= link_to "バンド募集掲示板", root_path, id: "logo" %>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "トップ", root_path %></li>
+        <li>
+          <% if logged_in? %>
+          <dl class="searchbox">
+            <%= search_form_for @search, url: microposts_path do |f| %>
+            <dt><%= f.text_field :content_cont ,placeholder: '投稿検索' %></dt>
+            <dd><%= f.submit ("検索") , class: 'search-btn'%></dd>
+            <% end %>
+          </dl></li>
+          <li class="notification"><%=link_to '通知', notifications_path, class:"btn"  %>
+            <% if unchecked_notifications.any? %>
+            <i class="fa fa-circle notification-circle"></i>
+            <% end %>
+            <li><%= link_to "マイページ", current_user %></li>
+            <li><%= link_to "写真投稿", new_path %></li>
+            <li><%= link_to "ユーザ一覧", users_path %></li>
+            <li><%= link_to "ログアウト", logout_path, method: :delete %></li>
+            <% else %>
+            <li><%= link_to "新規登録", signup_path %></li>
+            <li><%= link_to "ログイン", login_path %></li>
+            <% end %>
+          </ul>
+        </nav>
+      </div>
+    </header>

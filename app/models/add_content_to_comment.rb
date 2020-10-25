@@ -1,0 +1,2 @@
+class AddContentToComment < ApplicationRecord
+end

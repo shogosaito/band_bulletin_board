@@ -1,0 +1,21 @@
+{
+  "name": "sample_app",
+  "private": true,
+  "dependencies": {
+    "@rails/actioncable": "^6.0.0-alpha",
+    "@rails/activestorage": "^6.0.0-alpha",
+    "@rails/ujs": "^6.0.0-alpha",
+    "@rails/webpacker": "5.2.1",
+    "bootstrap": "4.5.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "jquery": "3.5.1",
+    "line-login": "^1.0.14",
+    "turbolinks": "^5.2.0"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+    "webpack-dev-server": "^3.11.0"
+  }
+}

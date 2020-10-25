@@ -1,0 +1,7 @@
+<% if @user.user_image.attached? %>
+<%= image_tag @user.user_image,size:'100x100' %>
+<% else %>
+<%= image_tag "default.png" ,size:'100x100'%>
+<% end %>
+<br>
+<%= @user.user_name %>

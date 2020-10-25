@@ -1,0 +1,11 @@
+<div class = "main posts-new">
+  <div class = "container">
+    <h1 class = "form">編集する</h1>
+    <%= form_tag("/microposts/#{@micropost.id}/update",method: :post) do %>
+    <div class = "form-body">
+      <textarea name="content"><%= @micropost.content %></textarea>
+      <input = "submit" value = "保存"></input>
+    </div>
+    <% end %>
+  </div>
+</div>

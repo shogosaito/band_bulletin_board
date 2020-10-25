@@ -1,0 +1,41 @@
+<% provide(:title, "Edit user") %>
+<h1>プロフィール編集</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @user, local: true) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :フルネーム %>
+      <%= f.text_field :full_name, class: 'form-control' %>
+
+      <%= f.label :ユーザーネーム %>
+      <%= f.text_field :user_name, class: 'form-control' %>
+
+      <%= f.label :ウェブサイト %>
+      <%= f.url_field	 :weburl, class: 'form-control' %>
+
+      <%= f.label :自己紹介 %>
+      <%= f.text_area :selfintroduction,  class: 'form-control', placeholder: "160文字以内で入力" %>
+
+      <%= f.label :メールアドレス %>
+      <%= f.email_field :email, class: 'form-control' %>
+
+      <%= f.label :電話番号 %>
+      <%= f.telephone_field :phonenumber, class: 'form-control' %>
+
+      <%= f.label :性別 %>
+      <%= f.select :gender,{'未選択':1,'男性': 2, '女性': 3},{class: 'form-control'} %>
+
+      <%= f.label :プロフィール写真 %>
+      <div class="form-group file">
+      <%= f.file_field :user_image, accept: "image/jpeg,image/gif,image/png" ,placeholder: "画像アップロード" %>
+      <%= f.submit "更新する", class: "btn btn-primary" %>
+      </div>
+      <% end %>
+      <%= link_to "アカウント削除", @user, method: :delete,
+                                   data: { confirm: "本当にアカウントを削除しますか?" } %>
+    <br>
+    <%= link_to "パスワード変更はこちら" ,"passwords/edit" %>
+  </div>
+</div>
