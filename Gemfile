@@ -31,8 +31,11 @@ gem 'bootstrap-will_paginate', '1.0.0'
 gem 'bootsnap',   '1.4.5', require: false
 gem 'webpacker'
 gem 'ransack'
+gem 'sqlite3',    '1.4.1', :group => [:development, :test]
+gem 'pg', :group => :production
+
 group :development, :test do
-  gem 'sqlite3', '1.4.1'
+  # gem 'sqlite3', '1.4.1'
   gem 'byebug',  '11.0.1', platforms: [:mri, :mingw, :x64_mingw]
 end
 
