@@ -1,7 +1,124 @@
-<% if @user.user_image.attached? %>
-<%= image_tag @user.user_image,size:'100x100' %>
-<% else %>
-<%= image_tag "default.png" ,size:'100x100'%>
-<% end %>
-<br>
-<%= @user.user_name %>
+<div class="user-info">
+  <div class="align-items-center">
+    <h1>プロフィール</h1>
+    <table>
+      <div class="row">
+        <%= form_with(model:@user) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        <tr>
+          <th class="required">プロフィール</th>
+          <td>
+            <div class="form-group">
+              <% if @user.user_image.attached? %>
+              <%= image_tag @user.user_image,size:'100x100' %>
+              <% end %>
+              <br>
+              <% if current_user == @user %>
+              <%= link_to "プロフィール編集", edit_user_path(current_user) %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th class="required">ユーザーネーム</th>
+          <td>
+            <div class="form-group">
+              <%= f.text_field :user_name, class: 'form-control', required: true, value: @user.user_name, readonly: true %>
+              <% if @user.errors.include?(:user_name) %>
+              <p style="color: red;"><%= @user.errors.full_messages_for(:user_name).first %></p>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <% if current_user == @user %>
+        <tr>
+          <th>メールアドレス</th>
+          <td>
+            <div class="form-group">
+              <%= f.email_field :email, class: 'form-control', required: true, value:@user.email, readonly: true %>
+              <% if @user.errors.include?(:email) %>
+              <p style="color: red;"><%= @user.errors.full_messages_for(:email).first %></p>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <% end %>
+        <tr>
+          <th>年齢</th>
+          <td>
+            <div class="form-group　form-age">
+              <%= f.text_field :birthday, class: 'form-control', value: @age, readonly: true %>
+              <% if @user.errors.include?(:birthday) %>
+              <p style="color: red;"><%= @user.errors.full_messages_for(:birthday).first %></p>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>性別</th>
+          <td>
+            <div class="form-group">
+              <%= f.text_field :gender, class: 'form-control', value: @user.gender, readonly: true %>
+              <% if @user.errors.include?(:gender) %>
+              <p style="color: red;"><%= @user.errors.full_messages_for(:gender).first %></p>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <div class="form-group">
+            <th>都道府県</th>
+            <td>
+              <% if @user.prefecture.blank? %>
+              <%= f.text_field :prefecture, class: 'form-control', value: "--", readonly: true %>
+              <% else %>
+              <%= f.text_field :prefecture, class: 'form-control', value: @user.prefecture.name, readonly: true %>
+              <% end %>
+            </td>
+          </div>
+        </tr>
+        <tr>
+          <th>好きなジャンル</th>
+          <td>
+            <div class="form-group">
+                <%= javascript_pack_tag 'genre' %>
+                <%= f.text_field  :genre, class: 'form-control', value: @genre, readonly: true  %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>好きなアーティスト</th>
+          <td>
+            <div class="form-group">
+              <%= f.text_field  :artist, class: 'form-control', value: @user.artist, readonly: true  %>
+            </div>
+            <% if @user.errors.include?(:artist) %>
+            <p style="color: red;"><%= @user.errors.full_messages_for(:artist).first %></p>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th>担当パート</th>
+          <td>
+            <div class="form-group">
+              <%= f.text_field  :part, class: 'form-control', value: @part, readonly: true %>
+            </div>
+            <% if @user.errors.include?(:part) %>
+            <p style="color: red;"><%= @user.errors.full_messages_for(:part).first %></p>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </div>
+    </table>
+    <dt>搭載記事(<%= @user.microposts.count %>)</dt>
+    <% if @user.microposts.any? %>
+    <% @user.microposts.each do |micropost| %>
+    <dd><a href="/microposts/<%= micropost.id %>"><%=  micropost.content %></dd>
+      <% end %>
+      <% else %>
+      <dd>投稿記事はありません</dd>
+      <%= will_paginate @microposts %>
+      <% end %>
+    </div>
+  </div>

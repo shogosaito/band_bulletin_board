@@ -1,37 +1,39 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-  :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:facebook, :twitter, :google_oauth2]
+  devise :omniauthable, omniauth_providers: [:facebook, :twitter, :google_oauth2]
   include DeviseTokenAuth::Concerns::User
-  devise :omniauthable
+  devise :omniauthable, omniauth_providers: [:facebook, :twitter, :google_oauth2]
   serialize :tokens
   has_one_attached :user_image
+  belongs_to :prefecture
   has_many :microposts, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :micropost
-  has_many :comments,dependent: :destroy
-  has_many :active_relationships, class_name:  "Relationship",
-  foreign_key: "follower_id",
-  dependent:   :destroy
+  has_many :comments, dependent: :destroy
+  has_many :active_relationships, class_name: "Relationship",
+                                  foreign_key: "follower_id",
+                                  dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
-  has_many :passive_relationships, class_name:  "Relationship",
-  foreign_key: "followed_id",
-  dependent:   :destroy
+  has_many :passive_relationships, class_name: "Relationship",
+                                   foreign_key: "followed_id",
+                                   dependent: :destroy
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
   attr_accessor :remember_token, :activation_token, :reset_token
-  validates :full_name,  presence: true, length: { maximum: 50 }
-  validates :user_name, uniqueness: true, presence: true,length: { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, length: { maximum: 255 }, allow_nil: true
-  validates :selfintroduction,length: { maximum: 120 }
+  before_save   :downcase_email
+  before_create :create_activation_digest
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
+  validates :user_name, presence: true, length: { maximum: 15 }, unless: :uid?
+  validates :gender, presence: true, unless: :uid?
+  validates :email, presence: true, length: { maximum: 255 }, allow_nil: true, unless: :uid?
+  # validates :birthday, presence: true
+  validates :selfintroduction, length: { maximum: 120 }
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-
-
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true, unless: :uid?
+  validates_acceptance_of :agreement, allow_nil: false, on: :create
 
   # 渡された文字列のハッシュ値を返す
   def User.digest(string)
@@ -92,7 +94,7 @@ class User < ApplicationRecord
   end
 
   def create_notification_follow!(current_user)
-    temp = Notification.where(["visitor_id = ? and visited_id = ? and action = ? ",current_user.id, id, 'follow'])
+    temp = Notification.where(["visitor_id = ? and visited_id = ? and action = ? ", current_user.id, id, 'follow'])
     if temp.blank?
       notification = current_user.active_notifications.new(
         visited_id: id,
@@ -110,69 +112,53 @@ class User < ApplicationRecord
     OR user_id = :user_id", user_id: id)
   end
 
-  # ユーザーをフォローする
-  def follow(other_user)
-    following << other_user
-  end
-
-  # ユーザーをフォロー解除する
-  def unfollow(other_user)
-    active_relationships.find_by(followed_id: other_user.id).destroy
-  end
-
-  # 現在のユーザーがフォローしてたらtrueを返す
-  def following?(other_user)
-    following.include?(other_user)
-  end
-
   def already_liked?(micropost)
-    self.likes.exists?(micropost_id: micropost.id)
+    likes.exists?(micropost_id: micropost.id)
   end
 
   def self.from_omniauth(auth)
-    user = User.where('email = ?', auth.info.email).first
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |users|
+    sns = SnsCredential.where(uid: auth["uid"], provider: auth["provider"]).first_or_create
+    pass = Devise.friendly_token
+    user = sns.user || User.where(email: auth["info"]["email"]).first
     if user.blank?
-      user = User.new
+    user = User.new(
+        uid: auth["uid"],
+        provider: auth["provider"],
+        user_name: auth["info"]["name"],
+        email: auth["info"]["email"],
+        oauth_token: auth.credentials.token,
+        oauth_expires_at: Time.at(auth.credentials.expires_at),
+        password: pass,
+        gender: auth["info"]["gender"],
+        birthday: auth["info"]["birthday"],
+        user_image: 'default.png'
+      )
     end
-    user.uid   = auth.uid
-    user.provider = auth.provider,
-    user.user_name  = auth.info.name
-    user.email = auth.info.email
-    user.oauth_token = auth.credentials.token
-    user.oauth_expires_at = Time.at(auth.credentials.expires_at)
-    user.password = Devise.friendly_token[0, 20]
+    if user.user_name.blank?
+      user.user_name = rondom_name
+    end
+    if user.persisted? # userが登録済みの場合：そのままログインするため、snsのuser_idを更新しとく
+      sns.user = user
+      sns.save
+    end
+    { user: user, sns: sns }
+    end
+
+  private
+
+  # メールアドレスをすべて小文字にする
+  def downcase_email
+    self.email = email.downcase
   end
-  return user
-end
-# def self.find_for_oauth(auth)
-#   user = User.where(uid: auth.uid, provider: auth.provider).first
-#
-#   unless user
-#     user = User.create(
-#       uid:      auth.uid,
-#       provider: auth.provider,
-#       email:    User.dummy_email(auth),
-#       password: Devise.friendly_token[0, 20]
-#     )
-#   end
-#   user
-# end
 
-private
+  # user_name作成
+  def self.rondom_name
+    "#{((0..9).to_a + ("a".."z").to_a).sample(10).join}"
+  end
 
-    def self.dummy_email(auth)
-      "#{auth.uid}-#{auth.provider}@example.com"
-    end
-
-    # メールアドレスをすべて小文字にする
-    def downcase_email
-      self.email = email.downcase
-    end
-
-    # 有効化トークンとダイジェストを作成および代入する
-    def create_activation_digest
-      self.activation_token  = User.new_token
-      self.activation_digest = User.digest(activation_token)
-    end
+  # 有効化トークンとダイジェストを作成および代入する
+  def create_activation_digest
+    self.activation_token  = User.new_token
+    self.activation_digest = User.digest(activation_token)
+  end
 end

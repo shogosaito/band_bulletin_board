@@ -34,11 +34,8 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
-  host = 'localhost:3000' # ここをコピペすると失敗します。自分の環境のホストに変えてください。
-  # クラウドIDEの場合は以下をお使いください
-  # config.action_mailer.default_url_options = { host: host, protocol: 'https' }
-  # localhostで開発している場合は以下をお使いください
-  config.action_mailer.default_url_options = { host: host, protocol: 'http' }
+  host = 'localhost:3000'
+  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
 
   config.action_mailer.perform_caching = false
 
@@ -64,8 +61,9 @@ Rails.application.configure do
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  config.file_watcher = ActiveSupport::FileUpdateChecker
 
-  # Cloud9 への接続を許可する
+  config.assets.raise_runtime_errors = true
+  config.web_console.whitelisted_ips = '157.107.73.5'
   config.hosts.clear
 end

@@ -1,0 +1,45 @@
+<tr class="join-article">
+  <th><span class="badge badge-danger">必須</span>好きなジャンル</th>
+  <td>
+    <div class="form-group">
+      <%= f.select :genre, [["J-POP", "J-POP"], ["アニメ", "アニメ"], ["邦楽ヒップホップ/R&B/レゲエ", "邦楽ヒップホップ/R&B/レゲエ"],
+        ["邦楽ロック", "邦楽ロック"], ["邦楽ダンス/エレクトロニカ", "邦楽ダンス/エレクトロニカ"],
+        ["K-POP/ワールド・ミュージック", "K-POP/ワールド・ミュージック"], ["洋楽総合", "洋楽総合"],
+        ["洋楽ポップス", "洋楽ポップス"],["洋楽ヒップホップ/R&B/レゲエ", "洋楽ヒップホップ/R&B/レゲエ"], ["洋楽ロック", "洋楽ロック"], ["洋楽ダンス/エレクトロニカ", "洋楽ダンス/エレクトロニカ"],
+        ["歌謡曲/演歌", "歌謡曲/演歌"],["ジャズ", "ジャズ"],["クラシック", "クラシック"]],{},
+        class: "genre1",multiple: true %>
+    </div>
+  </td>
+</tr>
+<tr class="join-article">
+  <th><span class="badge badge-danger">必須</span>担当パート</th>
+  <td>
+    <div class="form-group">
+      <%= f.select :part, [["ボーカル", "ボーカル"], ["ギター", "ギター"], ["ベース","ベース"],
+        ["ドラム", "ドラム"], ["キーボード", "キーボード"],["コーラス", "コーラス"], ["パーカッション", "パーカッション"],
+        ["ギターボーカル", "ギターボーカル"],["DJ", "DJ"], ["その他", "その他"]], {},
+        class:"part1", multiple: true %>
+    </div>
+  </td>
+</tr>
+<tr class="join-article">
+  <th>活動できる曜日</th>
+  <td>
+    <div class="form-group">
+      <ul class="activity-day-list">
+      <% %w(月 火 水 木 金 土 日 祝日).each.with_index do |day,i| %>
+        <li><%= f.check_box :activity_day, {multiple: true},day %>
+        <%= day%></li>
+      <% end %>
+     </ul>
+    </div>
+  </td>
+</tr>
+<tr class="join-article">
+  <th>試聴音源</th>
+  <td>
+    <div class="form-group demo-sound-source">
+      <%= f.url_field :demo_sound_source, include_blank: "選択して下さい" %>
+    </div>
+  </td>
+  </tr>

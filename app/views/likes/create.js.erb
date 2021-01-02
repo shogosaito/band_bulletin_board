@@ -1,1 +1,1 @@
-$("<%= @id_name %>").html('<%= escape_javascript(render("likes/like", micropost: @micropost  )) %>');
+$(".article-<%= @micropost.id %>-like").html("<%= j(render partial: 'likes/like', locals: micropost: @micropost) %>");

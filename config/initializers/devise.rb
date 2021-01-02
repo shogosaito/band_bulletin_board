@@ -69,7 +69,7 @@ Devise.setup do |config|
   # It can be set to an array that will enable params authentication only for the
   # given strategies, for example, `config.params_authenticatable = [:database]` will
   # enable it only for database (email + password) authentication.
-  # config.params_authenticatable = true
+  config.params_authenticatable = true
 
   # Tell if authentication through HTTP Auth is enabled. False by default.
   # It can be set to an array that will enable http authentication only for the
@@ -276,19 +276,20 @@ Devise.setup do |config|
                   ENV['FACEBOOK_KEY'],
                   ENV['FACEBOOK_SECRET'],
                   scope: 'email',
-                  info_fields: 'email',
+                  token_params: { parse: :json },
+                  info_fields: 'email,first_name,last_name,gender,birthday,location,picture',
                   callback_url: "#{ENV['HOST']}/users/auth/facebook/callback"
   config.omniauth :google_oauth2,
                    ENV['GOOGLE_CLIENT_ID'],
-                   ENV['GOOGLE_CLIENT_SECRET'], 
+                   ENV['GOOGLE_CLIENT_SECRET'],
                    name: :google,
                    scope: 'email',
                    callback_url: "#{ENV['HOST']}/users/auth/google_oauth2/callback"
-  config.omniauth :twitter,
-                   ENV['TWITTER_CONSUMER_KEY'],
-                   ENV['TWITTER_CONSUMER_SECRET'],
-                   scope: 'email',
-                   oauth_callback: "#{ENV['DOMAIN_NAME']}/users/auth/twitter/callback"
+  # config.omniauth :twitter,
+  #                  ENV['TWITTER_CONSUMER_KEY'],
+  #                  ENV['TWITTER_CONSUMER_SECRET'],
+  #                  scope: 'email',
+  #                  oauth_callback: "#{ENV['DOMAIN_NAME']}/users/auth/twitter/callback"
   OmniAuth.config.logger = Rails.logger if Rails.env.development?
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
@@ -307,7 +308,7 @@ Devise.setup do |config|
   #     mount MyEngine, at: '/my_engine'
   #
   # The router that invoked `devise_for`, in the example above, would be:
-  # config.router_name = :my_engine
+   config.router_name = :my_engine
   #
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:

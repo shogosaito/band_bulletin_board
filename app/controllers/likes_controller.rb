@@ -3,7 +3,7 @@ class LikesController < ApplicationController
   # def index
   #   @like_microposts = current_user.like_microposts
   # end
-
+  
   def create
     like = current_user.likes.new(micropost_id: @micropost.id)
     like.save
@@ -17,7 +17,6 @@ class LikesController < ApplicationController
     like.destroy
     @micropost.reload
   end
-
 
   private
 

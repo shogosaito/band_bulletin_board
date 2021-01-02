@@ -1,0 +1,41 @@
+<!-- Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header d-block'>
+        <h5 class='modal-title text-center'>あc</h5>
+      </div>
+      <div class='modal-body'></div>
+    <%= form_with(model: @micropost,local: true) do |f| %>
+    <div class="form-group">
+      <%= f.label 'ジャンル' %>
+      <%= select_tag('genre', options_for_select([["J-POP", "J-POP"], ["アニメ", "アニメ"], ["邦楽ヒップホップ/R&B/レゲエ", "邦楽ヒップホップ/R&B/レゲエ"],
+      ["邦楽ロック", "邦楽ロック"], ["邦楽ダンス/エレクトロニカ", "邦楽ダンス/エレクトロニカ"],
+      ["K-POP/ワールド・ミュージック", "K-POP/ワールド・ミュージック"], ["洋楽総合", "洋楽総合"],
+      ["洋楽ポップス", "洋楽ポップス"],["洋楽ヒップホップ/R&B/レゲエ", "洋楽ヒップホップ/R&B/レゲエ"], ["洋楽ロック", "洋楽ロック"], ["洋楽ダンス/エレクトロニカ", "洋楽ダンス/エレクトロニカ"],
+      ["歌謡曲/演歌", "歌謡曲/演歌"],["ジャズ", "ジャズ"],["クラシック ", "クラシック "]]), include_blank: "選択してください", multiple: true) %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label '都道府県' %>
+      <div class="prefectures-check-boxes">
+        <%= collection_check_boxes :prefecture, :prefecture_ids, Prefecture.all, :id, :name, include_hidden: false do |prefecture| %>
+        <%= prefecture.label{ prefecture.check_box + prefecture.text } %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="form-inline">
+        <%= f.label 'パート' %>
+        <%= f.check_box :part,{multiple:true}, "ボーカル（Vo.)", nil %>ボーカル（Vo.)
+        <%= f.check_box :part,{multiple:true}, "ギター（Gt.）", nil%>ギター（Gt.）
+        <%= f.check_box :part,{multiple:true}, "ベース（Ba.）", nil %>ベース（Ba.）
+        <%= f.check_box :part,{multiple:true}, "ドラム（Dr.）",nil %>ドラム（Dr.）
+        <%= f.check_box :part,{multiple:true}, "キーボード（Key.）", nil %>キーボード（Key.）
+　     </div>
+     </div>
+     <% end %>
+   </div>
+　</div>
+</div>

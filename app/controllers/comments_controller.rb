@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id
     if @comment.save
       flash[:success] = "コメントしました!"
-      @micropost=@comment.micropost
+      @micropost = @comment.micropost
       @micropost.create_notification_comment!(current_user, @comment.id)
       redirect_to @comment.micropost
     else
@@ -14,12 +14,9 @@ class CommentsController < ApplicationController
     end
   end
 
-
   def new
     @comment = Comment.new
   end
-
-
 
   def edit
     @comment = Comment.find(params[:id])

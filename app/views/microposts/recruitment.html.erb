@@ -1,0 +1,71 @@
+<div class="align-items-center">
+  <h1>記事検索フォーム</h1>
+</div>
+<table>
+  <%= form_with url:search_path ,method: :get do |f| %>
+  <tr>
+    <th>募集年齢</th>
+    <td>
+      <div class="form-group form-age">
+        <%= f.text_field :search_min_age %> 〜 <%= f.text_field :search_max_age %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <th>性別</th>
+    <td>
+      <div class="form-group">
+        <%= f.select :gender, [["指定なし", "指定なし"], ["男", "男"], ["女", "女"]]  %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <th>ジャンル</th>
+    <td>
+      <div class="form-group">
+        <%= javascript_pack_tag 'genre' %>
+        <%= select_tag('genre', options_for_select([["J-POP", "J-POP"], ["アニメ", "アニメ"], ["邦楽ヒップホップ/R&B/レゲエ", "邦楽ヒップホップ/R&B/レゲエ"],
+        ["邦楽ロック", "邦楽ロック"], ["邦楽ダンス/エレクトロニカ", "邦楽ダンス/エレクトロニカ"],
+        ["K-POP/ワールド・ミュージック", "K-POP/ワールド・ミュージック"], ["洋楽総合", "洋楽総合"],
+        ["洋楽ポップス", "洋楽ポップス"],["洋楽ヒップホップ/R&B/レゲエ", "洋楽ヒップホップ/R&B/レゲエ"], ["洋楽ロック", "洋楽ロック"], ["洋楽ダンス/エレクトロニカ", "洋楽ダンス/エレクトロニカ"],
+        ["歌謡曲/演歌", "歌謡曲/演歌"],["ジャズ", "ジャズ"],["クラシック ", "クラシック "]]),
+        class: "genre",include_blank: "選択してください", multiple: true) %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <div class="form-group">
+      <div class="form-inline">
+        <div class="prefectures-check-boxes">
+          <th>都道府県</th>
+          <td>
+            <div class="checkbox">
+              <ul>
+                <%= collection_check_boxes :prefecture, :prefecture_ids, Prefecture.all, :id, :name, include_hidden: false do |prefecture| %>
+                <li><%= prefecture.label{ prefecture.check_box + prefecture.text } %></li>
+                <% end %>
+              </ul>
+            </div>
+          </td>
+        </div>
+      </div>
+    </div>
+  </tr>
+  <tr>
+    <th>募集パート</th>
+    <td>
+      <div class="form-group　part">
+        <%= javascript_pack_tag 'part' %>
+        <%= select_tag('part0', options_for_select([["ボーカル", "ボーカル"], ["ギター", "ギター"], ["ベース","ベース"],
+        ["ドラム", "ドラム"], ["キーボード", "キーボード"],["コーラス", "コーラス"], ["パーカッション", "パーカッション"],
+        ["ギターボーカル", "ギターボーカル"],["DJ", "DJ"], ["その他", "その他"]]), placeholder: "選択してください",
+        class:"part", multiple: true) %>
+      </div>
+    </td>
+  </tr>
+</table>
+<div class="froup form-Submit">
+  <%= reset_tag 'リセット', class: 'btn btn-info', id: 'js_clear_btn' %>
+  <%= f.submit '探す', class: 'btn btn-info' %>
+  <% end %>
+</div>

@@ -1,0 +1,77 @@
+<div class="align-items-center">
+  <h1>初期設定</h1>
+<table>
+  <%= form_with(model:@user) do |f| %>
+  <tr>
+    <th>ユーザーネーム</th>
+    <td>
+      <div class="form-group">
+        <%= f.text_field :user_name %>
+      </div>
+    </td>
+    <tr>
+      <th>年齢</th>
+      <td>
+        <div class="form-group">
+          <%= f.text_field :age %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>性別</th>
+      <td>
+        <div class="form-group">
+            <%= f.select :gender, [["指定なし", "指定なし"], ["男", "男"], ["女", "女"]]  %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>ジャンル</th>
+      <td>
+        <div class="form-group">
+            <%= javascript_pack_tag 'genre' %>
+            <%= select_tag('genre', options_for_select([["J-POP", "J-POP"], ["アニメ", "アニメ"], ["邦楽ヒップホップ/R&B/レゲエ", "邦楽ヒップホップ/R&B/レゲエ"],
+            ["邦楽ロック", "邦楽ロック"], ["邦楽ダンス/エレクトロニカ", "邦楽ダンス/エレクトロニカ"],
+            ["K-POP/ワールド・ミュージック", "K-POP/ワールド・ミュージック"], ["洋楽総合", "洋楽総合"],
+            ["洋楽ポップス", "洋楽ポップス"],["洋楽ヒップホップ/R&B/レゲエ", "洋楽ヒップホップ/R&B/レゲエ"], ["洋楽ロック", "洋楽ロック"], ["洋楽ダンス/エレクトロニカ", "洋楽ダンス/エレクトロニカ"],
+            ["歌謡曲/演歌", "歌謡曲/演歌"],["ジャズ", "ジャズ"],["クラシック ", "クラシック "]]), include_blank: "選択してください", multiple: true) %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <div class="form-group">
+        <div class="form-inline">
+         <div class="prefectures-check-boxes">
+           <th>都道府県</th>
+           <td>
+             <div class="checkbox">
+               <ul>
+                 <%= collection_check_boxes :prefecture, :prefecture_ids, Prefecture.all, :id, :name, include_hidden: false do |prefecture| %>
+                   <li><%= prefecture.label{ prefecture.check_box + prefecture.text } %></li>
+                 <% end %>
+               </ul>
+             </div>
+           </td>
+        </div>
+       </div>
+    </div>
+    </tr>
+    <tr>
+      <th>担当パート</th>
+      <td>
+        <div class="form-group">
+            <% %w(ボーカル ギター ベース ドラム キーボード その他).each.with_index do |part,i| %>
+              <label class="part">
+                <%= f.check_box  :part, {multiple: true}, part, nil %>
+                <%= part %>
+              </label>
+            <% end %>
+          </div>
+      </td>
+    </tr>
+      <td>
+        <%= f.submit '設定する', class: 'btn-info btn-block' %>
+        <% end %>
+      </td>
+  </table>
+</div>

@@ -1,30 +1,37 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <%= link_to "バンド募集掲示板", root_path, id: "logo" %>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "トップ", root_path %></li>
-        <li>
-          <% if logged_in? %>
-          <dl class="searchbox">
-            <%= search_form_for @search, url: microposts_path do |f| %>
-            <dt><%= f.text_field :content_cont ,placeholder: '投稿検索' %></dt>
-            <dd><%= f.submit ("検索") , class: 'search-btn'%></dd>
-            <% end %>
-          </dl></li>
-          <li class="notification"><%=link_to '通知', notifications_path, class:"btn"  %>
-            <% if unchecked_notifications.any? %>
+<header class="header clearfix">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <%= link_to "バンド募集掲示板", root_path, id: "logo" ,class:"nav-item" %>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class='nav-item'><%= link_to "トップ", root_path, class:"nav-link" %></li>
+        <% if logged_in? %>
+          <% if unchecked_notifications.any? %>
+            <i class="fa fa-circle" style="color: gold;"></i>
+          <% end %>
+          <li class="nav-item"><%=link_to "通知", notifications_path, class:"nav-link" %></li>
+          <% if unchecked_notifications.any? %>
             <i class="fa fa-circle notification-circle"></i>
+          <% end %>
+          <li class="nav-item"><%= link_to "マイページ", current_user, class:"nav-link" %></li>
+          <li class="nav-item"><%= link_to "記事投稿", new_path, class:"nav-link"%></li>
+          <li class="nav-item"><%= link_to "ログアウト", logout_path, method: :delete ,class:"nav-link"%></li>
+          <form class="form-inline">
+            <%= search_form_for(@search, url:search_path, method: :get) do |f| %>
+              <%= f.text_field :content, placeholder: 'キーワードを入力', class:"form-control mr-sm-2" %>
+              <%= f.submit ("検索"), class: "btn btn-outline-success my-2 my-sm-0" %>
             <% end %>
-            <li><%= link_to "マイページ", current_user %></li>
-            <li><%= link_to "写真投稿", new_path %></li>
-            <li><%= link_to "ユーザ一覧", users_path %></li>
-            <li><%= link_to "ログアウト", logout_path, method: :delete %></li>
-            <% else %>
-            <li><%= link_to "新規登録", signup_path %></li>
-            <li><%= link_to "ログイン", login_path %></li>
+          </form>
+        <% else %>
+          <li class='nav-item'><%= link_to "新規登録", signup_path, class:"nav-link" %></li>
+          <li class='nav-item'><%= link_to "ログイン", login_path ,class:"nav-link" %></li>
+          <form class="form-inline">
+            <%= search_form_for(@search, url:search_path, method: :get) do |f| %>
+              <%= f.text_field :content, placeholder: 'キーワードを入力', class:"form-control mr-sm-2" %>
+              <%= f.submit ("検索"), class: "btn btn-outline-success my-2 my-sm-0" %>
             <% end %>
-          </ul>
-        </nav>
-      </div>
-    </header>
+          </form>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+</header>

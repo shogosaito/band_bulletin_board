@@ -1,22 +1,21 @@
 class ApplicationController < ActionController::Base
-        include DeviseTokenAuth::Concerns::SetUserByToken
+  include DeviseTokenAuth::Concerns::SetUserByToken
   protect_from_forgery with: :null_session
   include SessionsHelper
   include NotificationsHelper
+  include UsersHelper
   before_action :set_search
+  private
 
   def set_search
     @search = Micropost.ransack(params[:q])
-    @search_microposts = @search.result.page(params[:page])
   end
-
-  private
 
   # ユーザーのログインを確認する
   def logged_in_user
     unless logged_in?
       store_location
-      flash[:danger] = "Please log in."
+      flash[:danger] = "ログインしてください"
       redirect_to login_url
     end
   end

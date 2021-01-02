@@ -1,0 +1,19 @@
+<div class="align-items-center">
+  <h1>検索結果</h1>
+</div>
+<hr>
+<% unless @search_users.blank? %>
+<% @search_users.each do |user| %>
+<span class="user"><a href="/users/<%= user.id %>"><%= user.user_name %></a></span>
+<br>
+<span class="image"><a href="/users/<%= user.id %>"><%= image_tag(user.user_image,size:"100x100") if user.user_image.attached? %></a></span>
+<br>
+<span class="content"><%= user.selfintroduction %></span>
+<br>
+<span class="genre"><%= user.genre %></span>
+<% end %>
+<% else %>
+  <div class=search-result-empty>
+    条件に一致した記事が見つかりませんでした。
+  </div>
+<% end %>

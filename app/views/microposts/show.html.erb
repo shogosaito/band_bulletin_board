@@ -1,22 +1,56 @@
-<h1>投稿詳細ページ</h1>
-  <%= render @micropost %>
-
-
-<h2>いいねしたユーザ</h2>
-<% @micropost.liked_users.each do |f| %>
-  <a href="/users/"><%= f.user_name %></a>
-<% end %>
-
-
-<h2>コメント一覧</h2>
-<% @comments.each do |f| %>
-  <a href="/users/<%= @micropost.user.id %>"><%= f.user.user_name %></a>
-  <p><%= f.content %></p>
-<% end %>
-
-<%= form_with model: [@micropost, @comment] do |f| %>
-<%= f.text_field :content %>
-<%= f.submit 'コメントする',class: "btn btn-primary" %>
-<% end %>
-
-<%= link_to "ホーム", root_path %>
+<div class="align-items-center">
+  <h1>投稿記事詳細</h1>
+</div>
+<div class=" container">
+  <% if @micropost.content_type=="募集" %>
+  <%= render partial: 'micropost_recruitment', locals: { micropost: @micropost } %>
+  <% else %>
+  <%= render partial: 'micropost_join', locals: { micropost: @micropost } %>
+  <% end %>
+  <div class="detail_menu">
+    <ul class="detail_menu_col4">
+      <li><a href="/users/<%= @micropost.user.id %>"><i class="fa fa-user fa-3x"></i><figcaption>プロフィール</figcaption></a></li>
+      <li class="post-<%= @micropost.id %>-like"><%= render "likes/like", micropost: @micropost %></li>
+      <% if logged_in? %>
+        <%= link_to contact_path, micropost: @micropost do %>
+          <li><i class="fa fa-envelope fa-3x"></i><figcaption>メッセージ</figcaption></li>
+        <% end %>
+      <% else %>
+        <li><i class="fa fa-envelope fa-3x"></i><figcaption>メッセージ</figcaption></li>
+      <% end %>
+      <%= link_to :back do %>
+      <li><i class="fa fa-window-close fa-3x"></i><figcaption>閉じる</figcaption></li>
+      <% end %>
+    </ul>
+  </div>
+  <table>
+    <h2>コメント一覧</h2>
+    <thead>
+      <tr>
+        <th>コメント投稿者</th>
+        <th>コメント内容</th>
+      </tr>
+    </thead>
+    <tbody class=" border="1" width="300" height="100" ">
+      <div class="row">
+        <% unless @comments.nil? %>
+        <% @comments.each do |f| %>
+        <tr class="comment">
+          <td><a href="/users/<%= @micropost.user.id %>">
+            <% if f.user.user_image.attached? %>
+            <%= image_tag f.user.user_image,size:'100x100' %>
+            <% end %>
+            <p><%= f.user.user_name %></p></a>
+          </td>
+          <td><%= f.content %></td>
+         </tr>
+            <% end %>
+          </div>
+          <% end %>
+        </tbody>
+      </table>
+      <%= form_with model: [@micropost, @comment] do |f| %>
+      <%= f.text_field :content, class:"comment-form" %>
+      <%= f.submit 'コメントを書く', class: "btn btn-primary" %>
+      <% end %>
+    </div>

@@ -1,0 +1,8 @@
+<h1>バンド募集掲示板</h1>
+
+<p>Hi <%= @user.email %>様</p>
+
+<p>
+バンド募集掲示板へようこそ！
+<%= link_to "こちらをクリックして、アカウントを有効化してください。", edit_account_activation_url(@user.activation_token,email: @user.email) %>
+</p>

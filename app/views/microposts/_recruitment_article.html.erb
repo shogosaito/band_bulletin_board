@@ -1,0 +1,79 @@
+
+<tr class="recruitment-article">
+  <th><span class="badge badge-danger ">必須</span>ジャンル</th>
+  <td>
+    <div class="form-group">
+      <%= f.select :genre, [["J-POP", "J-POP"], ["アニメ", "アニメ"], ["邦楽ヒップホップ/R&B/レゲエ", "邦楽ヒップホップ/R&B/レゲエ"],
+        ["邦楽ロック", "邦楽ロック"], ["邦楽ダンス/エレクトロニカ", "邦楽ダンス/エレクトロニカ"],
+        ["K-POP/ワールド・ミュージック", "K-POP/ワールド・ミュージック"], ["洋楽総合", "洋楽総合"],
+        ["洋楽ポップス", "洋楽ポップス"],["洋楽ヒップホップ/R&B/レゲエ", "洋楽ヒップホップ/R&B/レゲエ"], ["洋楽ロック", "洋楽ロック"], ["洋楽ダンス/エレクトロニカ", "洋楽ダンス/エレクトロニカ"],
+        ["歌謡曲/演歌", "歌謡曲/演歌"],["ジャズ", "ジャズ"],["クラシック", "クラシック"]],{},
+        class: "genre0", multiple: true %>
+    </div>
+  </td>
+</tr>
+<tr class="recruitment-article">
+  <th><span class="badge badge-danger">必須</span>募集パート</th>
+  <td>
+    <div class="form-group">
+      <%= f.select :part, [["ボーカル", "ボーカル"], ["ギター", "ギター"], ["ベース","ベース"],
+        ["ドラム", "ドラム"], ["キーボード", "キーボード"],["コーラス", "コーラス"], ["パーカッション", "パーカッション"],
+        ["ギターボーカル", "ギターボーカル"],["DJ", "DJ"], ["その他", "その他"]], {},
+        class:"part0", multiple: true %>
+    </div>
+  </td>
+</tr>
+<tr class="recruitment-article">
+  <th>募集年齢</th>
+  <td>
+    <div class="form-group form-age">
+      <%= f.text_field :recruitment_min_age %>
+      〜
+      <%= f.text_field :recruitment_max_age %>
+      <% if @micropost.errors.include?(:recruitment_min_age) %>
+        <p style="color: red;"><%= @micropost.errors.full_messages_for(:recruitment_min_age).first %></p>
+      <% end %>
+      <% if @micropost.errors.include?(:recruitment_max_age) %>
+        <p style="color: red;"><%= @micropost.errors.full_messages_for(:recruitment_max_age).first %></p>
+      <% end %>
+    </div>
+  </td>
+</tr>
+<tr class="recruitment-article">
+  <th>募集性別</th>
+  <td>
+    <div class="form-group">
+      <%= f.select :gender, [["指定しない", "指定しない"], ["男性", "男性"], ["女性", "女性"]], required: true, value: "#{session[:gender]}"  %>
+      <% if @micropost.errors.include?(:gender) %>
+        <p style="color: red;"><%= @micropost.errors.full_messages_for(:gender).first %></p>
+      <% end %>
+    </div>
+  </td>
+</tr>
+<tr class="recruitment-article">
+  <th>活動曜日</th>
+  <td>
+    <div class="form-group">
+      <ul class="activity-day-list">
+      <% %w(月 火 水 木 金 土 日 祝日).each.with_index do |day,i| %>
+        <li><%= f.check_box :activity_day, {multiple: true}, day %>
+        <%= day%></li>
+      <% end %>
+      <% if @micropost.errors.include?(:activity_day) %>
+        <p style="color: red;"><%= @micropost.errors.full_messages_for(:activity_day).first %></p>
+      <% end %>
+     </ul>
+    </div>
+  </td>
+</tr>
+<tr class="recruitment-article">
+  <th>試聴音源</th>
+  <td>
+    <div class="form-group demo-sound-source">
+      <%= f.url_field :demo_sound_source, include_blank: "選択して下さい" %>
+      <% if @micropost.errors.include?(:demo_sound_source) %>
+        <p style="color: red;"><%= @micropost.errors.full_messages_for(:demo_sound_source).first %></p>
+      <% end %>
+    </div>
+  </td>
+</tr>

@@ -10,5 +10,4 @@ class Accounts::PasswordsControllerTest < ActionDispatch::IntegrationTest
     get accounts_passwords_update_url
     assert_response :success
   end
-
 end

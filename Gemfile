@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.1'
-gem 'rails',                   '6.0.0'
+gem 'rails', '6.0.0'
 gem 'rails-i18n'
 gem 'carrierwave'
 gem 'counter_culture', '~> 1.8'
@@ -17,29 +17,33 @@ gem 'devise_token_auth'
 gem 'rack-cors'
 gem 'kaminari'
 gem 'better_errors'
-gem 'image_processing',           '1.9.3'
+gem 'image_processing', '1.9.3'
 gem 'mini_magick'
-gem 'bootstrap-sass', '3.4.1'
 gem 'turbolinks', '5.2.0'
 gem 'active_storage_validations', '0.8.2'
 gem 'bcrypt',         '3.1.12'
 gem 'faker',          '1.7.3'
-gem 'will_paginate',           '3.1.8'
+gem 'will_paginate', '3.1.8'
 gem 'bootstrap', '~> 4.1.3'
-gem 'jquery-rails'
 gem 'bootstrap-will_paginate', '1.0.0'
-# gem 'bootsnap',   '1.4.5', require: false
 gem 'webpacker'
 gem 'ransack'
-gem 'sqlite3',    '1.4.1', :group => [:development, :test]
+gem 'sqlite3', '1.4.1', :group => [:development, :test]
 gem 'pg', :group => :production
-
+gem 'pry-rails'
+gem 'activerecord-session_store'
+gem 'bootstrap-social-rails'
+gem 'seed-fu'
+gem 'select2-rails'
+gem 'autoprefixer-rails'
+gem 'rubocop-airbnb'
+gem 'jquery'
+gem 'font-awesome-sass'
 group :jekyll_plugins do
-  gem 'bootsnap',   '1.4.5', require: false
+  gem 'bootsnap', '1.4.5', require: false
 end
 group :development, :test do
-  # gem 'sqlite3', '1.4.1'
-  gem 'byebug',  '11.0.1', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', '11.0.1', platforms: [:mri, :mingw, :x64_mingw]
 end
 
 group :development do
@@ -55,12 +59,8 @@ group :test do
   gem 'selenium-webdriver',       '3.142.4'
   gem 'webdrivers',               '4.1.2'
   gem 'rails-controller-testing', '1.0.4'
-  gem 'minitest',                 '5.11.3'
-  gem 'minitest-reporters',       '1.3.8'
   gem 'guard',                    '2.16.2'
   gem 'guard-minitest',           '2.4.6'
 end
 
-
-# Windows ではタイムゾーン情報用の tzinfo-data gem を含める必要があります
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data'

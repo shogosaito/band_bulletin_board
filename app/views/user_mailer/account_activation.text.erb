@@ -1,0 +1,5 @@
+Hi <%= @user.email %>,
+
+バンド募集掲示板へようこそ！ 以下のリンクをクリックして、初期設定を行ってください。
+
+<%= link_to "こちらをクリックして、アカウントを有効化してください。", edit_account_activation_url(@user.activation_token,email: @user.email) %>
