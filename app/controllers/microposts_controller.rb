@@ -1,7 +1,6 @@
 class MicropostsController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy]
   before_action :correct_user,   only: [:destroy]
-
   def index
     @microposts = Micropost.all
     @micropost =  Micropost.new
@@ -13,11 +12,12 @@ class MicropostsController < ApplicationController
 
   def create
     @micropost = current_user.microposts.build(micropost_params)
-    if @micropost.save!
+    @micropost.prefecture_id = params[:prefecture][:prefecture_id] if params[:prefecture].present?
+    binding.pry
+    if @micropost.save
       flash[:success] = "投稿しました!"
       redirect_to root_url
     else
-      @feed_items = [current_user.feed.paginate(page: params[:page])]
       flash[:danger] = "投稿に失敗しました!"
       render 'microposts/new'
     end
@@ -36,22 +36,10 @@ class MicropostsController < ApplicationController
     if @part.start_with?(",")
       @part.slice!(0)
     end
-    if @part.end_with?(",")
-      @part = @part.chop
-    end
     if @genre.start_with?(",")
       @genre.slice!(0)
     end
-    if @genre.end_with?(",")
-      @genre = @genre.chop
-    end
-
-    # @activity_day.reject(&:empty?)
-    # for @micropost.music_type.each do |music_type|
-    #   unless music_type == "0"
-    #     @music_type = music_type
-    #   end
-    # end
+    set_arrange
   end
 
   def edit
@@ -60,11 +48,12 @@ class MicropostsController < ApplicationController
 
   def update
     @micropost = Micropost.find_by(id: params[:id])
+    @micropost.prefecture_id = params[:prefecture][:prefecture_id] if params[:prefecture].present?
     if @micropost.update(micropost_params)
       flash[:notice] = "投稿を編集しました"
-      redirect_to("/microposts/index")
+      redirect_to("/microposts/#{@micropost.id}")
     else
-      render("/microposts/edit")
+      render '/microposts/edit'
     end
   end
 
@@ -78,20 +67,26 @@ class MicropostsController < ApplicationController
     @q = Micropost.ransack(params[:q])
     @search_microposts = @q.result(distinct: true)
     if @search
-      @search_microposts = @search.result(distinct: true)
+      @search_microposts = @search.result(distinct: true).page(params[:page]).per(10)
     end
+  end
+
+  def microposts_list_page
+    @page = params[:per]
+    @microposts = Micropost.paginate(page: params[:page], per_page: @page)
+    render 'band_bulletin_boards/home'
   end
 
   def recruitment
   end
 
-
   private
 
   def micropost_params
-    params.require(:micropost).permit(:title, :content_type, :content, :part, :prefecture_id, :music_type,
-                                       :recruitment_min_age, :recruitment_max_age, :gender, :activity_day,
-                                       :demo_sound_source, :activity_direction, { genre: [] }, { part: [] }, { music_type: [] }, { activity_day: [] })
+    params.require(:micropost).permit(:title, :content_type, :content, :recruitment_min_age, :prefecture_id,
+                                      :recruitment_max_age, :gender, :activity_day,
+                                      :demo_sound_source, :activity_direction, { prefecture_ids: [] },
+                                      { genre: [] }, { part: [] }, { music_type: [] }, { activity_day: [] })
   end
 
   def correct_user

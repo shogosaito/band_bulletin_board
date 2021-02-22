@@ -6,9 +6,9 @@ class ContactsController < ApplicationController
   def create
     @contact = Contact.new(contact_params)
     if @contact.save
-      ContactMailer.contact_mail(@contact).deliver
+      ContactMailer.contact_mail(@contact, current_user).deliver
       flash[:success] = 'メッセージを送りました'
-      redirect_to root_path
+      redirect_back(fallback_location: root_path)
     else
       render :new
   end

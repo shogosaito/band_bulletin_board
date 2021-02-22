@@ -1,15 +1,14 @@
 <%= form_with model:@contact,url: contact_create_path do |f| %>
-
-<div class="form-group">
-  <%= f.label :email, '送信先' %>
+<div class="form-group entry">
+  <%= f.label :email, '送信先:' %>
   <%= $post_user.user_name %>
 </div>
-
-<div class="form-group">
+<div class="form-group entry">
   <%= f.label :message, 'お問い合わせ内容' %>
-  <%= f.text_area :message, size: '10x10', class: 'form-control' %>
+  <%= f.text_area :message, size:'10x10', class: 'form-control contact-area' %>
 </div>
-
-<%= f.submit '送信' %>
-
+<div class="form-group entry">
+<%= f.submit '送信', class: "btn btn-lg btn-primary  contact-btn" %>
+<%= link_to '閉じる', :back,class: "btn btn-lg btn-primary  contact-btn"   %>
+</div>
 <% end %>

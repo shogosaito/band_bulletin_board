@@ -1,2 +1,0 @@
-module InstaClonesHelper
-end

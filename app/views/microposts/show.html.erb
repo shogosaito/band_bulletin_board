@@ -1,13 +1,13 @@
 <div class="align-items-center">
-  <h1>投稿記事詳細</h1>
+  <h1><%= @micropost.title %></h1>
 </div>
 <div class=" container">
   <% if @micropost.content_type=="募集" %>
-  <%= render partial: 'micropost_recruitment', locals: { micropost: @micropost } %>
+  <%= render partial: 'micropost_recruitment', locals: { micropost: @micropost, prefecture_name: @prefecture_name } %>
   <% else %>
-  <%= render partial: 'micropost_join', locals: { micropost: @micropost } %>
+  <%= render partial: 'micropost_join', locals: { micropost: @micropost, prefecture_name: @prefecture_name } %>
   <% end %>
-  <div class="detail_menu">
+  <div class="detail_menu" >
     <ul class="detail_menu_col4">
       <li><a href="/users/<%= @micropost.user.id %>"><i class="fa fa-user fa-3x"></i><figcaption>プロフィール</figcaption></a></li>
       <li class="post-<%= @micropost.id %>-like"><%= render "likes/like", micropost: @micropost %></li>
@@ -42,15 +42,26 @@
             <% end %>
             <p><%= f.user.user_name %></p></a>
           </td>
-          <td><%= f.content %></td>
-         </tr>
+          <td><%= f.content %>
+            <% if f.errors.include?(:content) %>
+              <p style="color: red;"><%= f.errors.full_messages_for(:content).first %></p>
             <% end %>
+          <%= time_ago_in_words(f.created_at)%>前.
+          <% if current_user?(f.user) %>
+            <%= link_to "削除",micropost_comment_url(micropost_id: @micropost.id, id: f.id), method: :delete,
+            data: { confirm: "本当に削除しますか?" } %>
+          <% end %>
+          </td>
+         </tr>
+          <% end %>
           </div>
           <% end %>
         </tbody>
       </table>
-      <%= form_with model: [@micropost, @comment] do |f| %>
-      <%= f.text_field :content, class:"comment-form" %>
-      <%= f.submit 'コメントを書く', class: "btn btn-primary" %>
+      <% if logged_in? %>
+        <%= form_with model: [@micropost, @comment] do |f| %>
+          <%= f.text_area :content, rows:5, class: "comment-area"%>
+          <%= f.submit 'コメントを書く', class: "btn btn-primary comment-btn" %>
+        <% end %>
       <% end %>
     </div>

@@ -1,0 +1,40 @@
+<div class="center jumbotron">
+  <div class="row">
+    <h1>バンドやろうぜ！！</h1>
+    <br>
+    <h2>思い立ったら、始めよう</h2>
+    <div class="col-md-8">
+      <% unless @microposts.blank? %>
+        <%= link_to "募集記事を探す", recruitment_path, class: "btn btn-lg btn-primary join" %>
+        <%= link_to "メンバーを探す", join_path, class: "btn btn-lg btn-primary recruitment" %>
+        <h3 class="new_articles">新着バンドメンバー募集・バンド加入希望</h3>
+          <% @microposts.each do |micropost|%>
+            <section class="post_info">
+              <span class="post"><%= image_tag micropost.user.user_image,size:'70x70',:Align=>"left"%><a href="/microposts/<%= micropost.id %>"><%= micropost.title %></a></span>
+              <span class="post_user"><%= micropost.user.user_name %>(<%= micropost.user.prefecture.name %>,<%= calcAge(micropost.user.birthday.strftime("%Y%m%d").to_i) %>歳)</span>
+　　　　　　　  <span class="content">
+                <%= micropost.content.truncate(25) do %>
+                  <p>(省略されました。<%= link_to "続きを読むには...", micropost_path %>をクリックしてください。<p>
+                <% end %>
+              </span>
+              <span class="timestamp"><%= time_ago_in_words(micropost.created_at) %> 前.</span>
+            </section>
+          <% end %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <%= link_to(@page, list_page_path(@page)) %>
+              <span class="caret">件表示</span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to("10", list_page_path(10)) %></li>
+              <li><%= link_to("25", list_page_path(25)) %></li>
+              <li><%= link_to("50", list_page_path(50)) %></li>
+              <li><%= link_to("100", list_page_path(100)) %></li>
+            </ul>
+          </li>
+          <%= paginate @microposts %>
+        <% else %>
+          <h3 class="new_articles">記事が存在しません</h3>
+        <% end %>
+    </div>
+  </div>
+</div>

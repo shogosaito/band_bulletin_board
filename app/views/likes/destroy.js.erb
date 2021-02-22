@@ -1,1 +1,3 @@
-$(".article-<%= @micropost.id %>-like").html("<%= j(render partial: 'likes/like', locals: {micropost: @micropost}) %>");
+$(document).ready(function(){
+$(".post-<%= @micropost.id %>-like").html("<%= j(render 'likes/like', micropost: @micropost)%>");
+});

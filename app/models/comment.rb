@@ -1,5 +1,6 @@
 class Comment < ApplicationRecord
   belongs_to :user
-  belongs_to :micropost
+  belongs_to :micropost, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  validates :content, presence: true
 end

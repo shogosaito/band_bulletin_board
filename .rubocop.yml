@@ -16,3 +16,4 @@ AllCops:
     - 'config/spring.rb'
     - 'lib/tasks/*'
     - 'vendor/**/*'
+    - 'node_modules/**/*'

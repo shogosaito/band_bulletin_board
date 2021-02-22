@@ -4,9 +4,9 @@
 /* mixins, variables, etc. */
 
 @mixin box_sizing {
-  -moz-box-sizing:    border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing:         border-box;
+  // -moz-box-sizing:    border-box;
+  // -webkit-box-sizing: border-box;
+  // box-sizing:         border-box;
 }
 
 /* universal */
@@ -231,10 +231,10 @@ input {
   }
 }
 .alert {
-    color:#262626;
-    background:#FFEBE8;
+//     color:#262626;
+//     background:#FFEBE8;
     text-align: center;
-    border:2px solid #990000;
+    // border:2px solid #990000;
     padding:12px; font-weight:850;
   }
 .checkbox {
@@ -334,7 +334,12 @@ dl.searchbox dd{
   top: -5px;
   // outline : none;
 }
-
+.search-form{
+display: inline-block;
+width: 350px;
+float: right;
+margin-top: auto ;
+}
 .search-btn{
   background:#C0C0C0;
   height:36px;
@@ -406,10 +411,10 @@ tr{
   border-bottom: none;
 }
 //form
-.form-inline {
-display: inline-block;
-width: 350px;
-}
+// .form-inline {
+// display: inline-block;
+// width: 350px;
+// }
 input[type="text"] {
         width: 600px;
         height: 40px;
@@ -453,22 +458,26 @@ input[type="select"] {
 text{
     margin-right: -20px;
 }
- .part {
-   display: inline-block;
+ .part input[type="checkbox"]{
   float: left;
-  // width: 110px;
-  font-weight:normal;
-input[type="checkbox"]{
-  float: left;
+}
 
-}
-}
 .part text{
   float: left;
 }
-.post_info{
+.user_info,.post_info{
   border-bottom: 3px double #ddd;
 }
+.like-genre{
+display: block;
+margin-left: 60px;
+}
+// .user_info{
+//   float: left;　 /*左側に配置する*/
+// }
+// .user_info span{
+//   float: right; 　 /*右側に配置する*/
+// }
 .bd-navbar .navbar-nav .nav-link {
     padding-right: .5rem;
     padding-left: .5rem;
@@ -503,20 +512,6 @@ header.navbar-light .navbar-nav .nav-link {
     position: relative;
     font-size: 1.285em;
 }
-.form-inline .form-control {
-    width: 110px;
-  }
-  .form-inline form {
-    }
-
-  // .my-2{
-  //   position: absolute;
-  //   top:30px
-  // }
-  // .mr-sm-2{
-  //   position:absolute;
-  //   top:30px
-  // }
 ul.navbar-nav{
   text-align: right;
  li{
@@ -551,7 +546,9 @@ table.form select, table.confirm select, dl.form select {
     width: 100%;
 }
 
-input[type~='text'], input[type~='url'], input[type~='email'], input[type~='password'], input[type~='number'], textarea, select,.select2-selection ,.genre {
+input[type~='text'], input[type~='url'], input[type~='email'],
+input[type~='password'], input[type~='number'], textarea,
+select,.select2-selection, .genre, .select2-selection, .select2-selection--multiple {
     font-size: 1em;
     color: #4c4c4c;
     border: solid 1px #dbdbdb;
@@ -759,7 +756,8 @@ form.login {
  }
  //コメント
  #comment_content{
-   width: 958px
+   width: 800px;
+   margin: 0 auto;
  }
  .comment{
    width: 500px;
@@ -791,29 +789,37 @@ form.login {
 }
 //いいねボタン
 .like-btn {
- // width: 25px;
- // height: 30px;
- // font-size: 25px;
- // color: #808080;
- // margin-left: 20px;
+ width: 25px;
+ font-size: 25px;
+ color: #808080;
+ margin-left: 20px;
  }
 
 .unlike-btn {
- // width: 25px;
- // height: 30px;
- // font-size: 25px;
- // color: #e54747;
- // margin-left: 20px;
+ width: 25px;
+ font-size: 25px;
+ color: #e54747;
+ margin-left: 20px;
  }
-//  float: left;
-// }
-// .part li {
-//   text-align: left;
-//   width: calc(100% / 4);
-//   position:relative;
-//     text-align:center;
-//     cursor:grab;
-//     cursor:-webkit-grab;
-//     color:#efefef;
-//     vertical-align:middle;
-// }
+.comment-area{
+    display: block;
+   // width: 60%;
+   margin: 10px auto;
+}
+ .comment-btn {
+   text-align: center;
+   display: block;
+   width: 60%;
+   margin: 10px auto;
+}
+.user-thumb{
+  margin: 10px auto;
+}
+.contact-area{
+    display: block;
+   margin: 10px auto;
+}
+.contact-btn{
+  text-align: center;
+  margin: 10px auto;
+}

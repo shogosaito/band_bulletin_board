@@ -280,11 +280,12 @@ Devise.setup do |config|
                   info_fields: 'email,first_name,last_name,gender,birthday,location,picture',
                   callback_url: "#{ENV['HOST']}/users/auth/facebook/callback"
   config.omniauth :google_oauth2,
-                   ENV['GOOGLE_CLIENT_ID'],
-                   ENV['GOOGLE_CLIENT_SECRET'],
-                   name: :google,
-                   scope: 'email',
-                   callback_url: "#{ENV['HOST']}/users/auth/google_oauth2/callback"
+                  ENV['GOOGLE_CLIENT_ID'],
+                  ENV['GOOGLE_CLIENT_SECRET'],
+                  name: :google,
+                  token_params: { parse: :json },
+                  scope: 'email',
+                  callback_url: "#{ENV['HOST']}/users/auth/google_oauth2/callback"
   # config.omniauth :twitter,
   #                  ENV['TWITTER_CONSUMER_KEY'],
   #                  ENV['TWITTER_CONSUMER_SECRET'],
@@ -308,7 +309,7 @@ Devise.setup do |config|
   #     mount MyEngine, at: '/my_engine'
   #
   # The router that invoked `devise_for`, in the example above, would be:
-   config.router_name = :my_engine
+  config.router_name = :my_engine
   #
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:

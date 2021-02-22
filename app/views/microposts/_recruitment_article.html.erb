@@ -6,9 +6,13 @@
       <%= f.select :genre, [["J-POP", "J-POP"], ["アニメ", "アニメ"], ["邦楽ヒップホップ/R&B/レゲエ", "邦楽ヒップホップ/R&B/レゲエ"],
         ["邦楽ロック", "邦楽ロック"], ["邦楽ダンス/エレクトロニカ", "邦楽ダンス/エレクトロニカ"],
         ["K-POP/ワールド・ミュージック", "K-POP/ワールド・ミュージック"], ["洋楽総合", "洋楽総合"],
-        ["洋楽ポップス", "洋楽ポップス"],["洋楽ヒップホップ/R&B/レゲエ", "洋楽ヒップホップ/R&B/レゲエ"], ["洋楽ロック", "洋楽ロック"], ["洋楽ダンス/エレクトロニカ", "洋楽ダンス/エレクトロニカ"],
+        ["洋楽ポップス", "洋楽ポップス"],["洋楽ヒップホップ/R&B/レゲエ", "洋楽ヒップホップ/R&B/レゲエ"],
+        ["洋楽ロック", "洋楽ロック"], ["洋楽ダンス/エレクトロニカ", "洋楽ダンス/エレクトロニカ"],
         ["歌謡曲/演歌", "歌謡曲/演歌"],["ジャズ", "ジャズ"],["クラシック", "クラシック"]],{},
-        class: "genre0", multiple: true %>
+        class: "genre0",multiple: true %>
+        <% if @micropost.errors.include?(:genre) %>
+          <p style="color: red;"><%= @micropost.errors.full_messages_for(:genre).first %></p>
+        <% end %>
     </div>
   </td>
 </tr>
@@ -20,6 +24,9 @@
         ["ドラム", "ドラム"], ["キーボード", "キーボード"],["コーラス", "コーラス"], ["パーカッション", "パーカッション"],
         ["ギターボーカル", "ギターボーカル"],["DJ", "DJ"], ["その他", "その他"]], {},
         class:"part0", multiple: true %>
+        <% if @micropost.errors.include?(:part) %>
+          <p style="color: red;"><%= @micropost.errors.full_messages_for(:part).first %></p>
+        <% end %>
     </div>
   </td>
 </tr>
@@ -57,7 +64,7 @@
       <ul class="activity-day-list">
       <% %w(月 火 水 木 金 土 日 祝日).each.with_index do |day,i| %>
         <li><%= f.check_box :activity_day, {multiple: true}, day %>
-        <%= day%></li>
+        <%= day %></li>
       <% end %>
       <% if @micropost.errors.include?(:activity_day) %>
         <p style="color: red;"><%= @micropost.errors.full_messages_for(:activity_day).first %></p>

@@ -17,7 +17,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.where(user_name: sns_info[:user][:user_name]).or(User.where(email: sns_info[:user][:email])).first || sns_info[:user]
     if @user.persisted?
       log_in @user
-      set_flash_message(:notice, :success, kind: "#{provider}".capitalize)
+      flash[:success] = "#{provider}アカウントによる認証に成功しました。"
+      # set_flash_message(:notice, :success, kind: "#{provider}".capitalize)
       redirect_to root_path
     else
       # 登録するアクションに取得した値を渡すために。sessionを利用してuserインスタンスを作成する

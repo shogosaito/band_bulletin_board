@@ -1,122 +1,120 @@
 <% provide(:title, "Edit user") %>
 <div class="align-items-center">
   <h1>プロフィール編集</h1>
-  <table>
-    <div class="row">
-        <%= form_with(model:@user) do |f| %>
-         <%= render 'shared/error_messages', object: f.object %>
-         <tr>
-          <th class="required"><span class="badge badge-danger">必須</span>ユーザーネーム</th>
-          <td>
-            <div class="form-group">
-              <%= hidden_field_tag :user_name,@user.user_name %>
-              <%= f.text_field :user_name, class: 'form-control', required: true %>
-              <% if @user.errors.include?(:user_name) %>
-              <p style="color: red;"><%= @user.errors.full_messages_for(:user_name).first %></p>
-              <% end %>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <th><span class="badge badge-danger">必須</span>メールアドレス</th>
-          <td>
-            <div class="form-group">
-              <%= f.email_field :email, class: 'form-control', required: true %>
-              <% if @user.errors.include?(:email) %>
-              <p style="color: red;"><%= @user.errors.full_messages_for(:email).first %></p>
-              <% end %>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <th><span class="badge badge-danger">必須</span><%= f.label :birthday, "生年月日"%></th>
+  <div class="row">
+    <%= form_with(model:@user,local: true) do |f| %>
+    <table>
+      <%= render 'shared/error_messages', object: f.object %>
+      <tr>
+        <th class="required"><span class="badge badge-danger">必須</span>ユーザーネーム</th>
+        <td>
           <div class="form-group">
-            <td>
-              <%=
-              f.date_select(
-              :birthday,
-              prompt:"--",
-              use_month_numbers:true,
-              start_year:Time.now.year,
-              end_year:1900 )
-              %>
-              <% if @user.errors.include?(:birthday) %>
-              <p style="color: red;"><%= @user.errors.full_messages_for(:birthday).first %></p>
-              <% end %>
-            </td>
+            <%= f.text_field :user_name, class: 'form-control', required: true %>
+            <% if @user.errors.include?(:user_name) %>
+            　　<p style="color: red;"><%= @user.errors.full_messages_for(:user_name).first %></p>
+            <% end %>
           </div>
-        </tr>
-        <tr>
-          <th><span class="badge badge-danger">必須</span>性別</th>
-          <td>
-            <div class="form-group">
-              <%= f.select :gender, [["選択してください", "選択してください"], ["男", "男"], ["女", "女"]], required: true %>
-              <% if @user.errors.include?(:gender) %>
-              <p style="color: red;"><%= @user.errors.full_messages_for(:gender).first %></p>
-              <% end %>
-            </div>
-          </td>
-        </tr>
-        <tr>
+        </td>
+      </tr>
+      <tr>
+        <th><span class="badge badge-danger">必須</span>メールアドレス</th>
+        <td>
           <div class="form-group">
-            <th><span class="badge badge-pill badge-secondary">任意</span>都道府県</th>
-            <td>
-              <%= collection_select :prefecture, :prefecture_ids, Prefecture.all, :id, :name, include_hidden: false ,required: true, prompt:"--" %>
-            </td>
+            <%= f.email_field :email, class: 'form-control', required: true %>
+            <% if @user.errors.include?(:email) %>
+            <p style="color: red;"><%= @user.errors.full_messages_for(:email).first %></p>
+            <% end %>
           </div>
-        </tr>
-        <tr>
-          <th><span class="badge badge-pill badge-secondary">任意</span>好きなジャンル</th>
+        </td>
+      </tr>
+      <tr>
+        <th><span class="badge badge-danger">必須</span><%= f.label :birthday, "生年月日"%></th>
           <td>
             <div class="form-group">
-                <%= javascript_pack_tag 'genre' %>
-                <%= select_tag('genre', options_for_select([["J-POP", "J-POP"], ["アニメ", "アニメ"], ["邦楽ヒップホップ/R&B/レゲエ", "邦楽ヒップホップ/R&B/レゲエ"],
-                ["邦楽ロック", "邦楽ロック"], ["邦楽ダンス/エレクトロニカ", "邦楽ダンス/エレクトロニカ"],
-                ["K-POP/ワールド・ミュージック", "K-POP/ワールド・ミュージック"], ["洋楽総合", "洋楽総合"],
-                ["洋楽ポップス", "洋楽ポップス"],["洋楽ヒップホップ/R&B/レゲエ", "洋楽ヒップホップ/R&B/レゲエ"], ["洋楽ロック", "洋楽ロック"], ["洋楽ダンス/エレクトロニカ", "洋楽ダンス/エレクトロニカ"],
-                ["歌謡曲/演歌", "歌謡曲/演歌"],["ジャズ", "ジャズ"],["クラシック ", "クラシック "]]), class: "form-control", multiple: true) %>
+            <%=
+            f.date_select(
+            :birthday,
+            prompt:"--",
+            use_month_numbers:true,
+            start_year:Time.now.year,
+            end_year:1900 )
+            %>
+            <% if @user.errors.include?(:birthday) %>
+            <p style="color: red;"><%= @user.errors.full_messages_for(:birthday).first %></p>
+            <% end %>
             </div>
-          </td>
-        </tr>
-        <tr>
-          <th>担当パート</th>
-          <td>
-            <div class="form-group　part">
-              <ul class="part-list check-box">
-              <% %w(ボーカル ギター ベース ドラム キーボード コーラス パーカッション その他).each.with_index do |part,i| %>
-                <li><%= f.check_box :part, {multiple: true}, part, nil %>
-                <%= part%></li>
-              <% end %>
-             </ul>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <th><span class="badge badge-pill badge-secondary">任意</span><%= f.label :好きなアーティスト %></th>
+        </td>
+      </tr>
+      <tr>
+        <th><span class="badge badge-danger">必須</span>性別</th>
+        <td>
+          <div class="form-group">
+            <%= f.select :gender, [["選択してください", "選択してください"], ["男", "男"], ["女", "女"]], required: true %>
+            <% if @user.errors.include?(:gender) %>
+            <p style="color: red;"><%= @user.errors.full_messages_for(:gender).first %></p>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th><span class="badge badge-danger">必須</span>担当パート</th>
+        <td>
+          <div class="form-group">
+            <%= javascript_pack_tag 'part' %>
+            <%= f.select :part, [["ボーカル", "ボーカル"], ["ギター", "ギター"], ["ベース","ベース"],
+            ["ドラム", "ドラム"], ["キーボード", "キーボード"],["コーラス", "コーラス"], ["パーカッション", "パーカッション"],
+            ["ギターボーカル", "ギターボーカル"],["DJ", "DJ"], ["その他", "その他"]], {},
+            class:"part", multiple: true %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th><span class="badge badge-pill badge-secondary">任意</span>都道府県</th>
           <td>
             <div class="form-group">
-              <%= f.text_field :artist, class: 'form-control', placeholder:"例 ○○○○○,○○○○○" %>
+              <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, include_hidden: false ,required: true, prompt:"--" %>
             </div>
           </td>
-        </tr>
-        <tr>
-          <th><span class="badge badge-pill badge-secondary">任意</span><%= f.label :プロフィール写真 %></th>
-          <td>
-            <div class="form-group file">
-              <%= f.file_field :user_image, accept: "image/jpeg,image/gif,image/png" ,placeholder: "画像アップロード" %>
-            </div>
-          </td>
-        </tr>
-      </div>
-    </div>
-  </table>
+      </tr>
+      <tr>
+        <th><span class="badge badge-pill badge-secondary">任意</span>好きなジャンル</th>
+        <td>
+          <div class="form-group">
+            <%= javascript_pack_tag 'genre' %>
+            <%= f.select :genre, [["J-POP", "J-POP"], ["アニメ", "アニメ"], ["邦楽ヒップホップ/R&B/レゲエ", "邦楽ヒップホップ/R&B/レゲエ"],
+            ["邦楽ロック", "邦楽ロック"], ["邦楽ダンス/エレクトロニカ", "邦楽ダンス/エレクトロニカ"],
+            ["K-POP/ワールド・ミュージック", "K-POP/ワールド・ミュージック"], ["洋楽総合", "洋楽総合"],
+            ["洋楽ポップス", "洋楽ポップス"],["洋楽ヒップホップ/R&B/レゲエ", "洋楽ヒップホップ/R&B/レゲエ"], ["洋楽ロック", "洋楽ロック"], ["洋楽ダンス/エレクトロニカ", "洋楽ダンス/エレクトロニカ"],
+            ["歌謡曲/演歌", "歌謡曲/演歌"],["ジャズ", "ジャズ"],["クラシック", "クラシック"]],{},
+            class: "genre",multiple: true %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th><span class="badge badge-pill badge-secondary">任意</span><%= f.label :好きなアーティスト %></th>
+        <td>
+          <div class="form-group">
+            <%= f.text_field :artist, class: 'form-control', placeholder:"例 ○○○○○,○○○○○" %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th><span class="badge badge-pill badge-secondary">任意</span><%= f.label :プロフィール写真 %></th>
+        <td>
+          <div class="form-group file">
+            <%= f.file_field :user_image, accept: "image/jpeg,image/gif,image/png" ,placeholder: "画像アップロード" %>
+          </div>
+        </td>
+      </tr>
+    </table>
   <div class="form-group entry">
-  <%= reset_tag 'リセット', class: 'btn btn-primary', id: 'js_clear_btn' %>
-  <%= f.submit "更新する", class: "btn btn-primary" %>
-</div>
+    <%= reset_tag 'リセット', class: 'btn btn-primary', id: 'js_clear_btn' %>
+    <%= f.submit "更新する", class: "btn btn-primary" %>
+  </div>
   <% end %>
+  </div>
 </div>
-  <%= link_to "アカウント削除", @user, method: :delete,
-  data: { confirm: "本当にアカウントを削除しますか?" } %>
+<%= link_to "アカウント削除", @user, method: :delete,
+data: { confirm: "本当にアカウントを削除しますか?" } %>
 
-  <%= link_to "パスワード変更はこちら" ,"passwords/edit" %>
+<%= link_to "パスワード変更はこちら" ,password_edit_path(@user.id) %>

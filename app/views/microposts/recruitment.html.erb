@@ -1,8 +1,8 @@
 <div class="align-items-center">
   <h1>記事検索フォーム</h1>
 </div>
-<table>
-  <%= form_with url:search_path ,method: :get do |f| %>
+  <%= form_with url:micropost_search_path, local: true do |f| %>
+  <table>
   <tr>
     <th>募集年齢</th>
     <td>
@@ -27,7 +27,8 @@
         <%= select_tag('genre', options_for_select([["J-POP", "J-POP"], ["アニメ", "アニメ"], ["邦楽ヒップホップ/R&B/レゲエ", "邦楽ヒップホップ/R&B/レゲエ"],
         ["邦楽ロック", "邦楽ロック"], ["邦楽ダンス/エレクトロニカ", "邦楽ダンス/エレクトロニカ"],
         ["K-POP/ワールド・ミュージック", "K-POP/ワールド・ミュージック"], ["洋楽総合", "洋楽総合"],
-        ["洋楽ポップス", "洋楽ポップス"],["洋楽ヒップホップ/R&B/レゲエ", "洋楽ヒップホップ/R&B/レゲエ"], ["洋楽ロック", "洋楽ロック"], ["洋楽ダンス/エレクトロニカ", "洋楽ダンス/エレクトロニカ"],
+        ["洋楽ポップス", "洋楽ポップス"],["洋楽ヒップホップ/R&B/レゲエ", "洋楽ヒップホップ/R&B/レゲエ"],
+        ["洋楽ロック", "洋楽ロック"], ["洋楽ダンス/エレクトロニカ", "洋楽ダンス/エレクトロニカ"],
         ["歌謡曲/演歌", "歌謡曲/演歌"],["ジャズ", "ジャズ"],["クラシック ", "クラシック "]]),
         class: "genre",include_blank: "選択してください", multiple: true) %>
       </div>
@@ -35,7 +36,6 @@
   </tr>
   <tr>
     <div class="form-group">
-      <div class="form-inline">
         <div class="prefectures-check-boxes">
           <th>都道府県</th>
           <td>
@@ -48,7 +48,6 @@
             </div>
           </td>
         </div>
-      </div>
     </div>
   </tr>
   <tr>

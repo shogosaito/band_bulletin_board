@@ -9,29 +9,16 @@ class CommentsController < ApplicationController
       @micropost.create_notification_comment!(current_user, @comment.id)
       redirect_to @comment.micropost
     else
-      flash[:success] = "コメントに失敗しました"
-      render template: 'microposts/show'
+      binding.pry
+      flash[:danger] = "コメントに失敗しました"
+      redirect_to controller: :microposts, action: :show, id: micropost.id
     end
   end
 
-  def new
-    @comment = Comment.new
-  end
-
-  def edit
-    @comment = Comment.find(params[:id])
-  end
-
-  def update
-    @comment = Comment.find(params[:id])
-    @comment.update(comment_params)
-    redirect_to @comment
-  end
-
   def destroy
-    @comment.destroy
+    Comment.find(params[:id]).destroy
     flash[:success] = "コメントを削除しました!"
-    redirect_to microposts_path
+    redirect_to micropost_path(params[:micropost_id])
   end
 
   private

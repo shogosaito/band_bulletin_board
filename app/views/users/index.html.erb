@@ -1,18 +1,1 @@
-<% provide(:title, 'All users') %>
-<h1>ユーザ一覧</h1>
-<% @users.each do |user| %>
-<% if user.user_image.attached? %>
-<span class="user"><a href="/users/<%= user.id %>"><%= image_tag(user.user_image,size:'50x50') %><%= user.user_name %></a></span>
-<br>
-<br>
-<% else %>
-<span class="user"><a href="/users/<%= user.id %>"><%= image_tag("default.png",size:'50x50') %><%= user.user_name %></a></span>
-<br>
-<br>
-<% end %>
-<% end %>
-<% if @users.nil?%>
-<ul class="users">
-  <%= render @users %>
-</ul>
-<% end %>
+

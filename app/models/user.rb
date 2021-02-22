@@ -11,28 +11,20 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :micropost
   has_many :comments, dependent: :destroy
-  has_many :active_relationships, class_name: "Relationship",
-                                  foreign_key: "follower_id",
-                                  dependent: :destroy
-  has_many :following, through: :active_relationships, source: :followed
-  has_many :passive_relationships, class_name: "Relationship",
-                                   foreign_key: "followed_id",
-                                   dependent: :destroy
-  has_many :following, through: :active_relationships,  source: :followed
-  has_many :followers, through: :passive_relationships, source: :follower
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
   before_create :create_activation_digest
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
-  validates :user_name, presence: true, length: { maximum: 15 }, unless: :uid?
-  validates :gender, presence: true, unless: :uid?
-  validates :email, presence: true, length: { maximum: 255 }, allow_nil: true, unless: :uid?
-  # validates :birthday, presence: true
+  validates :user_name, presence: true, length: { maximum: 15 }
+  validates :gender, presence: true
+  validates :email, presence: true, length: { maximum: 255 }
+  validates :birthday, presence: true
+  validates :part, presence: true
   validates :selfintroduction, length: { maximum: 120 }
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true, unless: :uid?
+  validates :password, presence: true, length: { minimum: 6 }
   validates_acceptance_of :agreement, allow_nil: false, on: :create
 
   # 渡された文字列のハッシュ値を返す
@@ -93,42 +85,22 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  def create_notification_follow!(current_user)
-    temp = Notification.where(["visitor_id = ? and visited_id = ? and action = ? ", current_user.id, id, 'follow'])
-    if temp.blank?
-      notification = current_user.active_notifications.new(
-        visited_id: id,
-        action: 'follow'
-      )
-      notification.save if notification.valid?
-    end
-  end
-
-  # ユーザーのステータスフィードを返す
-  def feed
-    following_ids = "SELECT followed_id FROM relationships
-    WHERE follower_id = :user_id"
-    Micropost.where("user_id IN (#{following_ids})
-    OR user_id = :user_id", user_id: id)
-  end
-
   def already_liked?(micropost)
     likes.exists?(micropost_id: micropost.id)
   end
 
   def self.from_omniauth(auth)
     sns = SnsCredential.where(uid: auth["uid"], provider: auth["provider"]).first_or_create
-    pass = Devise.friendly_token
     user = sns.user || User.where(email: auth["info"]["email"]).first
     if user.blank?
-    user = User.new(
+      user = User.new(
         uid: auth["uid"],
         provider: auth["provider"],
         user_name: auth["info"]["name"],
         email: auth["info"]["email"],
         oauth_token: auth.credentials.token,
         oauth_expires_at: Time.at(auth.credentials.expires_at),
-        password: pass,
+        password: rondom_password,
         gender: auth["info"]["gender"],
         birthday: auth["info"]["birthday"],
         user_image: 'default.png'
@@ -136,6 +108,9 @@ class User < ApplicationRecord
     end
     if user.user_name.blank?
       user.user_name = rondom_name
+    end
+    if user.password.blank?
+      user.password = rondom_password
     end
     if user.persisted? # userが登録済みの場合：そのままログインするため、snsのuser_idを更新しとく
       sns.user = user
@@ -153,6 +128,11 @@ class User < ApplicationRecord
 
   # user_name作成
   def self.rondom_name
+    "#{((0..9).to_a + ("a".."z").to_a).sample(10).join}"
+  end
+
+  # password作成
+  def self.rondom_password
     "#{((0..9).to_a + ("a".."z").to_a).sample(10).join}"
   end
 

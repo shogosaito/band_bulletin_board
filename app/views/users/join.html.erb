@@ -1,7 +1,7 @@
 <div class="align-items-center">
   <h1>メンバー検索フォーム</h1>
-<table>
-  <%= form_with url:user_search_path, method: :get do |f| %>
+  <%= form_with url:user_search_path ,local: true do |f| %>
+  <table>
   <tr>
     <th>ユーザネーム</th>
     <td>
@@ -41,7 +41,6 @@
     </tr>
     <tr>
       <div class="form-group">
-        <div class="form-inline">
           <div class="prefectures-check-boxes">
             <th>都道府県</th>
             <td>
@@ -54,7 +53,6 @@
               </div>
             </td>
           </div>
-        </div>
       </div>
     </tr>
     <tr>

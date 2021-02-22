@@ -25,7 +25,6 @@ gem 'bcrypt',         '3.1.12'
 gem 'faker',          '1.7.3'
 gem 'will_paginate', '3.1.8'
 gem 'bootstrap', '~> 4.1.3'
-gem 'bootstrap-will_paginate', '1.0.0'
 gem 'webpacker'
 gem 'ransack'
 gem 'sqlite3', '1.4.1', :group => [:development, :test]
@@ -39,11 +38,17 @@ gem 'autoprefixer-rails'
 gem 'rubocop-airbnb'
 gem 'jquery'
 gem 'font-awesome-sass'
+gem 'capybara', '3.28.0'
+gem 'kaminari-bootstrap', '~> 3.0.1'
+
 group :jekyll_plugins do
   gem 'bootsnap', '1.4.5', require: false
 end
 group :development, :test do
   gem 'byebug', '11.0.1', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'database_cleaner'
 end
 
 group :development do
@@ -55,7 +60,6 @@ group :development do
 end
 
 group :test do
-  gem 'capybara',                 '3.28.0'
   gem 'selenium-webdriver',       '3.142.4'
   gem 'webdrivers',               '4.1.2'
   gem 'rails-controller-testing', '1.0.4'
@@ -63,4 +67,5 @@ group :test do
   gem 'guard-minitest',           '2.4.6'
 end
 
-gem 'tzinfo-data'
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

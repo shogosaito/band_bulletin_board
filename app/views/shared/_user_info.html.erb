@@ -1,10 +1,10 @@
 <div class="user-info">
   <div class="align-items-center">
     <h1>プロフィール</h1>
-    <table>
-      <div class="row">
-        <%= form_with(model:@user) do |f| %>
-        <%= render 'shared/error_messages', object: f.object %>
+    <div class="row">
+      <%= form_with(model:@user) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <table>
         <tr>
           <th class="required">プロフィール</th>
           <td>
@@ -69,11 +69,7 @@
           <div class="form-group">
             <th>都道府県</th>
             <td>
-              <% if @user.prefecture.blank? %>
-              <%= f.text_field :prefecture, class: 'form-control', value: "--", readonly: true %>
-              <% else %>
               <%= f.text_field :prefecture, class: 'form-control', value: @user.prefecture.name, readonly: true %>
-              <% end %>
             </td>
           </div>
         </tr>
@@ -81,8 +77,8 @@
           <th>好きなジャンル</th>
           <td>
             <div class="form-group">
-                <%= javascript_pack_tag 'genre' %>
-                <%= f.text_field  :genre, class: 'form-control', value: @genre, readonly: true  %>
+              <%= javascript_pack_tag 'genre' %>
+              <%= f.text_field  :genre, class: 'form-control', value: @genre, readonly: true  %>
             </div>
           </td>
         </tr>
@@ -108,17 +104,26 @@
             <% end %>
           </td>
         </tr>
+        </table>
         <% end %>
       </div>
-    </table>
     <dt>搭載記事(<%= @user.microposts.count %>)</dt>
     <% if @user.microposts.any? %>
-    <% @user.microposts.each do |micropost| %>
-    <dd><a href="/microposts/<%= micropost.id %>"><%=  micropost.content %></dd>
+    　　<% @user.microposts.each do |micropost| %>
+    　　　　<dd><a href="/microposts/<%= micropost.id %>"><%=  micropost.content %>></a></dd>
+    　　<% end %>
+    <% else %>
+    　　<dd>投稿記事はありません</dd>
+    　　<%= will_paginate @microposts %>
+    <% end %>
+    <dt>お気に入り記事(<%= @user.liked_posts.count %>)</dt>
+    <% if @user.liked_posts.any? %>
+      <% @user.liked_posts.each do |micropost| %>
+        <dd><a href="/microposts/<%= micropost.id %>"><%=  micropost.content %></a></dd>
       <% end %>
-      <% else %>
-      <dd>投稿記事はありません</dd>
+    <% else %>
+      <dd>お気に入り記事はありません</dd>
       <%= will_paginate @microposts %>
-      <% end %>
-    </div>
+    <% end %>
   </div>
+</div>

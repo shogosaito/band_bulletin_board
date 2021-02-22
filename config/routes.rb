@@ -6,34 +6,35 @@ Rails.application.routes.draw do
   }
   get '/auth/:provider/callback',    to: 'users#create',       as: :auth_callback
   get '/auth/failure',               to: 'users#auth_failure', as: :auth_failure
-  root 'insta_clones#home'
+  root 'band_bulletin_boards#home'
   post "/" => "microposts#index"
-  get  '/help',    to: 'insta_clones#help'
-  get  '/about',   to: 'insta_clones#about'
+  get  '/help',    to: 'band_bulletin_boards#help'
+  get  '/about',   to: 'band_bulletin_boards#about'
   get  '/contact', to: 'contacts#new'
   post '/contact/create', to: 'contacts#create'
-  get  '/signup',  to: 'users#new'
+  get  '/signup', to: 'users#new'
   get  '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
-  get  '/new', to: 'microposts#new'
+  get '/new', to: 'microposts#new'
+  get '/micropost/search/:per/', to: 'microposts#microposts_list_page', as: 'list_page'
   # post '/micropost/:micropost_id/update', to: 'microposts#update'
-  get  '/search', to: 'microposts#search'
-  post '/search', to: 'microposts#search'
+  get  '/micropost/search', to: 'microposts#search'
+  post '/micropost/search', to: 'microposts#search'
   get  '/user/search', to: 'users#search'
   post '/user/search', to: 'users#search'
   get  '/recruitment', to: 'microposts#recruitment'
   get  '/join', to: 'users#join'
-  post  '/like/:micropost_id' => 'likes#create', as: 'like'
+  post '/like/:micropost_id' => 'likes#create', as: 'like'
   delete '/like/:micropost_id' => 'likes#destroy', as: 'unlike'
-  get '/notifications', to: 'notifications#index'
-  get 'users/:user_id/passwords/edit', to: 'passwords#edit'
-  get 'users/:user_id/passwords/update', to: 'passwords#update'
+  get '/notification', to: 'notifications#index'
+  delete '/notification/delete', to: 'notifications#destroy'
+  get 'users/:user_id/passwords/edit', to: 'users#password_edit', as: 'password_edit'
+  put 'users/:user_id/passwords/update', to: 'users#password_update', as: 'password_update'
 
   resources :users do
     # resources  :passwords,           only: [:edit, :update]
     member do
-      get :following, :followers
     end
   end
 
@@ -55,5 +56,4 @@ Rails.application.routes.draw do
   # resources :password_resets,     only: [:new, :create, :edit, :update]
   resources :relationships,       only: [:create, :destroy]
   resources :notifications
-  resources :passwords, only: [:edit, :update]
 end

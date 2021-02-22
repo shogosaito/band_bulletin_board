@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2020_12_30_004810) do
-
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -64,11 +63,11 @@ ActiveRecord::Schema.define(version: 2020_12_30_004810) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "image"
     t.integer "likes_count", default: 0, null: false
-    t.string "content_type"
     t.string "title"
     t.string "genre"
     t.string "part"
     t.integer "prefecture_id"
+    t.string "content_type"
     t.string "activity_day"
     t.string "activity_direction"
     t.string "music_type"
@@ -105,16 +104,6 @@ ActiveRecord::Schema.define(version: 2020_12_30_004810) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "relationships", force: :cascade do |t|
-    t.integer "follower_id"
-    t.integer "followed_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["followed_id"], name: "index_relationships_on_followed_id"
-    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
-    t.index ["follower_id"], name: "index_relationships_on_follower_id"
-  end
-
   create_table "sns_credentials", force: :cascade do |t|
     t.string "provider"
     t.string "uid"
@@ -146,7 +135,6 @@ ActiveRecord::Schema.define(version: 2020_12_30_004810) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "password_digest"
-    t.boolean "admin", default: false
     t.string "remember_digest"
     t.string "selfintroduction"
     t.string "gender"

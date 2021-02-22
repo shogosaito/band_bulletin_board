@@ -10,7 +10,7 @@
       <dt>記事の種類</dt>
       <dd><%= micropost.content_type %></dd>
       <dt>活動エリア</dt>
-      <dd><%= micropost.prefecture.name if micropost.prefecture_id? %></dd>
+      <dd><%= micropost.prefecture.name %></dd>
       <dt>活動曜日</dt>
       <dd><%= @activity_day %></dd>
       <dt>活動方向性</dt>
@@ -55,5 +55,4 @@
     data: { confirm: "本当に削除しますか?" } %>
     <% end %>
   </span>
-  <%= render "likes/like", micropost: micropost %>
 </div>

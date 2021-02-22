@@ -1,9 +1,5 @@
 class LikesController < ApplicationController
   before_action :set_variables
-  # def index
-  #   @like_microposts = current_user.like_microposts
-  # end
-  
   def create
     like = current_user.likes.new(micropost_id: @micropost.id)
     like.save

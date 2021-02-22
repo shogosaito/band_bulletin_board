@@ -1,18 +1,20 @@
 <div class="align-items-center">
   <h1>検索結果</h1>
 </div>
-<hr>
 <% unless @search_microposts.blank? %>
 <% @search_microposts.each do |micropost| %>
-<span class="user"><a href="/users/<%= micropost.user.id %>"><%= micropost.user.user_name %></a></span>
-<br>
-<span class="image"><a href="/microposts/<%= micropost.id %>"><%= image_tag(micropost.image,size:"600x400") if micropost.image.attached? %></a></span>
-<br>
-<span class="content"><%= micropost.content %></span>
-<br>
-<span class="genre"><%= micropost.genre %></span>
-<span class="prefecture"><%= micropost.prefecture_id %></span>
+<section class="post_info">
+  <span class="post"><%= image_tag micropost.user.user_image,size:'70x70',:Align=>"left"%><a href="/microposts/<%= micropost.id %>"><%= micropost.title %></a></span>
+  <span class="post_user"><%= micropost.user.user_name %>(<%= micropost.user.prefecture.name %>,<%= calcAge(micropost.user.birthday.strftime("%Y%m%d").to_i) %>歳)</span>
+　<span class="content">
+    <%= micropost.content.truncate(25) do %>
+      <p>(省略されました。<%= link_to "続きを読むには...", micropost_path %>をクリックしてください。<p>
+    <% end %>
+ </span>
+ <span class="timestamp"><%= time_ago_in_words(micropost.created_at) %> 前.</span>
+</section>
 <% end %>
+<%= paginate @search_microposts %>
 <% else %>
   <div class=search-result-empty>
     条件に一致した記事が見つかりませんでした。

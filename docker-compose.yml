@@ -26,6 +26,7 @@ services:
       # ローカルPCのディレクトリをrubyコンテナにマウント
       volumes:
           - .:/app
+          - .:/app/tmp/cache
       # アプリ公開ポートを指定<公開ポート番号>:<コンテナ内の転送先ポート>
       ports:
           - 3000:3000
@@ -34,6 +35,13 @@ services:
           - db
       tty: true
       stdin_open: true
+    # selenium_chrome を使うために以下の行を追加
+      environment:
+      - "SELENIUM_DRIVER_URL=http://selenium_chrome:4444/wd/hub"
+  selenium_chrome:
+      image: selenium/standalone-chrome-debug
+      logging:
+        driver: none
   #サービス2
   db:
       image: mysql:5.7

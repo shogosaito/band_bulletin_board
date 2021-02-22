@@ -1,16 +1,15 @@
 <div class="align-items-center">
   <h1>検索結果</h1>
 </div>
-<hr>
 <% unless @search_users.blank? %>
-<% @search_users.each do |user| %>
-<span class="user"><a href="/users/<%= user.id %>"><%= user.user_name %></a></span>
-<br>
-<span class="image"><a href="/users/<%= user.id %>"><%= image_tag(user.user_image,size:"100x100") if user.user_image.attached? %></a></span>
-<br>
-<span class="content"><%= user.selfintroduction %></span>
-<br>
-<span class="genre"><%= user.genre %></span>
+  <% @search_users.each do |user| %>
+    <section class="user_info">
+      <span class="image"><a href="/users/<%= user.id %>"><%= image_tag(user.user_image,size:"70x70",:Align=>"left") %></a></span>
+      <span class="user"><a href="/users/<%= user.id %>"><%= user.user_name %>(<%= calcAge(user.birthday.strftime("%Y%m%d").to_i) %>歳)</a></span>
+      <span>好きなジャンル：<%= @genre %></span>
+      <span class="part">担当パート：<%= @part %></span>
+      <span class="">活動地域：<%=user.prefecture.name %></span>
+    </section>
 <% end %>
 <% else %>
   <div class=search-result-empty>

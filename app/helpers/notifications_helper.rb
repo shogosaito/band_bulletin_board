@@ -1,19 +1,14 @@
 module NotificationsHelper
   def notification_form(notification)
     @comment = nil
-    visitor = link_to notification.visitor.user_name, notification.visitor, style: "font-weight: bold;"
-    your_post = link_to 'あなたの投稿', notification.micropost, style: "font-weight: bold;", remote: true
-    unless visitor == current_user.user_name
     case notification.action
     when "like"
-      "#{visitor}が#{your_post}にいいね！しました"
+      tag.a(notification.visitor.user_name, href: notification.visitor) + "さんが" + tag.a('あなたの投稿', href: notification.micropost) + "をお気に入りに追加しました。"
     when "comment" then
       @comment = Comment.find_by(id: notification.comment_id)&.content
-      "#{visitor}が#{your_post}にコメントしました"
+      tag.a(notification.visitor.user_name, href: notification.visitor) + "さんが" + tag.a('あなたの投稿', href: notification.micropost) + "にコメントしました。" + "コメント内容「 " + @comment + "」"
     end
     end
-    binding.pry
-  end
 
   def unchecked_notifications
     @notifications = current_user.passive_notifications.where(checked: false)

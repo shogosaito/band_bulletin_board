@@ -7,15 +7,14 @@
   <%= link_to  user_google_oauth2_omniauth_authorize_path, class:"btn btn-social btn-google" do %>
   <span><i class="fab fa-google-plus-square fa-1x"></i>googleで登録</span>
   <% end %>
-  <table>
     <div class="row">
-        <%= form_with(model:@user) do |f| %>
-          <%= render 'shared/error_messages', object: f.object %>
+      <%= form_with(model:@user,local: true) do |f| %>
+          <table>
+              <%= render 'shared/error_messages', object: f.object %>
             <tr>
               <th class="required"><span class="badge badge-danger">必須</span>ユーザーネーム</th>
                 <td>
                   <div class="form-group">
-                    <%= hidden_field_tag :user_name,@user.user_name %>
                     <%= f.text_field :user_name, class: 'form-control', required: true, value: "#{session[:user_name]}" %>
                       <% if @user.errors.include?(:user_name) %>
                         <p style="color: red;"><%= @user.errors.full_messages_for(:user_name).first %></p>
@@ -27,7 +26,6 @@
               <th><span class="badge badge-danger">必須</span>メールアドレス</th>
                 <td>
                   <div class="form-group">
-                    <%= hidden_field_tag :email,@user.email %>
                     <%= f.email_field :email, class: 'form-control', required: true, value: "#{session[:email]}"   %>
                     <% if @user.errors.include?(:email) %>
                       <p style="color: red;"><%= @user.errors.full_messages_for(:email).first %></p>
@@ -87,12 +85,15 @@
             </td>
           </tr>
           <tr>
-            <div class="form-group">
-              <th><span class="badge badge-danger">必須</span>都道府県</th>
+            <th><span class="badge badge-danger">必須</span>都道府県</th>
               <td>
-                <%= collection_select :prefecture, :prefecture_ids, Prefecture.all, :id, :name, include_hidden: false ,required: true, prompt:"--" %>
+                <div class="form-group">
+                  <%= collection_select :prefecture, :prefecture_id, Prefecture.all, :id, :name, include_hidden: false ,required: true, prompt:"--" %>
+                  <% if @user.errors.include?(:prefecture) %>
+                    <p style="color: red;"><%= @user.errors.full_messages_for(:prefecture).first %></p>
+                  <% end %>
+                </div>
               </td>
-            </div>
           </tr>
           <tr>
             <th><span class="badge badge-danger">必須</span>担当パート</th>
@@ -103,6 +104,9 @@
                   ["ドラム", "ドラム"], ["キーボード", "キーボード"],["コーラス", "コーラス"], ["パーカッション", "パーカッション"],
                   ["ギターボーカル", "ギターボーカル"],["DJ", "DJ"], ["その他", "その他"]], {},
                   class:"part", multiple: true %>
+                  <% if @user.errors.include?(:part) %>
+                    <p style="color: red;"><%= @user.errors.full_messages_for(:part).first %></p>
+                  <% end %>
               </div>
             </td>
           </tr>
@@ -128,11 +132,10 @@
               </div>
             </td>
           </tr>
-        </div>
         </table>
         <td>
           <div class="form-group policy">
-            <%= f.check_box :agreement, :as => :boolean, checked:false %>
+            <%= f.check_box :agreement, :as => :boolean, checked:false, class: 'agreement'%>
             <%= link_to "利用規約", about_path %> と<%= link_to "プライバシーポリシー", about_path %>に同意する
           </div>
         </td>
@@ -141,4 +144,6 @@
           <%= f.submit "登録する", class: "btn btn-primary" %>
         </div>
         <% end %>
+        <%= javascript_pack_tag 'reset' %>
+      </div>
     </div>

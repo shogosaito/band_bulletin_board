@@ -1,14 +1,12 @@
 class Micropost < ApplicationRecord
   # mount_uploader :image, ImageUploader
   belongs_to :user
-  has_many :prefecture
+  belongs_to :prefecture
   has_many :comments, dependent: :destroy
-  has_one_attached :image
   has_many :notifications, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_users, through: :likes, source: :user
   default_scope -> { order(created_at: :desc) }
-  # validates :user_id, presence: true
   validates :title, presence: true
   validates :content_type, presence: true
   validates :content, presence: true, length: { maximum: 1000 }
@@ -16,15 +14,6 @@ class Micropost < ApplicationRecord
   validates :music_type, presence: true
   validates :genre, presence: true
   validates :part, presence: true
-  validates :image, content_type: {
-    in: %w(image/jpeg image/png),
-    message: "must be a valid image format",
-  },
-                    size: {
-                      less_than: 5.megabytes,
-                      message: "should be less than 5MB",
-                      presence: true,
-                    }
 
   def liked_by?(user)
     liked_users.include?(user)

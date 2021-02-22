@@ -1,15 +1,17 @@
 <div class="align-items-center">
   <h1>通知</h1>
-    <%= link_to method: :delete do %>
+    <%= link_to notification_delete_path,method: :delete do %>
         <i class="fas fa-trash" style="color: black;"></i>
         <h7 style="color: black;">全削除</h7>
     <% end %>
-    <hr>
-<% if @notifications.exists? %>
+<% unless @notifications.blank? %>
+  <% if @notifications.exists? %>
     <div class="users-index">
-        <%= render @notifications %>
+      <%= render @notifications %>
+      <%= paginate @notifications %>
     </div>
+    <% end %>
 <% else %>
-    <p>通知はありません</p>
+  <p>通知はありません</p>
 <% end %>
 </div>
