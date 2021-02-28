@@ -117,4 +117,4 @@
 <%= link_to "アカウント削除", @user, method: :delete,
 data: { confirm: "本当にアカウントを削除しますか?" } %>
 
-<%= link_to "パスワード変更はこちら" ,password_edit_path(@user.id) %>
+<%= link_to "パスワード変更はこちら" ,password_edit_path(current_user.id) %>

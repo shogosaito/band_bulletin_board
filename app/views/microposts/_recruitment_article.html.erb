@@ -64,7 +64,7 @@
       <ul class="activity-day-list">
       <% %w(月 火 水 木 金 土 日 祝日).each.with_index do |day,i| %>
         <li><%= f.check_box :activity_day, {multiple: true}, day %>
-        <%= day %></li>
+        <%= f.label day %></li>
       <% end %>
       <% if @micropost.errors.include?(:activity_day) %>
         <p style="color: red;"><%= @micropost.errors.full_messages_for(:activity_day).first %></p>

@@ -26,7 +26,8 @@ services:
       # ローカルPCのディレクトリをrubyコンテナにマウント
       volumes:
           - .:/app
-          - .:/app/tmp/cache
+          - /app/tmp/cache
+          - /app/node_modules
       # アプリ公開ポートを指定<公開ポート番号>:<コンテナ内の転送先ポート>
       ports:
           - 3000:3000

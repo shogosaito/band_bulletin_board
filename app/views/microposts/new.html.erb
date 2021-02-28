@@ -65,8 +65,8 @@
         <div class="form-group">
           <ul class="music-type-list">
             <% %w(指定なし オリジナル コピー).each.with_index do |type,i| %>
-              <li><%= f.check_box :music_type, {multiple: true},type %>
-              <%= type%></li>
+              <li><%= f.check_box :music_type, { multiple: true }, type %>
+              <%= f.label type %></li>
               <% if @micropost.errors.include?(:music_type) %>
                 <p style="color: red;"><%= @micropost.errors.full_messages_for(:music_type).first %></p>
               <% end %>
@@ -75,8 +75,12 @@
         </div>
       </td>
     </tr>
+    <div class="recruitment-group">
     <%= render partial: 'recruitment_article' ,locals: { f:f } %>
+    </div>
+    <div class="join-group">
     <%= render partial: 'join_article' ,locals: { f:f } %>
+    </div>
   </table>
   <div class="froup form-Submit">
     <%= reset_tag 'リセット', class: 'btn btn-primary', id: 'js_clear_btn' %>

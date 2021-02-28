@@ -10,7 +10,7 @@ FactoryBot.define do
     artist { "X JAPAN" }
     url { "http://localhost:3000" }
     agreement { "1" }
-    birthday { Faker::Date.birthday }
+    birthday { '2000-12-20' }
     # user_image  { "default.png" }
     part { ["ギター", "ドラム"] }
     activated { true }

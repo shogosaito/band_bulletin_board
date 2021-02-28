@@ -13,7 +13,6 @@ class MicropostsController < ApplicationController
   def create
     @micropost = current_user.microposts.build(micropost_params)
     @micropost.prefecture_id = params[:prefecture][:prefecture_id] if params[:prefecture].present?
-    binding.pry
     if @micropost.save
       flash[:success] = "投稿しました!"
       redirect_to root_url

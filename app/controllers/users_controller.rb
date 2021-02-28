@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [
     :edit, :update, :destroy,
   ]
-  # before_action :correct_user, only: [:edit, :update]
+   # before_action :correct_user, only: [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -37,12 +37,12 @@ class UsersController < ApplicationController
           redirect_to root_url
         else
           render "users/new"
-          flash[:danger] = "ユーザー登録に失敗しました。"
+          flash[:danger] = "ユーザー登録に失敗しました"
         end
       end
       if result
         sign_in @user
-        flash[:success] = "#{@user.provider}ログインしました。"
+        flash[:success] = "#{@user.provider}ログインしました"
         redirect_to @user
       else
       end
@@ -58,7 +58,7 @@ class UsersController < ApplicationController
     @user.prefecture_id = params[:prefecture][:prefecture_id] if params[:prefecture].present?
     @user.user_image = params[:user_image]
     current_user.user_image = @user.user_image
-    if @user.update(user_params)
+    if @user.update!(user_params)
       if @user.part.present?
         @part = @user.part.gsub("[", "").chop!
       end

@@ -71,7 +71,7 @@ p {
   outline: 0;
   vertical-align: baseline;
   background: transparent;
-	left:500px;
+  left:500px;
   &:hover {
     color: white;
     text-decoration: none;
@@ -92,24 +92,24 @@ footer {
   padding-left: 10rem;
   padding-right: 10rem;
 }
-  a {
-    color: $gray-600;
-    &:hover {
-      color: $gray-800;
-    }
+a {
+  color: $gray-600;
+  &:hover {
+    color: $gray-800;
   }
-  small {
-    float: left;
-  }
-  ul {
-    list-style: none;
+}
+small {
+  float: left;
+}
+ul {
+  list-style: none;
   li.nav-item {
     padding-left: 20px;
 
     margin: 0 auto;
     margin-left: 15px;
-    }
   }
+}
 
 /* miscellaneous */
 
@@ -122,43 +122,43 @@ footer {
 }
 
 /* sidebar */
-  section.user_info {
-    display:block;
-    margin: auto;
-    justify-content: center;
+section.user_info {
+  display:block;
+  margin: auto;
+  justify-content: center;
 
-    p {
-      padding: 10px 10px 1.5em 1em;
-      border-bottom: solid 1px #dbdbdb;
-      margin-bottom: 1.5em;
-      font-size: 1.4em;
-      text-align: left;
-      letter-spacing: -1px;
-      margin-bottom: 3px;
-      margin-top: 0px;
-    }
+  p {
+    padding: 10px 10px 1.5em 1em;
+    border-bottom: solid 1px #dbdbdb;
+    margin-bottom: 1.5em;
+    font-size: 1.4em;
+    text-align: left;
+    letter-spacing: -1px;
+    margin-bottom: 3px;
+    margin-top: 0px;
   }
+}
 
-  section {
-    padding: 10px 0;
-    margin-top: 20px;
-    &:first-child {
-      border: 0;
-      padding-top: 0;
-    }
-    span {
-      display: block;
-      margin-bottom: 3px;
-      line-height: 1;
-    }
-    h1 {
-      font-size: 1.4em;
-      text-align: left;
-      letter-spacing: -1px;
-      margin-bottom: 3px;
-      margin-top: 0px;
-    }
+section {
+  padding: 10px 0;
+  margin-top: 20px;
+  &:first-child {
+    border: 0;
+    padding-top: 0;
   }
+  span {
+    display: block;
+    margin-bottom: 3px;
+    line-height: 1;
+  }
+  h1 {
+    font-size: 1.4em;
+    text-align: left;
+    letter-spacing: -1px;
+    margin-bottom: 3px;
+    margin-top: 0px;
+  }
+}
 
 
 
@@ -202,7 +202,7 @@ footer {
 
 /* forms */
 
- textarea, select, .uneditable-input {
+textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   margin-bottom: 15px;
   @include box_sizing;
@@ -231,12 +231,12 @@ input {
   }
 }
 .alert {
-//     color:#262626;
-//     background:#FFEBE8;
-    text-align: center;
-    // border:2px solid #990000;
-    padding:12px; font-weight:850;
-  }
+  //     color:#262626;
+  //     background:#FFEBE8;
+  text-align: center;
+  // border:2px solid #990000;
+  padding:12px; font-weight:850;
+}
 .checkbox {
   margin-top: -10px;
   margin-bottom: 10px;
@@ -335,10 +335,10 @@ dl.searchbox dd{
   // outline : none;
 }
 .search-form{
-display: inline-block;
-width: 350px;
-float: right;
-margin-top: auto ;
+  display: inline-block;
+  width: 350px;
+  float: right;
+  margin-top: auto ;
 }
 .search-btn{
   background:#C0C0C0;
@@ -363,7 +363,7 @@ margin-top: auto ;
 .item.img{
   width: 200px;
 }
-   // form
+// form
 .form-group{
   padding-right: 20px;
 }
@@ -393,10 +393,10 @@ table th{
   text-align: left;
 }
 td{
-vertical-align: inherit
+  vertical-align: inherit
 }
 tr{
-   border-bottom: 3px double #ddd;
+  border-bottom: 3px double #ddd;
 }
 .select2-search__field{
   width: 100px;
@@ -416,12 +416,12 @@ tr{
 // width: 350px;
 // }
 input[type="text"] {
-        width: 600px;
-        height: 40px;
-    }
-  div.form-group select, #prefecture_prefecture_ids{
-        width: 600px;
-    }
+  width: 600px;
+  height: 40px;
+}
+div.form-group select, #prefecture_prefecture_ids{
+  width: 600px;
+}
 
 input[type="radio"] {
   margin-left: -10px;
@@ -430,35 +430,35 @@ input[type="radio"] {
   list-style: none;
 }
 .checkbox ul li {
-    display:block;
-    width:calc(100% / 5);
-	  float: left;
-  }
+  display:block;
+  width:calc(100% / 5);
+  float: left;
+}
 
-  .user-info,.article-posting {
-     margin: 0 0 10px 0; padding:0;
-     text-align: center;
-     margin: 0;
-     padding:25px;
-     background: #dee;
-     border: solid 10px;
-     border-color : #eff #9bb #add #dff;
-   }
+.user-info,.article-posting {
+  margin: 0 0 10px 0; padding:0;
+  text-align: center;
+  margin: 0;
+  padding:25px;
+  background: #dee;
+  border: solid 10px;
+  border-color : #eff #9bb #add #dff;
+}
 dl{
-   padding: 20px;
-   margin-bottom: 1.5em;
-   border-bottom: 3px double #ddd;
+  padding: 20px;
+  margin-bottom: 1.5em;
+  border-bottom: 3px double #ddd;
 }
 .checkbox input[type="checkbox"] {
 
 }
 input[type="select"] {
-    width: 300px;
+  width: 300px;
 }
 text{
-    margin-right: -20px;
+  margin-right: -20px;
 }
- .part input[type="checkbox"]{
+.part input[type="checkbox"]{
   float: left;
 }
 
@@ -469,8 +469,8 @@ text{
   border-bottom: 3px double #ddd;
 }
 .like-genre{
-display: block;
-margin-left: 60px;
+  display: block;
+  margin-left: 60px;
 }
 // .user_info{
 //   float: left;　 /*左側に配置する*/
@@ -479,9 +479,9 @@ margin-left: 60px;
 //   float: right; 　 /*右側に配置する*/
 // }
 .bd-navbar .navbar-nav .nav-link {
-    padding-right: .5rem;
-    padding-left: .5rem;
-    color: #cbbde2;
+  padding-right: .5rem;
+  padding-left: .5rem;
+  color: #cbbde2;
 }
 
 header.navbar-light .navbar-nav .nav-link {
@@ -489,41 +489,41 @@ header.navbar-light .navbar-nav .nav-link {
   padding:30px;
 }
 .nav-link {
-    display: block;
-    padding: .5rem 1rem;
-    padding-top: 20px;
+  display: block;
+  padding: .5rem 1rem;
+  padding-top: 20px;
 }
 
 .navbar-expand-lg .navbar-nav {
-    float: right;
+  float: right;
 }
 .align-items-center h1{
-    text-align: center;
-    background: #005151;
-    color: #fff;
-    font-weight: bold;
-    height: 55px;
-    line-height: 55px;
-    border-bottom: 1px solid #fff;
-    border-top: 1px solid #fff;
-    margin-top: 1em;
-    padding-left: 1em;
-    padding-right: 1em;
-    position: relative;
-    font-size: 1.285em;
+  text-align: center;
+  background: #005151;
+  color: #fff;
+  font-weight: bold;
+  height: 55px;
+  line-height: 55px;
+  border-bottom: 1px solid #fff;
+  border-top: 1px solid #fff;
+  margin-top: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  position: relative;
+  font-size: 1.285em;
 }
 ul.navbar-nav{
   text-align: right;
- li{
+  li{
     display: inline;
   }
 }
 // row
 .row {
-    display: block;
-    flex-wrap: wrap;
-    margin-right: 0px;
-    margin-left: 0px;
+  display: block;
+  flex-wrap: wrap;
+  margin-right: 0px;
+  margin-left: 0px;
 }
 .recruitment{
   float:right;
@@ -538,58 +538,58 @@ ul.navbar-nav{
   margin-right: auto;
 }
 label.gender {
-    content: "\A";
-    white-space: pre-line;
+  content: "\A";
+  white-space: pre-line;
 }
 table.form select, table.confirm select, dl.form select {
-    height: 38px;
-    width: 100%;
+  height: 38px;
+  width: 100%;
 }
 
 input[type~='text'], input[type~='url'], input[type~='email'],
 input[type~='password'], input[type~='number'], textarea,
 select,.select2-selection, .genre, .select2-selection, .select2-selection--multiple {
-    font-size: 1em;
-    color: #4c4c4c;
-    border: solid 1px #dbdbdb;
-    border-radius: 5px;
-    background: none;
-    outline: none;
-    padding: 0.2em 0.3em;
-    margin-right: 0.5em;
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    box-shadow: inner 0 0 4px rgba(0,0,0,0.2);
-    -moz-box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
-    -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    background-color: #fff;
+  font-size: 1em;
+  color: #4c4c4c;
+  border: solid 1px #dbdbdb;
+  border-radius: 5px;
+  background: none;
+  outline: none;
+  padding: 0.2em 0.3em;
+  margin-right: 0.5em;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  box-shadow: inner 0 0 4px rgba(0,0,0,0.2);
+  -moz-box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+  -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  background-color: #fff;
 }
 .button {
-    font-family: 'icomoon' !important;
-    speak: none;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .button {
-    text-align:center;
+  text-align:center;
 }
 .button input {
-    margin: 0px 20px;
+  margin: 0px 20px;
 }
 .form-Submit{
   text-align:center;
-.btn{
-  width: 110px;
-}
+  .btn{
+    width: 110px;
+  }
 }
 ul.detail_menu_col4 li a:before {
   font-size: 24px;
@@ -627,16 +627,16 @@ ul.detail_menu_col4 li{
   clear: both;
 }
 .fa{
-   text-align:  center;
-   width:calc(100% / 4);
+  text-align:  center;
+  width:calc(100% / 4);
 }
 //header
 navbar-expand-lg .navbar-nav .nav-link {
-    padding-right: .5rem;
-    padding-left: .5rem;
+  padding-right: .5rem;
+  padding-left: .5rem;
 }
 .bg-light{
-   height: 100px;
+  height: 100px;
 }
 .navbar{
   padding-left: 10rem;
@@ -652,25 +652,25 @@ ul.navbar-nav .my-2{
   right: 100px;
 }
 #q_content{
-    top:30px;
-    margin: 10px;
-    padding: 7px;
-    width: auto;
-  }
+  top:30px;
+  margin: 10px;
+  padding: 7px;
+  width: auto;
+}
 .my-sm-0{
-    top:30px;
-  }
+  top:30px;
+}
 .policy{
-   margin-left: auto;
-   margin-right: auto;
-   width: 23em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 23em;
 }
 .entry{
-   text-align: center;
+  text-align: center;
 }
 #user_birthday_1i,#user_birthday_2i,#user_birthday_3i{
-    width:calc(100% / 3.15);
-    float: left;
+  width:calc(100% / 3.15);
+  float: left;
 }
 
 form.login {
@@ -683,141 +683,141 @@ form.login {
 // .btn-primary{
 //    margin-top: 10px;
 //  }
- /* SNS ボタンのグループ */
- .sns-login-button {
-   margin: 5px;
-   padding: 0px;
-   text-align: center;
- }
- .sns-login-button a {
-   text-decoration: none;
- }
- /* 各 SNS ボタンのボックス */
- .sns-login-button li {
-   display: inline-block;  /* 水平に並べる */
-   list-style-type: none;  /* 先頭のポッチを消す */
-   margin: 2px;
-   color: white;
-   border-radius: 4px;
-   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
- }
- /* マウスカーソルを重ねたとき */
- .snsButtons li:hover {
-   opacity: 0.7;
- }
- /* クリックしたとき */
- .snsButtons li:active {
-   box-shadow: inset 0 0 2px rgba(128, 128, 128, 0.1);
-   transform: translateY(2px);
- }
- /* アイコン部分 */
- .snsButtons i {
-   font-size: 18pt;
-   min-width: 40px;
-   margin: 0px;
-   padding: 0px 0px 0px 8px;
-   vertical-align: bottom;
- }
- /* テキスト部分 */
- sns-login-button label {
-   min-width: 80px;
-   display: inline-block;
-   padding: 0px 8px 0px 0px;
-   font-size: 12pt;
-   text-align: center;
- }
- .btn-google,.btn-facebook{
-   text-align: left;
- }
- /* 各 SNS のブランドカラー */
- .btn-facebook  {
-   background: #1da1f2;
-  }
- .btn-google   {
-   background: #dd4b39;
-  }
- .form-age input[type~='text'] {
-   width: 285px;
- }
- .form-group textarea {
-   width: 600px;
- }
- .check-box li{
+/* SNS ボタンのグループ */
+.sns-login-button {
+  margin: 5px;
+  padding: 0px;
+  text-align: center;
+}
+.sns-login-button a {
+  text-decoration: none;
+}
+/* 各 SNS ボタンのボックス */
+.sns-login-button li {
+  display: inline-block;  /* 水平に並べる */
+  list-style-type: none;  /* 先頭のポッチを消す */
+  margin: 2px;
+  color: white;
+  border-radius: 4px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+}
+/* マウスカーソルを重ねたとき */
+.snsButtons li:hover {
+  opacity: 0.7;
+}
+/* クリックしたとき */
+.snsButtons li:active {
+  box-shadow: inset 0 0 2px rgba(128, 128, 128, 0.1);
+  transform: translateY(2px);
+}
+/* アイコン部分 */
+.snsButtons i {
+  font-size: 18pt;
+  min-width: 40px;
+  margin: 0px;
+  padding: 0px 0px 0px 8px;
+  vertical-align: bottom;
+}
+/* テキスト部分 */
+sns-login-button label {
+  min-width: 80px;
+  display: inline-block;
+  padding: 0px 8px 0px 0px;
+  font-size: 12pt;
+  text-align: center;
+}
+.btn-google,.btn-facebook{
+  text-align: left;
+}
+/* 各 SNS のブランドカラー */
+.btn-facebook  {
+  background: #1da1f2;
+}
+.btn-google   {
+  background: #dd4b39;
+}
+.form-age input[type~='text'] {
+  width: 285px;
+}
+.form-group textarea {
+  width: 600px;
+}
+.check-box li{
   display: block;
   width: calc(100% / 3);
   float: left;
   margin-bottom: 0.5rem;
   text-align: left;
- }
- .music-type-list li, .activity-day-list li{
+}
+.music-type-list li, .activity-day-list li{
   float: left;
   width: calc(100% / 4);
   text-align: center;
- }
- //コメント
- #comment_content{
-   width: 800px;
-   margin: 0 auto;
- }
- .comment{
-   width: 500px;
- }
- thead th{
-   text-align: center;
- }
- .demo-sound-source input[type~='url']{
-   width: 600px;
- }
- // ログインボタン
- .login-btn{
-   margin-top: 10px;
- }
- .fa-user{
-   color: blue;
- }
+}
+//コメント
+#comment_content{
+  width: 800px;
+  margin: 0 auto;
+}
+.comment{
+  width: 500px;
+}
+thead th{
+  text-align: center;
+}
+.demo-sound-source input[type~='url']{
+  width: 600px;
+}
+// ログインボタン
+.login-btn{
+  margin-top: 10px;
+}
+.fa-user{
+  color: blue;
+}
 .fa-heart-o{
   color: red;
 }
- .fa-envelope{
+.fa-envelope{
   color: antiquewhite;
- }
- .fa-window-close{
-   color: black;
- }
+}
+.fa-window-close{
+  color: black;
+}
 .recruitment-article,.join-article,.common-article{
   display: none;
 }
 //いいねボタン
 .like-btn {
- width: 25px;
- font-size: 25px;
- color: #808080;
- margin-left: 20px;
- }
+  width: 25px;
+  font-size: 25px;
+  color: #808080;
+  margin-left: 20px;
+}
 
 .unlike-btn {
- width: 25px;
- font-size: 25px;
- color: #e54747;
- margin-left: 20px;
- }
-.comment-area{
-    display: block;
-   // width: 60%;
-   margin: 10px auto;
+  width: 25px;
+  font-size: 25px;
+  color: #e54747;
+  margin-left: 20px;
 }
- .comment-btn {
-   text-align: center;
-   display: block;
-   width: 60%;
-   margin: 10px auto;
+.comment-area{
+  display: block;
+  // width: 60%;
+  margin: 10px auto;
+}
+.comment-btn {
+  text-align: center;
+  display: block;
+  width: 60%;
+  margin: 10px auto;
 }
 .user-thumb{
   margin: 10px auto;
 }
 .contact-area{
-    display: block;
-   margin: 10px auto;
+  display: block;
+  margin: 10px auto;
 }
 .contact-btn{
   text-align: center;

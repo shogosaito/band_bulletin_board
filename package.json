@@ -13,7 +13,7 @@
     "express-session": "^1.17.1",
     "jquery": "^3.5.1",
     "line-login": "^1.0.14",
-    "node-sass": "^4.14.1",
+    "node-sass": "4.14.0",
     "popper.js": "^1.16.1",
     "select2": "^4.0.13",
     "turbolinks": "^5.2.0",

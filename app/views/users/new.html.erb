@@ -1,9 +1,6 @@
 <% provide(:title, 'Sign up') %>
 <div class="align-items-center">
   <h1>新規登録</h1>
-  <%= link_to  user_facebook_omniauth_authorize_path, class:"btn btn-social btn-facebook" do %>
-  <span><i class="fab fa-facebook-square fa-1x"></i>facebookで登録</span>
-  <% end %>
   <%= link_to  user_google_oauth2_omniauth_authorize_path, class:"btn btn-social btn-google" do %>
   <span><i class="fab fa-google-plus-square fa-1x"></i>googleで登録</span>
   <% end %>
@@ -12,7 +9,7 @@
           <table>
               <%= render 'shared/error_messages', object: f.object %>
             <tr>
-              <th class="required"><span class="badge badge-danger">必須</span>ユーザーネーム</th>
+              <th class="required"><span class="badge badge-danger">必須</span><%= f.label :ユーザーネーム %></th>
                 <td>
                   <div class="form-group">
                     <%= f.text_field :user_name, class: 'form-control', required: true, value: "#{session[:user_name]}" %>
@@ -96,7 +93,7 @@
               </td>
           </tr>
           <tr>
-            <th><span class="badge badge-danger">必須</span>担当パート</th>
+            <th><span class="badge badge-danger">必須</span><%= f.label :担当パート %></th>
             <td>
               <div class="form-group">
                 <%= javascript_pack_tag 'part' %>

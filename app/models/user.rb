@@ -24,7 +24,7 @@ class User < ApplicationRecord
   validates :part, presence: true
   validates :selfintroduction, length: { maximum: 120 }
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, on: [:create,:password_update]
   validates_acceptance_of :agreement, allow_nil: false, on: :create
 
   # 渡された文字列のハッシュ値を返す

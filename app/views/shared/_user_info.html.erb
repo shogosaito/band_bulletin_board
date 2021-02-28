@@ -20,7 +20,7 @@
           </td>
         </tr>
         <tr>
-          <th class="required">ユーザーネーム</th>
+          <th class="required"><%= f.label :ユーザーネーム %></th>
           <td>
             <div class="form-group">
               <%= f.text_field :user_name, class: 'form-control', required: true, value: @user.user_name, readonly: true %>
