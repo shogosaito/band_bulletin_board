@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   {
     omniauth_callbacks: 'users/omniauth_callbacks',
   }
-  get '/auth/:provider/callback',    to: 'users#create',       as: :auth_callback
-  get '/auth/failure',               to: 'users#auth_failure', as: :auth_failure
+  # get '/auth/:provider/callback',    to: 'users#create',       as: :auth_callback
+  # get '/auth/failure',               to: 'users#auth_failure', as: :auth_failure
   root 'band_bulletin_boards#home'
   post "/" => "microposts#index"
   get  '/help',    to: 'band_bulletin_boards#help'
@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   get '/new', to: 'microposts#new'
+  get '/search', to: 'microposts#search_header'
   get '/micropost/search/:per/', to: 'microposts#microposts_list_page', as: 'list_page'
   # post '/micropost/:micropost_id/update', to: 'microposts#update'
   get  '/micropost/search', to: 'microposts#search'

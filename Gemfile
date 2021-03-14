@@ -40,6 +40,7 @@ gem 'jquery'
 gem 'font-awesome-sass'
 gem 'capybara', '3.28.0'
 gem 'kaminari-bootstrap', '~> 3.0.1'
+gem 'mini_racer'
 
 group :jekyll_plugins do
   gem 'bootsnap', '1.4.5', require: false
@@ -49,6 +50,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
+  gem 'rspec-retry'
 end
 
 group :development do

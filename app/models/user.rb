@@ -16,15 +16,16 @@ class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
   before_create :create_activation_digest
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
-  validates :user_name, presence: true, length: { maximum: 15 }
+  validates :user_name, presence: true, uniqueness: true, length: { maximum: 15 }
   validates :gender, presence: true
-  validates :email, presence: true, length: { maximum: 255 }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
+  validates :email, format: { with: VALID_EMAIL_REGEX }, allow_blank: true
+  validates :email, presence: true, length: { maximum: 255 }, allow_blank: true
   validates :birthday, presence: true
   validates :part, presence: true
   validates :selfintroduction, length: { maximum: 120 }
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }, on: [:create,:password_update]
+  validates :password, presence: true, length: { minimum: 6 }, on: [:create, :password_update]
   validates_acceptance_of :agreement, allow_nil: false, on: :create
 
   # 渡された文字列のハッシュ値を返す
@@ -73,11 +74,6 @@ class User < ApplicationRecord
     self.reset_token = User.new_token
     update_attribute(:reset_digest,  User.digest(reset_token))
     update_attribute(:reset_sent_at, Time.zone.now)
-  end
-
-  # パスワード再設定のメールを送信する
-  def send_password_reset_email
-    UserMailer.password_reset(self).deliver_now
   end
 
   # パスワード再設定の期限が切れている場合はtrueを返す

@@ -1,0 +1,3 @@
+$(document).ready(function(){
+$(".post-<%= @micropost.id %>-like").html("<%= j(render 'likes/like', micropost: @micropost)%>");
+});

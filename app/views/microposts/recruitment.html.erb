@@ -1,24 +1,55 @@
 <div class="align-items-center">
   <h1>記事検索フォーム</h1>
 </div>
-  <%= form_with url:micropost_search_path, local: true do |f| %>
+  <%= search_form_for @search, url:micropost_search_path, local: true do |f| %>
   <table>
+    <tr>
+      <th>記事の種類</th>
+      <td>
+        <div class="form-group">
+          <%= javascript_pack_tag 'content_type' %>
+          <%= f.select :content_type, [["指定しない",""],["募集","募集"], ["加入","加入"]], class: 'form-control',id:'content_type' %>
+        </div>
+      </td>
+      </tr>
   <tr>
     <th>募集年齢</th>
     <td>
       <div class="form-group form-age">
-        <%= f.text_field :search_min_age %> 〜 <%= f.text_field :search_max_age %>
+        <%= f.search_field :recruitment_min_age_eq %> 〜 <%= f.search_field :recruitment_max_age_eq %>
       </div>
     </td>
   </tr>
   <tr>
-    <th>性別</th>
+    <th>募集性別</th>
     <td>
       <div class="form-group">
-        <%= f.select :gender, [["指定なし", "指定なし"], ["男", "男"], ["女", "女"]]  %>
+        <%= f.select :gender, [["指定なし", ""], ["男", "男"], ["女", "女"]]  %>
       </div>
     </td>
   </tr>
+  <tr>
+   <th>方向性</th>
+    <td>
+      <div class="form-group">
+        <%= f.select :activity_direction, [["指定なし", ""], ["趣味志向", "趣味志向"], ["プロ志向", "プロ志向"]], required: true  %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <th>楽曲</th>
+    <td>
+      <div class="form-group">
+        <ul class="music-type">
+          <% %w(指定なし オリジナル コピー).each.with_index do |type,i| %>
+            <li><%= f.check_box :music_type, { multiple: true }, type %>
+            <%= f.label type %></li>
+          <% end %>
+       </ul>
+      </div>
+    </td>
+  </tr>
+
   <tr>
     <th>ジャンル</th>
     <td>
@@ -37,7 +68,7 @@
   <tr>
     <div class="form-group">
         <div class="prefectures-check-boxes">
-          <th>都道府県</th>
+          <th>活動地域</th>
           <td>
             <div class="checkbox">
               <ul>
@@ -55,7 +86,7 @@
     <td>
       <div class="form-group　part">
         <%= javascript_pack_tag 'part' %>
-        <%= select_tag('part0', options_for_select([["ボーカル", "ボーカル"], ["ギター", "ギター"], ["ベース","ベース"],
+        <%= select_tag('part', options_for_select([["ボーカル", "ボーカル"], ["ギター", "ギター"], ["ベース","ベース"],
         ["ドラム", "ドラム"], ["キーボード", "キーボード"],["コーラス", "コーラス"], ["パーカッション", "パーカッション"],
         ["ギターボーカル", "ギターボーカル"],["DJ", "DJ"], ["その他", "その他"]]), placeholder: "選択してください",
         class:"part", multiple: true) %>

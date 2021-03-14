@@ -4,7 +4,7 @@ $(document).ready(function(){
     var recruitment = document.getElementsByClassName('recruitment-article');
     var join = document.getElementsByClassName('join-article');
     var common = document.getElementsByClassName('common-article');
-    var value = $('#micropost_content_type').val();
+    // var value = $('#micropost_content_type').val();
       for(var i = 0; i < join.length; i++) {
         join[i].style.display = "table-row";
       }

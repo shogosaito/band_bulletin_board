@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
       @part.slice!(0)
     end
     if @part.end_with?(",")
-      @part = @part.chop
+      @@part = @part.chop
     end
     if @genre.present?
       if @genre.start_with?(",")

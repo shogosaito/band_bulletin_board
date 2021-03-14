@@ -6,9 +6,9 @@
     <section class="user_info">
       <span class="image"><a href="/users/<%= user.id %>"><%= image_tag(user.user_image,size:"70x70",:Align=>"left") %></a></span>
       <span class="user"><a href="/users/<%= user.id %>"><%= user.user_name %>(<%= calcAge(user.birthday.strftime("%Y%m%d").to_i) %>歳)</a></span>
-      <span>好きなジャンル：<%= @genre %></span>
-      <span class="part">担当パート：<%= @part %></span>
-      <span class="">活動地域：<%=user.prefecture.name %></span>
+      <span>好きなジャンル：<%= user.genre %></span>
+      <span class="part">担当パート：<%= user.part %></span>
+      <span class="prefecture">活動地域：<%=user.prefecture.name %></span>
     </section>
 <% end %>
 <% else %>

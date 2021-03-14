@@ -11,12 +11,11 @@ FactoryBot.define do
     url { "http://localhost:3000" }
     agreement { "1" }
     birthday { '2000-12-20' }
-    # user_image  { "default.png" }
     part { ["ギター", "ドラム"] }
     activated { true }
     activated_at { Time.zone.now }
-    after(:build) do |user|
-      user.user_image.attach(io: File.open('spec/support/images/default.png'), filename: "default.png", content_type: 'image/png')
+    after(:build) do |user1|
+      user1.user_image.attach(io: File.open('spec/support/images/default.png'), filename: 'default.png', content_type: 'image/png')
     end
 
     trait :invalid do
@@ -33,12 +32,12 @@ FactoryBot.define do
     password_confirmation { "test02" }
     prefecture_id { 12 }
     gender  { "男" }
-    genre { ["J-POP", "アニメ"] }
+    genre { ["邦楽ロック", "ジャズ"] }
     artist { "X JAPAN" }
     url { "http://localhost:3000/" }
     agreement { "1" }
-    birthday { Faker::Date.birthday }
-    part { ["ギター", "ドラム"] }
+    birthday { '1995-10-23' }
+    part { ["ギター", "ベース"] }
     activated { true }
     activated_at { Time.zone.now }
     after(:build) do |user2|
@@ -59,14 +58,15 @@ FactoryBot.define do
     password_confirmation { "test03" }
     prefecture_id { 12 }
     gender  { "男" }
-    genre { ["J-POP", "アニメ"] }
+    genre { ["洋楽ロック", "クラシック"] }
     artist { "X JAPAN" }
     url { "http://localhost:3000/" }
     agreement { "1" }
     birthday { Faker::Date.birthday }
-    part { ["ギター", "ドラム"] }
+    part { ["キーボード", "コーラス"] }
     activated { true }
     activated_at { Time.zone.now }
+    # user_image { "default.png" }
     after(:build) do |user3|
       user3.user_image.attach(io: File.open('spec/support/images/default.png'), filename: 'default.png', content_type: 'image/png')
     end

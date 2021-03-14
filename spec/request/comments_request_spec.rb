@@ -14,7 +14,6 @@ RSpec.describe CommentsController, type: :request do
 
       it 'リクエストが成功すること' do
         post micropost_comments_url micropost, params: { comment: attributes_for(:comment) }
-        binding.pry
         expect(response.status).to eq 302
       end
 
@@ -33,7 +32,6 @@ RSpec.describe CommentsController, type: :request do
     context 'パラメータが不正な場合' do
       it 'リクエストが成功すること' do
         post micropost_comments_url micropost, params: { comment: attributes_for(:comment, :invalid) }
-        binding.pry
         expect(response.status).to eq 302
       end
 

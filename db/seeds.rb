@@ -55,10 +55,10 @@ prefecture = Prefecture.find(12)
     password_confirmation: '12345678',
     artist: Faker::Name.name,
     part: 'ギター,ドラム,ボーカル',
-    genre: ["アニメ"],
+    genre: "アニメ",
     prefecture: prefecture,
     gender: '男',
-    birthday: '1993/12/28',
+    birthday: Faker::Date.birthday,
     agreement: '1'
   )
   @user.user_image = 'default.png'

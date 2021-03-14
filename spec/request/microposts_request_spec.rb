@@ -51,18 +51,18 @@ RSpec.describe MicropostsController, type: :request do
   describe 'POST #create' do
     context 'パラメータが妥当な場合' do
       it 'リクエストが成功すること' do
-        post microposts_url, params: { micropost: :micropost2 }
-        expect(response.status).to eq 200
+        post microposts_url, params: { micropost: attributes_for(:micropost2) }
+        expect(response.status).to eq 302
       end
 
       it '記事が登録されること' do
         expect do
-          post microposts_url, params: { micropost: :micropost2 }
+          post microposts_url, params: { micropost: attributes_for(:micropost2) }
         end.to change(Micropost, :count).by(1)
       end
 
       it 'リダイレクトすること' do
-        post microposts_url, params: { micropost: :micropost2 }
+        post microposts_url, params: { micropost: attributes_for(:micropost2) }
         expect(response).to redirect_to root_url
       end
     end
@@ -125,7 +125,7 @@ RSpec.describe MicropostsController, type: :request do
     context 'パラメータが不正な場合' do
       it 'リクエストが成功すること' do
         put micropost_url micropost, params: { micropost: attributes_for(:micropost, :invalid) }
-        expect(response.status).to eq 200
+        expect(response.status).to eq 422
       end
 
       it 'タイトルが変更されないこと' do
@@ -136,7 +136,7 @@ RSpec.describe MicropostsController, type: :request do
 
       it 'エラーが表示されること' do
         put micropost_url micropost, params: { micropost: attributes_for(:micropost, :invalid) }
-        expect(response.body).to include ''
+        expect(response.body).to include 'Titleを入力してください'
       end
     end
   end

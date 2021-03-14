@@ -1,4 +1,3 @@
-
 <tr class="recruitment-article">
   <th><span class="badge badge-danger ">必須</span>ジャンル</th>
   <td>
@@ -34,9 +33,7 @@
   <th>募集年齢</th>
   <td>
     <div class="form-group form-age">
-      <%= f.text_field :recruitment_min_age %>
-      〜
-      <%= f.text_field :recruitment_max_age %>
+      <%= f.text_field :recruitment_min_age %>〜<%= f.text_field :recruitment_max_age %>
       <% if @micropost.errors.include?(:recruitment_min_age) %>
         <p style="color: red;"><%= @micropost.errors.full_messages_for(:recruitment_min_age).first %></p>
       <% end %>
@@ -66,21 +63,7 @@
         <li><%= f.check_box :activity_day, {multiple: true}, day %>
         <%= f.label day %></li>
       <% end %>
-      <% if @micropost.errors.include?(:activity_day) %>
-        <p style="color: red;"><%= @micropost.errors.full_messages_for(:activity_day).first %></p>
-      <% end %>
      </ul>
-    </div>
-  </td>
-</tr>
-<tr class="recruitment-article">
-  <th>試聴音源</th>
-  <td>
-    <div class="form-group demo-sound-source">
-      <%= f.url_field :demo_sound_source, include_blank: "選択して下さい" %>
-      <% if @micropost.errors.include?(:demo_sound_source) %>
-        <p style="color: red;"><%= @micropost.errors.full_messages_for(:demo_sound_source).first %></p>
-      <% end %>
     </div>
   </td>
 </tr>

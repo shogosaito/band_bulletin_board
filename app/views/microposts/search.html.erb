@@ -11,7 +11,7 @@
       <p>(省略されました。<%= link_to "続きを読むには...", micropost_path %>をクリックしてください。<p>
     <% end %>
  </span>
- <span class="timestamp"><%= time_ago_in_words(micropost.created_at) %> 前.</span>
+ <span class="timestamp"><%= time_ago_in_words(micropost.created_at) %>前.</span>
 </section>
 <% end %>
 <%= paginate @search_microposts %>

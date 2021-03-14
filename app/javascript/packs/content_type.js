@@ -27,8 +27,9 @@ $(document).ready(function(){
         recruitment[i].style.display = "table-row";
         // recruitment[i].empty();
       }
-      $('.recruitment-article').prop('disabled', false);
       $('.join-article').prop('disabled', true);
+      $(".join-article").val("");
+      $('.recruitment-article').prop('disabled', false);
       $(".part0").select2({
         width: 600
       });
@@ -44,9 +45,9 @@ $(document).ready(function(){
       }
       for(var i = 0; i < join.length; i++) {
         join[i].style.display = "table-row";
-        // join[i].empty();
       }
       $(".recruitment-article").prop('disabled', true);
+      $(".recruitment-article").val("");
       $('.join-article').prop('disabled', false);
       $(".part1").select2({
         width: 600

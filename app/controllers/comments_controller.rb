@@ -9,7 +9,6 @@ class CommentsController < ApplicationController
       @micropost.create_notification_comment!(current_user, @comment.id)
       redirect_to @comment.micropost
     else
-      binding.pry
       flash[:danger] = "コメントに失敗しました"
       redirect_to controller: :microposts, action: :show, id: micropost.id
     end

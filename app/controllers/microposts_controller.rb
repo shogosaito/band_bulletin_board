@@ -48,9 +48,9 @@ class MicropostsController < ApplicationController
   def update
     @micropost = Micropost.find_by(id: params[:id])
     @micropost.prefecture_id = params[:prefecture][:prefecture_id] if params[:prefecture].present?
-    if @micropost.update(micropost_params)
-      flash[:notice] = "投稿を編集しました"
-      redirect_to("/microposts/#{@micropost.id}")
+    if @micropost.update!(micropost_params)
+      flash[:success] = "投稿を編集しました"
+      redirect_to @micropost
     else
       render '/microposts/edit'
     end
@@ -64,10 +64,39 @@ class MicropostsController < ApplicationController
 
   def search
     @q = Micropost.ransack(params[:q])
-    @search_microposts = @q.result(distinct: true)
-    if @search
-      @search_microposts = @search.result(distinct: true).page(params[:page]).per(10)
+    @search_microposts = @q.result(distinct: true).page(params[:page]).per(10)
+    if @search_microposts.present? & params[:prefecture].present?
+      @prefecture_search_microposts = []
+      @search_microposts.each do |micropost|
+        @prefecture_search_microposts.push(micropost) if params[:prefecture][:prefecture_ids].include?(micropost.prefecture_id.to_s)
+      end
+      @search_microposts = @prefecture_search_microposts
     end
+    if @search_microposts.present? & params[:genre].present?
+      @genre_search_microposts = []
+      @search_microposts.each do |micropost|
+        params[:genre].each do |genre|
+          @genre_search_microposts.push(micropost) if micropost.genre.include?(genre)
+        end
+      end
+      @search_microposts = @genre_search_microposts
+    end
+    if @search_microposts.present? & params[:part].present?
+      @part_search_microposts = []
+      @search_microposts.each do |micropost|
+        params[:part].each do |part|
+          @part_search_microposts.push(micropost) if micropost.part.include?(part)
+        end
+      end
+      @search_microposts = @part_search_microposts
+    end
+    @search_microposts = Kaminari.paginate_array(@search_microposts).page(params[:page]).per(10) if @search_microposts.present?
+  end
+
+  def search_header
+    @search = Micropost.ransack(params[:q])
+    @search_microposts = @search.result(distinct: true).page(params[:page]).per(10)
+    render "search"
   end
 
   def microposts_list_page
@@ -79,17 +108,17 @@ class MicropostsController < ApplicationController
   def recruitment
   end
 
-  private
+    private
 
   def micropost_params
     params.require(:micropost).permit(:title, :content_type, :content, :recruitment_min_age, :prefecture_id,
                                       :recruitment_max_age, :gender, :activity_day,
-                                      :demo_sound_source, :activity_direction, { prefecture_ids: [] },
-                                      { genre: [] }, { part: [] }, { music_type: [] }, { activity_day: [] })
-  end
+                                      :demo_sound_source, :activity_direction,
+                                      { genre: [] }, { part: [] }, { music_type: [] }, { activity_day: [] }, { demo_sound_source: [] })
+    end
 
   def correct_user
     @micropost = current_user.microposts.find_by(id: params[:id])
     redirect_to root_url if @micropost.nil?
   end
-end
+  end
