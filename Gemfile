@@ -8,9 +8,6 @@ gem 'carrierwave'
 gem 'counter_culture', '~> 1.8'
 gem 'dotenv-rails'
 gem 'omniauth'
-gem 'omniauth-facebook'
-gem 'omniauth-line'
-gem 'omniauth-twitter'
 gem 'omniauth-google-oauth2'
 gem 'devise'
 gem 'devise_token_auth'
@@ -40,7 +37,7 @@ gem 'jquery'
 gem 'font-awesome-sass'
 gem 'capybara', '3.28.0'
 gem 'kaminari-bootstrap', '~> 3.0.1'
-gem 'mini_racer'
+# gem 'mini_racer'
 
 group :jekyll_plugins do
   gem 'bootsnap', '1.4.5', require: false
@@ -66,7 +63,6 @@ group :test do
   gem 'webdrivers',               '4.1.2'
   gem 'rails-controller-testing', '1.0.4'
   gem 'guard',                    '2.16.2'
-  gem 'guard-minitest',           '2.4.6'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
