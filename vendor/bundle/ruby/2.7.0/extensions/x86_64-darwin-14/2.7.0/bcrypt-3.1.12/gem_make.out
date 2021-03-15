@@ -1,0 +1,13 @@
+current directory: /Users/shogo/Desktop/band_bulletin_board/vendor/bundle/ruby/2.7.0/gems/bcrypt-3.1.12/ext/mri
+/Users/shogo/.rbenv/versions/2.7.1/bin/ruby -I /Users/shogo/.rbenv/versions/2.7.1/lib/ruby/site_ruby/2.7.0 -r ./siteconf20210316-2804-5xjnx2.rb extconf.rb
+creating Makefile
+
+current directory: /Users/shogo/Desktop/band_bulletin_board/vendor/bundle/ruby/2.7.0/gems/bcrypt-3.1.12/ext/mri
+make "DESTDIR=" clean
+xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun
+
+current directory: /Users/shogo/Desktop/band_bulletin_board/vendor/bundle/ruby/2.7.0/gems/bcrypt-3.1.12/ext/mri
+make "DESTDIR="
+xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun
+
+make failed, exit code 1

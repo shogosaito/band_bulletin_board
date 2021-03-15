@@ -1,0 +1,16 @@
+find_executable: checking for pg_config... -------------------- yes
+
+--------------------
+
+"clang -o conftest -I/Users/shogo/.rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-darwin14 -I/Users/shogo/.rbenv/versions/2.7.1/include/ruby-2.7.0/ruby/backward -I/Users/shogo/.rbenv/versions/2.7.1/include/ruby-2.7.0 -I. -I/usr/local/include -I/Users/shogo/.rbenv/versions/2.7.1/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT    -O3 -Wno-error=shorten-64-to-32  -fno-common -pipe conftest.c  -L. -L/Users/shogo/.rbenv/versions/2.7.1/lib -L/usr/local/lib -L. -L/Users/shogo/.rbenv/versions/2.7.1/lib  -fstack-protector-strong -L/usr/local/lib     -lruby.2.7   "
+xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return !!argv[argc];
+6: }
+/* end */
+
