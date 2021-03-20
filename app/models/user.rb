@@ -1,9 +1,9 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :omniauthable, omniauth_providers: [:facebook, :twitter, :google_oauth2]
+  devise :omniauthable, omniauth_providers: [:google_oauth2]
   include DeviseTokenAuth::Concerns::User
-  devise :omniauthable, omniauth_providers: [:facebook, :twitter, :google_oauth2]
+  devise :omniauthable, omniauth_providers: [:google_oauth2]
   serialize :tokens
   has_one_attached :user_image
   belongs_to :prefecture
@@ -81,6 +81,7 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
+# お気に入りされている場合はtrueを返す
   def already_liked?(micropost)
     likes.exists?(micropost_id: micropost.id)
   end

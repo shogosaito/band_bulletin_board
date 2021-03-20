@@ -1,10 +1,7 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def failure
-    redirect_to root_path, alert: "SNSログインに失敗しました。"
-  end
-
-  def facebook
-    callback__from :facebook
+    flash[:danger] = "SNSログインに失敗しました。"
+    # redirect_to root_path
   end
 
   def google_oauth2
@@ -12,13 +9,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def callback_from(provider)
+    binding.pry
     provider = provider.to_s
     sns_info = User.from_omniauth(request.env['omniauth.auth'])
     @user = User.where(user_name: sns_info[:user][:user_name]).or(User.where(email: sns_info[:user][:email])).first || sns_info[:user]
     if @user.persisted?
       log_in @user
       flash[:success] = "#{provider}アカウントによる認証に成功しました。"
-      # set_flash_message(:notice, :success, kind: "#{provider}".capitalize)
       redirect_to root_path
     else
       # 登録するアクションに取得した値を渡すために。sessionを利用してuserインスタンスを作成する

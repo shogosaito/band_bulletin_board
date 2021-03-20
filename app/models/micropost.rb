@@ -27,11 +27,6 @@ class Micropost < ApplicationRecord
     likes.find_by(user_id: user.id).destroy
   end
 
-  # 表示用のりサイズ済み画像を返す
-  def display_image
-    image.variant(resize_to_limit: [500, 500])
-  end
-
   def create_notification_like!(current_user)
     # すでに「いいね」されているか検索
     existing_iine = Notification.where(["visitor_id = ? and visited_id = ? and micropost_id = ? and action = ? ", current_user.id, user_id, id, 'like'])
@@ -68,10 +63,6 @@ class Micropost < ApplicationRecord
       visited_id: visited_id,
       action: 'comment'
     )
-    # def self.search(search)
-    #   return Micropost.all unless search
-    #   Micropost.where(['content LIKE ?', "%#{search}%"])
-    # end
     # 自分の投稿に対するコメントの場合は、通知済みとする
     if notification.visitor_id == notification.visited_id
       notification.checked = true

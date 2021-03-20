@@ -23,11 +23,13 @@ class UsersController < ApplicationController
   end
 
   def create
-    # if ENV['omniauth.auth'].present?
-    #   # snsログイン
-    #   @user = User.from_omniauth(env['omniauth.auth'])
-    #   result = @user.save(context: :sns_login)
-    # else
+    binding.pry
+    if ENV['omniauth.auth'].present?
+      # snsログイン
+      binding.pry
+      @user = User.from_omniauth(env['omniauth.auth'])
+      result = @user.save(context: :sns_login)
+    else
     @user = User.new(user_params)
     @user.prefecture_id = params[:prefecture][:prefecture_id] if params[:prefecture].present?
     @user.user_image = "default.png"
@@ -43,6 +45,7 @@ class UsersController < ApplicationController
         flash[:danger] = "ユーザー登録に失敗しました"
       end
     end
+  end
     # if result
     #   sign_in @user
     #   flash[:success] = "#{@user.provider}ログインしました"

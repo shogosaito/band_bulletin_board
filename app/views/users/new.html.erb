@@ -1,7 +1,7 @@
 <% provide(:title, 'Sign up') %>
 <div class="align-items-center">
   <h1>新規登録</h1>
-  <%= link_to  user_google_oauth2_omniauth_authorize_path, class:"btn btn-social btn-google" do %>
+  <%= link_to  user_google_oauth2_omniauth_authorize_path, class:"btn btn-social btn-google", method: :post do %>
   <span><i class="fab fa-google-plus-square fa-1x"></i>googleで登録</span>
   <% end %>
     <div class="row">

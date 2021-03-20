@@ -7,9 +7,9 @@ gem 'rails-i18n'
 gem 'carrierwave'
 gem 'counter_culture', '~> 1.8'
 gem 'dotenv-rails'
-gem 'omniauth'
+gem 'omniauth','~> 1'
 gem 'omniauth-google-oauth2'
-gem 'devise'
+gem 'devise', git: "https://github.com/heartcombo/devise"
 gem 'devise_token_auth'
 gem 'rack-cors'
 gem 'kaminari'
@@ -39,9 +39,9 @@ gem 'capybara', '3.28.0'
 gem 'kaminari-bootstrap', '~> 3.0.1'
 # gem 'mini_racer'
 
-group :jekyll_plugins do
-  gem 'bootsnap', '1.4.5', require: false
-end
+# group :jekyll_plugins do
+#   gem 'bootsnap', '1.4.5', require: false
+# end
 group :development, :test do
   gem 'byebug', '11.0.1', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
