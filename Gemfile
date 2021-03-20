@@ -7,7 +7,6 @@ gem 'rails-i18n'
 gem 'carrierwave'
 gem 'counter_culture', '~> 1.8'
 gem 'dotenv-rails'
-gem 'omniauth','~> 1'
 gem 'omniauth-google-oauth2'
 gem 'devise', git: "https://github.com/heartcombo/devise"
 gem 'devise_token_auth'
@@ -39,9 +38,6 @@ gem 'capybara', '3.28.0'
 gem 'kaminari-bootstrap', '~> 3.0.1'
 # gem 'mini_racer'
 
-# group :jekyll_plugins do
-#   gem 'bootsnap', '1.4.5', require: false
-# end
 group :development, :test do
   gem 'byebug', '11.0.1', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
@@ -65,5 +61,4 @@ group :test do
   gem 'guard',                    '2.16.2'
 end
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
