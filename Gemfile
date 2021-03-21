@@ -35,6 +35,7 @@ gem 'jquery'
 gem 'font-awesome-sass'
 gem 'capybara', '3.28.0'
 gem 'kaminari-bootstrap', '~> 3.0.1'
+gem 'puma'
 
 group :development, :test do
   gem 'byebug', '11.0.1', platforms: [:mri, :mingw, :x64_mingw]
