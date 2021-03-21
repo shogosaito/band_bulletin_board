@@ -26,7 +26,6 @@ gem 'ransack'
 gem 'sqlite3', '1.4.1', :group => [:development, :test]
 gem 'pg', :group => :production
 gem 'pry-rails'
-gem 'activerecord-session_store'
 gem 'bootstrap-social-rails'
 gem 'seed-fu'
 gem 'select2-rails'
@@ -36,7 +35,6 @@ gem 'jquery'
 gem 'font-awesome-sass'
 gem 'capybara', '3.28.0'
 gem 'kaminari-bootstrap', '~> 3.0.1'
-# gem 'mini_racer'
 
 group :development, :test do
   gem 'byebug', '11.0.1', platforms: [:mri, :mingw, :x64_mingw]
