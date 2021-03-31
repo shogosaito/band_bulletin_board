@@ -1,11 +1,8 @@
 Rails.application.routes.draw do
-  # devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks'}
   devise_for :users, path: "auth", :controllers =>
   {
     omniauth_callbacks: 'users/omniauth_callbacks',
   }
-  # get '/auth/:provider/callback',    to: 'users#create',       as: :auth_callback
-  # get '/auth/failure',               to: 'users#auth_failure', as: :auth_failure
   root 'band_bulletin_boards#home'
   post "/" => "microposts#index"
   get  '/help',    to: 'band_bulletin_boards#help'
@@ -19,7 +16,6 @@ Rails.application.routes.draw do
   get '/new', to: 'microposts#new'
   get '/search', to: 'microposts#search_header'
   get '/micropost/search/:per/', to: 'microposts#microposts_list_page', as: 'list_page'
-  # post '/micropost/:micropost_id/update', to: 'microposts#update'
   get  '/micropost/search', to: 'microposts#search'
   post '/micropost/search', to: 'microposts#search'
   get  '/user/search', to: 'users#search'
@@ -34,7 +30,6 @@ Rails.application.routes.draw do
   put 'users/:user_id/passwords/update', to: 'users#password_update', as: 'password_update'
 
   resources :users do
-    # resources  :passwords,           only: [:edit, :update]
     member do
     end
   end
@@ -54,7 +49,6 @@ Rails.application.routes.draw do
   resources :microposts, only: [:edit]
   resources :users, only: [:edit]
   resources :account_activations, only: [:edit]
-  # resources :password_resets,     only: [:new, :create, :edit, :update]
   resources :relationships,       only: [:create, :destroy]
   resources :notifications
 end

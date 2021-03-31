@@ -1,7 +1,7 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def failure
     flash[:danger] = "SNSログインに失敗しました。"
-    # redirect_to root_path
+    redirect_to root_path
   end
 
   def google_oauth2
@@ -9,7 +9,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def callback_from(provider)
-    binding.pry
     provider = provider.to_s
     sns_info = User.from_omniauth(request.env['omniauth.auth'])
     @user = User.where(user_name: sns_info[:user][:user_name]).or(User.where(email: sns_info[:user][:email])).first || sns_info[:user]
