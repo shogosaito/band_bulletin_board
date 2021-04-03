@@ -24,7 +24,7 @@ gem 'bootstrap', '~> 4.1.3'
 gem 'webpacker'
 gem 'ransack'
 gem 'sqlite3', '1.4.1', :group => [:development, :test]
-gem 'pg', :group => :production
+gem 'pg'
 gem 'pry-rails'
 gem 'bootstrap-social-rails'
 gem 'seed-fu'
@@ -36,6 +36,7 @@ gem 'font-awesome-sass'
 gem 'capybara', '3.28.0'
 gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'puma'
+gem "aws-sdk-s3", require: false
 
 group :development, :test do
   gem 'byebug', '11.0.1', platforms: [:mri, :mingw, :x64_mingw]
