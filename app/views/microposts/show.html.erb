@@ -7,6 +7,7 @@
   <% else %>
   <%= render partial: 'micropost_join', locals: { micropost: @micropost, prefecture_name: @prefecture_name } %>
   <% end %>
+  <%= javascript_pack_tag 'unfooter' %>
   <div class="detail_menu" >
     <ul class="detail_menu_col4">
       <li><a href="/users/<%= @micropost.user.id %>"><i class="fa fa-user fa-3x"></i><figcaption>プロフィール</figcaption></a></li>
