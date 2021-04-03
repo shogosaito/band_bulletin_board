@@ -1,9 +1,10 @@
-<footer class="footer fixed-bottom">
+<footer class="footer">
   <%= link_to "バンド募集掲示板", root_path, id: "logo" ,class:"nav-item" %>
-  <div class="container">
-      <ul>
-        <li><%= link_to "サポート", about_path %></li>
-        <li><%= link_to "利用規約", about_path %></li>
-      </ul>
+  <div class='container'>
+    <ul>
+      <li class='footer-li'><%= link_to "サポート", help_path %></li>
+      <li class='footer-li'><%= link_to "利用規約", about_path %></li>
+    </ul>
   </div>
+    <p class='copyright'>© 2021 BandBulletinBoard</p>
 </footer>
