@@ -66,7 +66,7 @@ p {
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
-  padding: 0;
+  padding: 10px;
   border: 0;
   outline: 0;
   vertical-align: baseline;
@@ -87,10 +87,19 @@ footer {
   color: #fff;
   text-align: center;
   padding: 0px 0;
-  position: absolute;/*←絶対位置*/
-  bottom: 0; /*下に固定*/
+  position: absolute;/*②絶対位置*/
+  bottom: -600px; /*下に固定*/
   padding-left: 10rem;
   padding-right: 10rem;
+}
+.copyright{
+  color: #6c757d;
+}
+
+.footer-li{
+  padding: 3px;
+  padding-right: 50px;
+  float: left;
 }
 a {
   color: $gray-600;
@@ -449,6 +458,11 @@ input[type="radio"] {
   border: solid 10px;
   border-color : #eff #9bb #add #dff;
 }
+.notifications {
+  background: #dee;
+  border: solid 10px;
+  border-color : #eff #9bb #add #dff;
+}
 dl{
   padding: 20px;
   margin-bottom: 1.5em;
@@ -474,16 +488,12 @@ text{
 .user_info,.post_info{
   border-bottom: 3px double #ddd;
 }
+
 .like-genre{
   display: block;
   margin-left: 60px;
 }
-// .user_info{
-//   float: left;　 /*左側に配置する*/
-// }
-// .user_info span{
-//   float: right; 　 /*右側に配置する*/
-// }
+
 .bd-navbar .navbar-nav .nav-link {
   padding-right: .5rem;
   padding-left: .5rem;
@@ -836,4 +846,7 @@ thead th{
 .contact-btn{
   text-align: center;
   margin: 10px auto;
+}
+.midashi{
+  color: #008080;
 }
