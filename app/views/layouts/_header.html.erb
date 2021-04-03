@@ -12,6 +12,7 @@
           <li class="nav-item"><%= link_to "マイページ", current_user, class:"nav-link" %></li>
           <li class="nav-item"><%= link_to "記事投稿", new_path, class:"nav-link"%></li>
           <li class="nav-item"><%= link_to "ログアウト", logout_path, method: :delete ,class:"nav-link"%></li>
+          <li class='nav-item'><%= link_to "サポート", help_path ,class:"nav-link" %></li>
             <%= search_form_for @search, url: search_path, class:"search-form form-inline" do |f| %>
               <%= f.search_field :content_or_title_cont, placeholder: 'キーワードを入力', class:"form-control mr-sm-2" %>
               <%= f.submit ("検索"), class: "btn btn-outline-success my-2 my-sm-0" %>
@@ -19,6 +20,7 @@
         <% else %>
           <li class='nav-item'><%= link_to "新規登録", signup_path, class:"nav-link" %></li>
           <li class='nav-item'><%= link_to "ログイン", login_path ,class:"nav-link" %></li>
+          <li class='nav-item'><%= link_to "サポート", help_path ,class:"nav-link" %></li>
             <%= search_form_for @search, url: search_path, class:"search-form form-inline" do |f| %>
               <%= f.search_field :content_or_title_cont, placeholder: 'キーワードを入力', class:"form-control mr-sm-2" %>
               <%= f.submit ("検索"), class: "btn btn-outline-success my-2 my-sm-0" %>
