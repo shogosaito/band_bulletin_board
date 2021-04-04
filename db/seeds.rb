@@ -47,6 +47,7 @@ Prefecture.seed(:id,
                 { :id => 45, :name => "鹿児島県" },
                 { :id => 46, :name => "沖縄県" })
 prefecture = Prefecture.find(12)
+# ダミー登録者を10人作成する
 10.times do
   @user = User.create!(
     user_name: Faker::Name.name,
@@ -73,9 +74,9 @@ end
 40.times do |index| # boardダミーの作成。
   Micropost.create!(
     user: User.offset(rand(User.count)).first,
-    title: "タイトル#{index}",
-    genre: ["本文#{index}"],
-    content_type: "J-POP#{index}",
+    title: "ギター、ドラム募集#{index}",
+    genre: ["アニメ、J-POP"],
+    content_type: "J-POP",
     content: "テスト#{index}",
     prefecture_id: "#{index}",
     music_type: ["コピー"],
