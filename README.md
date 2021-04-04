@@ -20,20 +20,15 @@ https://nameless-badlands-54984.herokuapp.com/
 
 ## 機能一覧
   - ユーザー登録
-  - ログイン機能,SNSログイン機能（devise、google）
+  - ログイン機能、SNSログイン機能（devise、google）
   - 投稿機能
-   　- 編集
-   　- 削除
   - お気に入り機能(Ajax)
   - コメント機能
   - メール機能
   - 通知機能
   - 検索機能(ransack)
-   　- 記事検索
-   　- メンバー検索
-   　- キーワード険悪
 
 ## テスト
-　- RSpec  
-　　- 単体テスト(request)  
-　　- 統合テスト(system)
+  - RSpec  
+    - 単体テスト(request)  
+    - 統合テスト(system)
