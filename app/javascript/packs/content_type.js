@@ -18,7 +18,8 @@ $(document).ready(function(){
     $(".genre0").val("");
     $(".genre1").val("");
     $("#prefecture_prefecture_id").val("");
-    $(".direction").val("指定なし");
+    $(".gender").val("指定なし");
+    $("#micropost_activity_direction").val("指定なし");
 
     if(value == '') {
       for(var i = 0; i < join.length; i++) {

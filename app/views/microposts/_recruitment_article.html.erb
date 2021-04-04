@@ -33,7 +33,7 @@
   <th>募集年齢</th>
   <td>
     <div class="form-group form-age">
-      <%= f.text_field :recruitment_min_age %>〜<%= f.text_field :recruitment_max_age %>
+      <%= f.text_field :recruitment_min_age ,class:'clear' %>〜<%= f.text_field :recruitment_max_age ,class:'clear' %>
       <% if @micropost.errors.include?(:recruitment_min_age) %>
         <p style="color: red;"><%= @micropost.errors.full_messages_for(:recruitment_min_age).first %></p>
       <% end %>
@@ -47,7 +47,7 @@
   <th>募集性別</th>
   <td>
     <div class="form-group">
-      <%= f.select :gender, [["指定しない", "指定しない"], ["男性", "男性"], ["女性", "女性"]], required: true, value: "#{session[:gender]}"  %>
+      <%= f.select :gender, [["指定なし", "指定なし"], ["男性", "男性"], ["女性", "女性"]], required: true, class:'gender', value: "#{session[:gender]}"  %>
       <% if @micropost.errors.include?(:gender) %>
         <p style="color: red;"><%= @micropost.errors.full_messages_for(:gender).first %></p>
       <% end %>
@@ -60,7 +60,7 @@
     <div class="form-group">
       <ul class="activity-day-list">
       <% %w(月 火 水 木 金 土 日 祝日).each.with_index do |day,i| %>
-        <li><%= f.check_box :activity_day, {multiple: true}, day %>
+        <li><%= f.check_box :activity_day, { multiple: true, class:'clear_box' }, day %>
         <%= f.label day %></li>
       <% end %>
      </ul>
