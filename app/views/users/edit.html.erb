@@ -6,18 +6,18 @@
     <table>
       <%= render 'shared/error_messages', object: f.object %>
       <tr>
-        <th class="required"><span class="badge badge-danger">必須</span>ユーザーネーム</th>
+        <th class="required"><span class="badge badge-danger">必須</span><%= f.label :user_name, "ユーザーネーム" %></th>
         <td>
           <div class="form-group">
             <%= f.text_field :user_name, class: 'form-control', required: true %>
             <% if @user.errors.include?(:user_name) %>
-            　　<p style="color: red;"><%= @user.errors.full_messages_for(:user_name).first %></p>
+            <p style="color: red;"><%= @user.errors.full_messages_for(:user_name).first %></p>
             <% end %>
           </div>
         </td>
       </tr>
       <tr>
-        <th><span class="badge badge-danger">必須</span>メールアドレス</th>
+        <th><span class="badge badge-danger">必須</span><%= f.label :email, "メールアドレス" %></th>
         <td>
           <div class="form-group">
             <%= f.email_field :email, class: 'form-control', required: true %>
@@ -28,9 +28,9 @@
         </td>
       </tr>
       <tr>
-        <th><span class="badge badge-danger">必須</span><%= f.label :birthday, "生年月日"%></th>
-          <td>
-            <div class="form-group">
+        <th><span class="badge badge-danger">必須</span><%= f.label :birthday, "生年月日" %></th>
+        <td>
+          <div class="form-group">
             <%=
             f.date_select(
             :birthday,
@@ -42,11 +42,11 @@
             <% if @user.errors.include?(:birthday) %>
             <p style="color: red;"><%= @user.errors.full_messages_for(:birthday).first %></p>
             <% end %>
-            </div>
+          </div>
         </td>
       </tr>
       <tr>
-        <th><span class="badge badge-danger">必須</span>性別</th>
+        <th><span class="badge badge-danger">必須</span><%= f.label :gender, "性別" %></th>
         <td>
           <div class="form-group">
             <%= f.select :gender, [["選択してください", "選択してください"], ["男", "男"], ["女", "女"]], required: true %>
@@ -57,7 +57,7 @@
         </td>
       </tr>
       <tr>
-        <th><span class="badge badge-danger">必須</span>担当パート</th>
+        <th><span class="badge badge-danger">必須</span><%= f.label :part, "担当パート" %></th>
         <td>
           <div class="form-group">
             <%= javascript_pack_tag 'part' %>
@@ -69,15 +69,15 @@
         </td>
       </tr>
       <tr>
-        <th><span class="badge badge-pill badge-secondary">任意</span>都道府県</th>
-          <td>
-            <div class="form-group">
-              <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, include_hidden: false ,required: true, prompt:"--" %>
-            </div>
-          </td>
+        <th><span class="badge badge-pill badge-secondary">任意</span><%= f.label :prefecture_id, "都道府県" %></th>
+        <td>
+          <div class="form-group">
+            <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, include_hidden: false ,required: true, prompt:"--" %>
+          </div>
+        </td>
       </tr>
       <tr>
-        <th><span class="badge badge-pill badge-secondary">任意</span>好きなジャンル</th>
+        <th><span class="badge badge-pill badge-secondary">任意</span><%= f.label :genre, "好きなジャンル" %></th>
         <td>
           <div class="form-group">
             <%= javascript_pack_tag 'genre' %>
@@ -91,7 +91,7 @@
         </td>
       </tr>
       <tr>
-        <th><span class="badge badge-pill badge-secondary">任意</span><%= f.label :好きなアーティスト %></th>
+        <th><span class="badge badge-pill badge-secondary">任意</span><%= f.label :artist, "好きなアーティスト" %></th>
         <td>
           <div class="form-group">
             <%= f.text_field :artist, class: 'form-control', placeholder:"例 ○○○○○,○○○○○" %>
@@ -99,7 +99,7 @@
         </td>
       </tr>
       <tr>
-        <th><span class="badge badge-pill badge-secondary">任意</span><%= f.label :プロフィール写真 %></th>
+        <th><span class="badge badge-pill badge-secondary">任意</span><%= f.label :user_image, "プロフィール写真" %></th>
         <td>
           <div class="form-group file">
             <%= f.file_field :user_image, accept: "image/jpeg,image/gif,image/png" ,placeholder: "画像アップロード" %>
@@ -107,11 +107,11 @@
         </td>
       </tr>
     </table>
-  <div class="form-group entry">
-    <%= reset_tag 'リセット', class: 'btn btn-primary', id: 'js_clear_btn' %>
-    <%= f.submit "更新する", class: "btn btn-primary" %>
-  </div>
-  <% end %>
+    <div class="form-group entry">
+      <%= reset_tag 'リセット', class: 'btn btn-primary', id: 'js_clear_btn' %>
+      <%= f.submit "更新する", class: "btn btn-primary" %>
+    </div>
+    <% end %>
   </div>
 </div>
 <%= link_to "アカウント削除", @user, method: :delete,

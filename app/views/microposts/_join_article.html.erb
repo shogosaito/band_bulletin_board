@@ -1,5 +1,5 @@
 <tr class="join-article">
-  <th><span class="badge badge-danger">必須</span>好きなジャンル</th>
+  <th><span class="badge badge-danger">必須</span><%= f.label :genre, "好きなジャンル" %></th>
   <td>
     <div class="form-group">
       <%= f.select :genre, [["J-POP", "J-POP"], ["アニメ", "アニメ"], ["邦楽ヒップホップ/R&B/レゲエ", "邦楽ヒップホップ/R&B/レゲエ"],
@@ -16,7 +16,7 @@
   </td>
 </tr>
 <tr class="join-article">
-  <th><span class="badge badge-danger">必須</span><%= f.label :担当パート%></th>
+  <th><span class="badge badge-danger">必須</span><%= f.label :part, "担当パート" %></th>
   <td>
     <div class="form-group">
       <%= f.select :part, [["ボーカル", "ボーカル"], ["ギター", "ギター"], ["ベース","ベース"],
@@ -30,7 +30,7 @@
   </td>
 </tr>
 <tr class="join-article">
-  <th>活動できる曜日</th>
+  <th><%= f.label :activity_day, "活動できる曜日" %></th>
   <td>
     <div class="form-group">
       <ul class="activity-day-list">

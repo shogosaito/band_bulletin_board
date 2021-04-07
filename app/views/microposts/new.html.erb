@@ -3,7 +3,7 @@
   <%= form_with model:@micropost,local: true do |f| %>
   <table>
     <tr>
-      <th><span class="badge badge-danger">必須</span>記事の種類</th>
+      <th><span class="badge badge-danger">必須</span><%= f.label :content_type, "記事の種類" %></th>
       <td>
         <div class="form-group">
           <%= javascript_pack_tag 'content_type' %>
@@ -12,7 +12,7 @@
       </td>
     </tr>
     <tr class="common-article">
-      <th><span class="badge badge-danger">必須</span>記事タイトル</th>
+      <th><span class="badge badge-danger">必須</span><%= f.label :title, "記事タイトル" %></th>
       <td>
         <div class= "form-group" >
           <%= f.text_field :title, placeholder: "タイトルを入力してください。" %>
@@ -23,10 +23,10 @@
       </td>
     </tr>
     <tr class="common-article">
-      <th><span class="badge badge-danger">必須</span>記事の内容</th>
+      <th><span class="badge badge-danger">必須</span><%= f.label :content, "記事の内容" %></th>
       <td>
         <div class= "form-group" >
-          <%= f.text_area :content, rows:10 %>
+          <%= f.text_area :content, rows:10, include_blank: "2000文字以内で入力して下さい。" %>
           <% if @micropost.errors.include?(:content) %>
           <p style="color: red;"><%= @micropost.errors.full_messages_for(:content).first %></p>
           <% end %>
@@ -35,7 +35,7 @@
     </tr>
     <tr class="common-article">
       <div class="prefectures-check-boxes">
-        <th><span class="badge badge-danger">必須</span>都道府県</th>
+        <th><span class="badge badge-danger">必須</span><%= f.label :prefecture, "都道府県" %></th>
         <td>
           <div class="checkbox">
             <div class="form-group">
@@ -49,10 +49,10 @@
       </div>
     </tr>
     <tr class="common-article">
-      <th><span class="badge badge-danger">必須</span>バンドの方向性</th>
+      <th><span class="badge badge-danger">必須</span><%= f.label :activity_direction, "バンドの方向性" %></th>
       <td>
         <div class="form-group">
-          <%= f.select :activity_direction, [["指定なし", "指定なし"], ["趣味志向", "趣味志向"], ["プロ志向", "プロ志向"]], required: true, value: "#{session[:content_type]}"  %>
+          <%= f.select :activity_direction, [["指定なし", "指定なし"], ["趣味志向", "趣味志向"], ["プロ志向", "プロ志向"]], required: true, value: "#{session[:activity_direction]}"  %>
           <% if @micropost.errors.include?(:activity_direction) %>
           <p style="color: red;"><%= @micropost.errors.full_messages_for(:activity_direction).first %></p>
           <% end %>
@@ -60,7 +60,7 @@
       </td>
     </tr>
     <tr class="common-article">
-      <th><span class="badge badge-danger">必須</span>バンドの楽曲</th>
+      <th><span class="badge badge-danger">必須</span><%= f.label :music_type, "バンドの楽曲" %></th>
       <td>
         <div class="form-group">
           <ul class="music-type-list">
@@ -82,7 +82,7 @@
         <%= render partial: 'join_article' ,locals: { f:f } %>
       </div>
       <tr class="common-article">
-        <th>試聴音源</th>
+        <th><%= f.label :demo_sound_source, "試聴音源" %></th>
         <td>
           <div class="form-group demo-sound-source">
             <%= f.url_field :demo_sound_source %>
