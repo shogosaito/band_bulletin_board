@@ -1,86 +1,87 @@
 <div class="align-items-center article-posting">
   <h1>記事編集</h1>
-    <%= form_with model:@micropost,:remote => true do |f| %>
-      <table>
-         <%= javascript_pack_tag 'edit' %>
-         <tr class="common-article">
-           <th><span class="badge badge-danger">必須</span>記事タイトル</th>
-             <td>
-               <div class= "form-group" >
-                 <%= f.text_field :title, placeholder: "タイトルを入力してください。", value: @micropost.title %>
-               </div>
-              </td>
-          </tr>
-          <tr class="common-article">
-            <th><span class="badge badge-danger">必須</span>記事の内容</th>
-              <td>
-                <div class= "form-group" >
-                  <%= f.text_area :content, rows:10,value: @micropost.content %>
-                </div>
-              </td>
-          </tr>
-          <tr class="common-article">
-            <div class="prefectures-check-boxes">
-              <th><span class="badge badge-danger">必須</span>都道府県</th>
-              <td>
-                <div class="checkbox">
-                  <div class="form-group">
-                    <%= collection_select :prefecture, :prefecture_id, Prefecture.all, :id, :name, include_hidden: false ,required: true, prompt:"--" %>
-                    <% if @micropost.errors.include?(:prefecture) %>
-                      <p style="color: red;"><%= @micropost.errors.full_messages_for(:prefecture).first %></p>
-                      <% end %>
-                  </div>
-                </div>
-              </td>
-            </div>
-          </tr>
-          <tr class="common-article">
-            <th><span class="badge badge-danger">必須</span>バンドの方向性</th>
-            <td>
-              <div class="form-group">
-                <%= f.select :activity_direction, [["指定しない", "指定しない"], ["趣味志向", "趣味志向"], ["プロ志向", "プロ志向"]], required: true, value: "#{session[:content_type]}"  %>
-                <% if @micropost.errors.include?(:content_type) %>
-                  <p style="color: red;"><%= @micropost.errors.full_messages_for(:content_type).first %></p>
-                <% end %>
-              </div>
-             </td>
-           </tr>
-           <tr class="common-article">
-             <th><span class="badge badge-danger">必須</span>バンドの楽曲</th>
-               <td>
-                 <div class="form-group">
-                   <ul class="music-type-list">
-                     <% %w(指定しない オリジナル コピー).each.with_index do |type,i| %>
-                       <li><%= f.check_box :music_type, {multiple: true},type %><%= type%></li>
-                     <% end %>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <% if @micropost.content_type == "募集" %>
-              <div class="recruitment-group">
-              <%= render partial: 'recruitment_article' ,locals: { f:f } %>
-              </div>
-              <% else %>
-              <div class="join-group">
-              <%= render partial: 'join_article' ,locals: { f:f } %>
-              </div>
+  <%= form_with model:@micropost,:remote => true do |f| %>
+  <table>
+    <%= javascript_pack_tag 'unfooter' %>
+    <%= javascript_pack_tag 'edit' %>
+    <tr class="common-article">
+      <th><span class="badge badge-danger">必須</span><%= f.label :title, "記事タイトル" %></th>
+      <td>
+        <div class= "form-group" >
+          <%= f.text_field :title, placeholder: "タイトルを入力してください。", value: @micropost.title %>
+        </div>
+      </td>
+    </tr>
+    <tr class="common-article">
+      <th><span class="badge badge-danger">必須</span><%= f.label :content, "記事の内容" %></th>
+      <td>
+        <div class= "form-group" >
+          <%= f.text_area :content, rows:10, include_blank: "2000文字以内で入力して下さい。", value: @micropost.content %>
+        </div>
+      </td>
+    </tr>
+    <tr class="common-article">
+      <div class="prefectures-check-boxes">
+        <th><span class="badge badge-danger">必須</span><%= f.label :prefecture, "都道府県" %></th>
+        <td>
+          <div class="checkbox">
+            <div class="form-group">
+              <%= collection_select :prefecture, :prefecture_id, Prefecture.all, :id, :name, include_hidden: false ,required: true, prompt:"--" %>
+              <% if @micropost.errors.include?(:prefecture) %>
+              <p style="color: red;"><%= @micropost.errors.full_messages_for(:prefecture).first %></p>
               <% end %>
-              <tr class="common-article">
-                <th>試聴音源</th>
-                <td>
-                  <div class="form-group demo-sound-source">
-                    <%= f.url_field :demo_sound_source,value: @micropost.demo_sound_source %>
-                    <% if @micropost.errors.include?(:demo_sound_source) %>
-                    <p style="color: red;"><%= @micropost.errors.full_messages_for(:demo_sound_source).first %></p>
-                    <% end %>
-                  </div>
-                </td>
-              </tr>
-          </table>
-          <div class="froup form-Submit">
-            <%= reset_tag 'リセット', class: 'btn btn-primary', id: 'js_clear_btn' %>
-            <%= f.submit '編集', class: 'btn btn-primary' %>
+            </div>
           </div>
-      <% end %>
+        </td>
+      </div>
+    </tr>
+    <tr class="common-article">
+      <th><span class="badge badge-danger">必須</span><%= f.label :activity_direction, "バンドの方向性" %></th>
+      <td>
+        <div class="form-group">
+          <%= f.select :activity_direction, [["指定しない", "指定しない"], ["趣味志向", "趣味志向"], ["プロ志向", "プロ志向"]], required: true, value: "#{session[:activity_direction]}"  %>
+          <% if @micropost.errors.include?(:activity_direction) %>
+          <p style="color: red;"><%= @micropost.errors.full_messages_for(:activity_direction).first %></p>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+    <tr class="common-article">
+      <th><span class="badge badge-danger">必須</span><%= f.label :music_type, "バンドの楽曲" %></th>
+      <td>
+        <div class="form-group">
+          <ul class="music-type-list">
+            <% %w(指定しない オリジナル コピー).each.with_index do |type,i| %>
+            <li><%= f.check_box :music_type, {multiple: true},type %><%= type%></li>
+            <% end %>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <% if @micropost.content_type == "募集" %>
+    <div class="recruitment-group">
+      <%= render partial: 'recruitment_article' ,locals: { f:f } %>
+    </div>
+    <% else %>
+    <div class="join-group">
+      <%= render partial: 'join_article' ,locals: { f:f } %>
+    </div>
+    <% end %>
+    <tr class="common-article">
+      <th><%= f.label :demo_sound_source, "試聴音源" %></th>
+      <td>
+        <div class="form-group demo-sound-source">
+          <%= f.url_field :demo_sound_source,value: @micropost.demo_sound_source %>
+          <% if @micropost.errors.include?(:demo_sound_source) %>
+          <p style="color: red;"><%= @micropost.errors.full_messages_for(:demo_sound_source).first %></p>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <div class="froup form-Submit">
+    <%= reset_tag 'リセット', class: 'btn btn-primary', id: 'js_clear_btn' %>
+    <%= f.submit '編集', class: 'btn btn-primary' %>
+  </div>
+  <% end %>
 </div>
