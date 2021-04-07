@@ -6,7 +6,7 @@
 <img width="386" alt="スクリーンショット 2021-04-04 19 08 54" src="https://user-images.githubusercontent.com/41812171/113506427-d57c2400-957f-11eb-9eae-d305f959322b.png">
 
 ## URL
-https://nameless-badlands-54984.herokuapp.com/
+https://band-bulletin-boards.herokuapp.com
 
 ## 使用技術
   - Ruby 2.7.1p83
