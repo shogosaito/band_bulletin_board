@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     :edit, :update, :destroy,
   ]
   before_action :set_ransack
-  # before_action :correct_user, only: [:edit, :update]
+  before_action :correct_user, only: [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -23,13 +23,6 @@ class UsersController < ApplicationController
   end
 
   def create
-    binding.pry
-    if ENV['omniauth.auth'].present?
-      # snsログイン
-      binding.pry
-      @user = User.from_omniauth(env['omniauth.auth'])
-      result = @user.save(context: :sns_login)
-    else
     @user = User.new(user_params)
     @user.prefecture_id = params[:prefecture][:prefecture_id] if params[:prefecture].present?
     @user.user_image = "default.png"
@@ -46,14 +39,6 @@ class UsersController < ApplicationController
       end
     end
   end
-    # if result
-    #   sign_in @user
-    #   flash[:success] = "#{@user.provider}ログインしました"
-    #   redirect_to @user
-    # else
-    # end
-    # end
-  end
 
   def edit
     @user = User.find(params[:id])
@@ -62,8 +47,12 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @user.prefecture_id = params[:prefecture][:prefecture_id] if params[:prefecture].present?
-    @user.user_image = params[:user][:user_image]
-    current_user.user_image = @user.user_image
+    if params[:user][:user_image].blank?
+      params[:user][:user_image] = "default.png"
+    else
+      @user.user_image = params[:user][:user_image]
+      current_user.user_image = @user.user_image
+    end
     if @user.update!(user_params)
       if @user.part.present?
         @part = @user.part.gsub("[", "").chop!
@@ -107,23 +96,7 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
-  def sns_login
-    @user = User.from_omniauth(request.env["omniauth.auth"])
-    result = @user.save(context: :sns_login)
-    if result
-      log_in @user
-      redirect_to @user
-    else
-      redirect_to auth_failure_path
-    end
-  end
-
-  # 認証に失敗した際の処理
-  def auth_failure
-    @user = User.new
-    render root_path
-  end
-
+  # メンバー検索処理
   def search
     params[:q][:birthday_gt] = calc_min_birthday(params[:q][:birthday_gt]) if params[:q][:birthday_gt].present?
     params[:q][:birthday_lt] = calc_max_birthday(params[:q][:birthday_lt]) if params[:q][:birthday_lt].present?
@@ -167,36 +140,33 @@ class UsersController < ApplicationController
   def join
   end
 
-    private
+  private
 
   def user_params
     params.require(:user).permit(:user_name, :email, :password, :password_confirmation,
-                                 :prefecture_id, :gender, :artist, :url, :agreement,
-                                 :birthday, :uid, :provider, :user_image, { genre: [] }, { part: [] })
+      :prefecture_id, :gender, :artist, :url, :agreement,
+      :birthday, :uid, :provider, :user_image, { genre: [] }, { part: [] })
+    end
+    
+    #不要な記号を削除し整理
+    def present_check(user)
+      if user.part.present?
+        user.part = user.part.delete('] [ 0 ""')
+      end
+      if user.genre.present?
+        user.genre = user.genre.delete('] [ ""')
+      end
+      user
     end
 
-  def birthday_join
-    date = @user.birthday
-    Date.new date["birthday(1i)"].to_i, date["birthday(2i)"].to_i, date["birthday(3i)"].to_i
-  end
-
-  def present_check(user)
-    if user.part.present?
-      user.part = user.part.delete('] [ 0 ""')
+    #ransack検索用
+    def set_ransack
+      @q = User.ransack(params[:q])
     end
-    if user.genre.present?
-      user.genre = user.genre.delete('] [ ""')
+
+    # 正しいユーザーかどうか確認
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless current_user?(@user)
     end
-    user
-  end
-
-  def set_ransack
-    @q = User.ransack(params[:q])
-   end
-
-  # 正しいユーザーかどうか確認
-  def correct_user
-    @user = User.find(params[:id])
-    redirect_to(root_url) unless current_user?(@user)
-  end
   end

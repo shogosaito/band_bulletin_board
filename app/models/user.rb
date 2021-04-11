@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :omniauthable, omniauth_providers: [:google_oauth2]
   include DeviseTokenAuth::Concerns::User
   devise :omniauthable, omniauth_providers: [:google_oauth2]
@@ -81,14 +79,14 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-# お気に入りされている場合はtrueを返す
+  # お気に入りされている場合はtrueを返す
   def already_liked?(micropost)
     likes.exists?(micropost_id: micropost.id)
   end
 
+  # omniauthのコールバック時に呼ばれるメソッド
   def self.from_omniauth(auth)
-    sns = SnsCredential.where(uid: auth["uid"], provider: auth["provider"]).first_or_create
-    user = sns.user || User.where(email: auth["info"]["email"]).first
+    user = User.where(email: auth["info"]["email"]).first
     if user.blank?
       user = User.new(
         uid: auth["uid"],
@@ -109,11 +107,7 @@ class User < ApplicationRecord
     if user.password.blank?
       user.password = rondom_password
     end
-    if user.persisted? # userが登録済みの場合：そのままログインするため、snsのuser_idを更新しとく
-      sns.user = user
-      sns.save
-    end
-    { user: user, sns: sns }
+    { user: user }
     end
 
   private

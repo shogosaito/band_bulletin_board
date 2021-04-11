@@ -8,10 +8,12 @@ class ApplicationController < ActionController::Base
 
   private
 
+ #ransack検索用
   def set_search
     @search = Micropost.ransack(params[:q])
   end
 
+  #不要な記号を削除し整理
   def set_arrange
     if @part.start_with?(",")
       @part.slice!(0)

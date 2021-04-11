@@ -1,6 +1,5 @@
 class MicropostsController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy]
-  before_action :correct_user,   only: [:destroy]
   def index
     @microposts = Micropost.all
     @micropost =  Micropost.new
@@ -62,6 +61,7 @@ class MicropostsController < ApplicationController
     redirect_to root_url
   end
 
+　#投稿検索フォーム用処理
   def search
     @q = Micropost.ransack(params[:q])
     @search_microposts = @q.result(distinct: true).page(params[:page]).per(10)
@@ -93,12 +93,14 @@ class MicropostsController < ApplicationController
     @search_microposts = Kaminari.paginate_array(@search_microposts).page(params[:page]).per(10) if @search_microposts.present?
   end
 
+　#ヘッダーのキーワード検索用処理
   def search_header
     @search = Micropost.ransack(params[:q])
     @search_microposts = @search.result(distinct: true).page(params[:page]).per(10)
     render "search"
   end
 
+  #投稿一覧の表示件数変更処理
   def microposts_list_page
     @page = params[:per]
     @microposts = Micropost.paginate(page: params[:page], per_page: @page)
@@ -117,8 +119,4 @@ class MicropostsController < ApplicationController
                                       { genre: [] }, { part: [] }, { music_type: [] }, { activity_day: [] }, { demo_sound_source: [] })
     end
 
-  def correct_user
-    @micropost = current_user.microposts.find_by(id: params[:id])
-    redirect_to root_url if @micropost.nil?
-  end
   end

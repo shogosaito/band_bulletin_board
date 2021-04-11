@@ -1,13 +1,16 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  # callback for failure
   def failure
     flash[:danger] = "SNSログインに失敗しました。"
     redirect_to root_path
   end
 
+  # callback for google
   def google_oauth2
     callback_from :google
   end
 
+  # common callback method
   def callback_from(provider)
     provider = provider.to_s
     sns_info = User.from_omniauth(request.env['omniauth.auth'])
@@ -17,7 +20,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash[:success] = "#{provider}アカウントによる認証に成功しました。"
       redirect_to root_path
     else
-      # 登録するアクションに取得した値を渡すために。sessionを利用してuserインスタンスを作成する
+      # 登録するviewのformに取得した値を初期値として入力するため、sessionを利用する
       session[:provider] = @user.provider
       session[:uid] = @user.uid
       session[:user_name] = @user.user_name
@@ -26,14 +29,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       session[:password] = @user.password
       session[:password_confirmation] = @user.password
       session["devise.#{provider}_data"] = request.env['omniauth.auth'].except("extra")
-      # SnsCredentialが登録されていないとき
-      if SnsCredential.find_by(uid: sns_info[:sns][:uid], provider: sns_info[:sns][:provider]).nil?
-        # ユーザ登録と同時にsns_credentialも登録するために
-        session[:uid] = sns_info[:sns][:uid]
-        session[:provider] = sns_info[:sns][:provider]
-      end
       # 登録フォームのviewにリダイレクトさせる
       redirect_to signup_path
     end
- end
+  end
 end
