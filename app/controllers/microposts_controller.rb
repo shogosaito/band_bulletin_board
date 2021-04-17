@@ -1,5 +1,6 @@
 class MicropostsController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy]
+  before_action :correct_user,   only: [:destroy]
   def index
     @microposts = Micropost.all
     @micropost =  Micropost.new
@@ -11,7 +12,9 @@ class MicropostsController < ApplicationController
 
   def create
     @micropost = current_user.microposts.build(micropost_params)
-    @micropost.prefecture_id = params[:prefecture][:prefecture_id] if params[:prefecture].present?
+    if params[:prefecture].present?
+      @micropost.prefecture_id = params[:prefecture][:prefecture_id]
+    end
     if @micropost.save
       flash[:success] = "投稿しました!"
       redirect_to root_url
@@ -46,7 +49,9 @@ class MicropostsController < ApplicationController
 
   def update
     @micropost = Micropost.find_by(id: params[:id])
-    @micropost.prefecture_id = params[:prefecture][:prefecture_id] if params[:prefecture].present?
+    if params[:prefecture].present?
+      @micropost.prefecture_id = params[:prefecture][:prefecture_id]
+    end
     if @micropost.update!(micropost_params)
       flash[:success] = "投稿を編集しました"
       redirect_to @micropost
@@ -61,62 +66,76 @@ class MicropostsController < ApplicationController
     redirect_to root_url
   end
 
-　#投稿検索フォーム用処理
+  # 投稿検索フォーム用処理
   def search
     @q = Micropost.ransack(params[:q])
     @search_microposts = @q.result(distinct: true).page(params[:page]).per(10)
     if @search_microposts.present? & params[:prefecture].present?
       @prefecture_search_microposts = []
       @search_microposts.each do |micropost|
-        @prefecture_search_microposts.push(micropost) if params[:prefecture][:prefecture_ids].include?(micropost.prefecture_id.to_s)
-      end
-      @search_microposts = @prefecture_search_microposts
-    end
-    if @search_microposts.present? & params[:genre].present?
-      @genre_search_microposts = []
-      @search_microposts.each do |micropost|
-        params[:genre].each do |genre|
-          @genre_search_microposts.push(micropost) if micropost.genre.include?(genre)
+        @prefecture_search_microposts.push(micropost)
+        if params[:prefecture][:prefecture_ids].include?(micropost.prefecture_id.to_s)
+          @search_microposts = @prefecture_search_microposts
         end
       end
-      @search_microposts = @genre_search_microposts
-    end
-    if @search_microposts.present? & params[:part].present?
-      @part_search_microposts = []
-      @search_microposts.each do |micropost|
-        params[:part].each do |part|
-          @part_search_microposts.push(micropost) if micropost.part.include?(part)
+      if @search_microposts.present? & params[:genre].present?
+        @genre_search_microposts = []
+        @search_microposts.each do |micropost|
+          params[:genre].each do |genre|
+            if micropost.genre.include?(genre)
+              @genre_search_microposts.push(micropost)
+            end
+          end
         end
+        @search_microposts = @genre_search_microposts
       end
-      @search_microposts = @part_search_microposts
+      if @search_microposts.present? & params[:part].present?
+        @part_search_microposts = []
+        @search_microposts.each do |micropost|
+          params[:part].each do |part|
+            if micropost.part.include?(part)
+              @part_search_microposts.push(micropost)
+            end
+          end
+        end
+        @search_microposts = @part_search_microposts
+      end
+      if @search_microposts.present?
+        @search_microposts = Kaminari.paginate_array(@search_microposts).page(params[:page]).per(10)
+      end
     end
-    @search_microposts = Kaminari.paginate_array(@search_microposts).page(params[:page]).per(10) if @search_microposts.present?
   end
 
-　#ヘッダーのキーワード検索用処理
+  # ヘッダーのキーワード検索用処理
   def search_header
     @search = Micropost.ransack(params[:q])
     @search_microposts = @search.result(distinct: true).page(params[:page]).per(10)
     render "search"
   end
 
-  #投稿一覧の表示件数変更処理
+  # 投稿一覧の表示件数変更処理
   def microposts_list_page
     @page = params[:per]
     @microposts = Micropost.paginate(page: params[:page], per_page: @page)
     render 'band_bulletin_boards/home'
   end
 
+  # ユーザに紐づいた記事を取得
+  def correct_user
+    @micropost = current_user.microposts.find_by(id: params[:id])
+    redirect_to root_url if @micropost.nil?
+  end
+
   def recruitment
   end
 
-    private
+      private
 
   def micropost_params
     params.require(:micropost).permit(:title, :content_type, :content, :recruitment_min_age, :prefecture_id,
                                       :recruitment_max_age, :gender, :activity_day,
                                       :demo_sound_source, :activity_direction,
-                                      { genre: [] }, { part: [] }, { music_type: [] }, { activity_day: [] }, { demo_sound_source: [] })
+                                      { genre: [] }, { part: [] }, { music_type: [] },
+                                      { activity_day: [] }, { demo_sound_source: [] })
     end
-
-  end
+    end
