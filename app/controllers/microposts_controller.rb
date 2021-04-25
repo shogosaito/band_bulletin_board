@@ -69,47 +69,49 @@ class MicropostsController < ApplicationController
   # 投稿検索フォーム用処理
   def search
     @q = Micropost.ransack(params[:q])
-    @search_microposts = @q.result(distinct: true).page(params[:page]).per(10)
+    @search_microposts = @q.result(distinct: true).includes(:user, user: :prefecture).all.
+      page(params[:page]).includes(user: { user_image_attachment: :blob })
     if @search_microposts.present? & params[:prefecture].present?
       @prefecture_search_microposts = []
       @search_microposts.each do |micropost|
-        @prefecture_search_microposts.push(micropost)
         if params[:prefecture][:prefecture_ids].include?(micropost.prefecture_id.to_s)
-          @search_microposts = @prefecture_search_microposts
+          @prefecture_search_microposts.push(micropost)
         end
       end
-      if @search_microposts.present? & params[:genre].present?
-        @genre_search_microposts = []
-        @search_microposts.each do |micropost|
-          params[:genre].each do |genre|
-            if micropost.genre.include?(genre)
-              @genre_search_microposts.push(micropost)
-            end
+      @search_microposts = @prefecture_search_microposts
+    end
+    if @search_microposts.present? & params[:genre].present?
+      @genre_search_microposts = []
+      @search_microposts.each do |micropost|
+        params[:genre].each do |genre|
+          if micropost.genre.include?(genre)
+            @genre_search_microposts.push(micropost)
           end
         end
-        @search_microposts = @genre_search_microposts
       end
-      if @search_microposts.present? & params[:part].present?
-        @part_search_microposts = []
-        @search_microposts.each do |micropost|
-          params[:part].each do |part|
-            if micropost.part.include?(part)
-              @part_search_microposts.push(micropost)
-            end
+      @search_microposts = @genre_search_microposts
+    end
+    if @search_microposts.present? & params[:part].present?
+      @part_search_microposts = []
+      @search_microposts.each do |micropost|
+        params[:part].each do |part|
+          if micropost.part.include?(part)
+            @part_search_microposts.push(micropost)
           end
         end
-        @search_microposts = @part_search_microposts
       end
-      if @search_microposts.present?
-        @search_microposts = Kaminari.paginate_array(@search_microposts).page(params[:page]).per(10)
-      end
+      @search_microposts = @part_search_microposts
+    end
+    if @search_microposts.present?
+      @search_microposts = Kaminari.paginate_array(@search_microposts).page(params[:page]).per(10)
     end
   end
 
   # ヘッダーのキーワード検索用処理
   def search_header
     @search = Micropost.ransack(params[:q])
-    @search_microposts = @search.result(distinct: true).page(params[:page]).per(10)
+    @search_microposts = @search.result(distinct: true).includes(:user, user: :prefecture).all.
+      page(params[:page]).includes(user: { user_image_attachment: :blob }).per(10)
     render "search"
   end
 
@@ -129,7 +131,7 @@ class MicropostsController < ApplicationController
   def recruitment
   end
 
-      private
+  private
 
   def micropost_params
     params.require(:micropost).permit(:title, :content_type, :content, :recruitment_min_age, :prefecture_id,
@@ -137,5 +139,5 @@ class MicropostsController < ApplicationController
                                       :demo_sound_source, :activity_direction,
                                       { genre: [] }, { part: [] }, { music_type: [] },
                                       { activity_day: [] }, { demo_sound_source: [] })
-    end
-    end
+  end
+end

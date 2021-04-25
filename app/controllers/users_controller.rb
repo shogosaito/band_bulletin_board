@@ -46,14 +46,14 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.prefecture_id = params[:prefecture][:prefecture_id] if params[:prefecture].present?
-    if params[:user][:user_image].blank?
-      params[:user][:user_image] = "default.png"
-    else
+    if params[:prefecture].present?
+      @user.prefecture_id = params[:prefecture][:prefecture_id]
+    end
+    if params[:user][:user_image].present?
       @user.user_image = params[:user][:user_image]
       current_user.user_image = @user.user_image
     end
-    if @user.update!(user_params)
+    if @user.update(user_params)
       if @user.part.present?
         @part = @user.part.gsub("[", "").chop!
       end
@@ -98,14 +98,21 @@ class UsersController < ApplicationController
 
   # メンバー検索処理
   def search
-    params[:q][:birthday_gt] = calc_min_birthday(params[:q][:birthday_gt]) if params[:q][:birthday_gt].present?
-    params[:q][:birthday_lt] = calc_max_birthday(params[:q][:birthday_lt]) if params[:q][:birthday_lt].present?
+    if params[:q][:birthday_gt].present?
+      params[:q][:birthday_gt] = calc_min_birthday(params[:q][:birthday_gt])
+    end
+    if params[:q][:birthday_lt].present?
+      params[:q][:birthday_lt] = calc_max_birthday(params[:q][:birthday_lt])
+    end
     @q = User.ransack(params[:q])
-    @search_users = @q.result(distinct: true)
+    @search_users = @q.result(distinct: true).includes(:prefecture).all.page(params[:page]).
+      includes({ user_image_attachment: :blob })
     if @search_users.present? & params[:prefecture].present?
       @prefecture_search_users = []
       @search_users.each do |user|
-        @prefecture_search_users.push(user) if params[:prefecture][:prefecture_ids].include?(user.prefecture_id.to_s)
+        if params[:prefecture][:prefecture_ids].include?(user.prefecture_id.to_s)
+          @prefecture_search_users.push(user)
+        end
       end
       @search_users = @prefecture_search_users
     end
@@ -134,7 +141,9 @@ class UsersController < ApplicationController
         present_check(user)
       end
     end
-    @search_users = Kaminari.paginate_array(@search_users).page(params[:page]).per(10) if @search_users.present?
+    if @search_users.present?
+      @search_users = Kaminari.paginate_array(@search_users).page(params[:page]).per(10)
+    end
   end
 
   def join
@@ -144,29 +153,29 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:user_name, :email, :password, :password_confirmation,
-      :prefecture_id, :gender, :artist, :url, :agreement,
-      :birthday, :uid, :provider, :user_image, { genre: [] }, { part: [] })
-    end
-    
-    #不要な記号を削除し整理
-    def present_check(user)
-      if user.part.present?
-        user.part = user.part.delete('] [ 0 ""')
-      end
-      if user.genre.present?
-        user.genre = user.genre.delete('] [ ""')
-      end
-      user
-    end
-
-    #ransack検索用
-    def set_ransack
-      @q = User.ransack(params[:q])
-    end
-
-    # 正しいユーザーかどうか確認
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
-    end
+                                 :prefecture_id, :gender, :artist, :url, :agreement,
+                                 :birthday, :uid, :provider, { genre: [] }, { part: [] })
   end
+
+  # 不要な記号を削除し整理
+  def present_check(user)
+    if user.part.present?
+      user.part = user.part.delete('] [ 0 ""')
+    end
+    if user.genre.present?
+      user.genre = user.genre.delete('] [ ""')
+    end
+    user
+  end
+
+  # ransack検索用
+  def set_ransack
+    @q = User.ransack(params[:q])
+  end
+
+  # 正しいユーザーかどうか確認
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless current_user?(@user)
+  end
+end
