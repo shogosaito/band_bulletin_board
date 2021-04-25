@@ -2,7 +2,7 @@ module ApplicationHelper
   include SessionsHelper
   include NotificationsHelper
   # ページごとの完全なタイトルを返します。
-  def full_title(page_title = '')
+  def full_title(page_title = '') # rubocop:disable all
     base_title = "instaClone"
     if page_title.empty?
       base_title
@@ -15,7 +15,7 @@ module ApplicationHelper
     !current_user.nil?
   end
 
-  def reset_tag(value = "Reset form", options = {})
+  def reset_tag(value = "Reset form", options = {}) # rubocop:disable all
     options = options.stringify_keys
     tag :input, { type: "reset", value: value }.update(options)
   end

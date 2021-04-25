@@ -5,7 +5,7 @@ FactoryBot.define do
       content { nil }
     end
   end
-  factory :comment2, class: Comment do
+  factory :comment2, :class => "Comment" do
     content { "テストコメント2" }
   end
 end

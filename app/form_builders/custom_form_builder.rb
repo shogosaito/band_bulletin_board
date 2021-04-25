@@ -11,11 +11,11 @@ class CustomFormBuilder < ActionView::Helpers::FormBuilder
     super + error(method)
   end
 
-  def collection_select(method, collection, value_method, text_method, options = {}, html_options = {})
+  def collection_select(method, collection, value_method, text_method,options = {}, html_options = {}) # rubocop:disable all
     super + error(method)
   end
 
-  def collection_radio_buttons(method, collection, value_method, text_method, options = {}, html_options = {}, &block)
+  def collection_radio_buttons(method, collection, value_method, text_method,options = {}, html_options = {}, &block) # rubocop:disable all
     super + error(method)
   end
 
@@ -26,14 +26,14 @@ class CustomFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def error_message(method)
-    (@object.errors[method].size > 0) ? I18n.t("activerecord.attributes.#{@object.model_name.singular}.#{method}") + @object.errors[method].first : ""
+    (@object.errors[method].size > 0) ? I18n.t("activerecord.attributes.#{@object.model_name.singular}.#{method}")+ @object.errors[method].first : "" # rubocop:disable all
   end
 
   def error_html(msg)
     return "" if msg.blank?
 
     @template.content_tag(:div, class: "has-error") do
-      @template.concat (@template.content_tag(:span, class: "help-block") do
+      @template.concat(@template.content_tag(:span, class: "help-block") do
         msg
       end)
     end

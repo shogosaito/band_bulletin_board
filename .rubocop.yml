@@ -5,6 +5,12 @@ inherit_from:
 Rails:
    Enabled: true
 
+LineLength:
+  Max: 130
+
+Rails/HelperInstanceVariable:
+  Enabled: false
+
 #検証除外フォルダ指定
 AllCops:
   Exclude:
@@ -17,3 +23,4 @@ AllCops:
     - 'lib/tasks/*'
     - 'vendor/**/*'
     - 'node_modules/**/*'
+    - 'spec/rails_helper.rb'

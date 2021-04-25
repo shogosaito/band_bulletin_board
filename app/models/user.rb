@@ -28,8 +28,7 @@ class User < ApplicationRecord
 
   # 渡された文字列のハッシュ値を返す
   def User.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-    BCrypt::Engine.cost
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
 
@@ -108,7 +107,7 @@ class User < ApplicationRecord
       user.password = rondom_password
     end
     { user: user }
-    end
+  end
 
   private
 
@@ -118,12 +117,12 @@ class User < ApplicationRecord
   end
 
   # user_name作成
-  def self.rondom_name
+  def self.rondom_name # rubocop:disable all
     "#{((0..9).to_a + ("a".."z").to_a).sample(10).join}"
   end
 
   # password作成
-  def self.rondom_password
+  def self.rondom_password # rubocop:disable all
     "#{((0..9).to_a + ("a".."z").to_a).sample(10).join}"
   end
 

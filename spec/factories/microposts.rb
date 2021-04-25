@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :micropost do
-    title { "test1" }
+    title { "test_post1" }
     genre { ["J-POP,アニメ"] }
     content_type { "募集" }
     content { "テスト1" }
@@ -19,8 +19,8 @@ FactoryBot.define do
     prefecture
   end
 
-  factory :micropost2, class: Micropost do
-    title { "test2" }
+  factory :micropost2, :class => "Micropost" do
+    title { "test_post2" }
     genre { ["邦楽ロック", "ジャズ"] }
     content_type { "募集" }
     content { "テスト2" }

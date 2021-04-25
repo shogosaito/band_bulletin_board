@@ -6,7 +6,7 @@ class Micropost < ApplicationRecord
   has_many :notifications, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_users, through: :likes, source: :user
-  default_scope -> { order(created_at: :desc) }
+  scope :recent, -> { order(created_at: :desc) }
   validates :title, presence: true
   validates :content_type, presence: true
   validates :content, presence: true, length: { maximum: 1000 }
@@ -29,7 +29,10 @@ class Micropost < ApplicationRecord
 
   def create_notification_like!(current_user)
     # すでに「いいね」されているか検索
-    existing_iine = Notification.where(["visitor_id = ? and visited_id = ? and micropost_id = ? and action = ? ", current_user.id, user_id, id, 'like'])
+    existing_iine = Notification.where([
+      "visitor_id = ? and visited_id = ? and micropost_id = ? and action = ? ",
+      current_user.id, user_id, id, 'like',
+    ])
     # いいねされていない場合のみ、通知レコードを作成
     if existing_iine.blank?
       notification = current_user.active_notifications.new(
