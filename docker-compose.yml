@@ -21,6 +21,7 @@ services:
       image: nginx:1.17-alpine
       # 同じディレクトリ配下にあるDockerfileをビルド
       build: .
+      # tty: true
       # rails実行(s->serverの略)
       command:  /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
       # ローカルPCのディレクトリをrubyコンテナにマウント
@@ -28,6 +29,11 @@ services:
           - .:/app
           - /app/tmp/cache
           - /app/node_modules
+      logging:
+        driver: "json-file" # defaults if not specified
+        options:
+         max-size: "10m"
+         max-file: "3"
       # アプリ公開ポートを指定<公開ポート番号>:<コンテナ内の転送先ポート>
       ports:
           - 3000:3000
