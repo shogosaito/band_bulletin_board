@@ -30,13 +30,13 @@ gem 'bootstrap-social-rails'
 gem 'seed-fu'
 gem 'select2-rails'
 gem 'autoprefixer-rails'
-gem 'rubocop-airbnb'
 gem 'jquery'
 gem 'font-awesome-sass'
-gem 'capybara', '3.28.0'
+gem 'capybara'
 gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'puma'
 gem "aws-sdk-s3", require: false
+gem "omniauth-rails_csrf_protection"
 
 group :development, :test do
   gem 'byebug', '11.0.1', platforms: [:mri, :mingw, :x64_mingw]
@@ -52,6 +52,8 @@ group :development do
   gem 'spring',                '2.1.0'
   gem 'spring-watcher-listen', '2.0.1'
   gem "letter_opener"
+  gem 'bullet'
+  gem 'rubocop-airbnb'
 end
 
 group :test do

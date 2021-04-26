@@ -83,7 +83,7 @@ RSpec.describe 'Users', type: :system do
     click_button '探す'
     within first('.container') do
       expect(page).to have_selector("img[src$='default.png']")
-      expect(page).to have_link("test1")
+      expect(page).to have_link("test_post1")
       expect(page).to have_content("東京都")
       expect(page).to have_content(20)
       expect(page).to have_content("テスト1")
@@ -100,7 +100,7 @@ RSpec.describe 'Users', type: :system do
     click_button '探す'
     within first('.container') do
       expect(page).to have_selector("img[src$='default.png']")
-      expect(page).to have_link("test1")
+      expect(page).to have_link("test_post1")
       expect(page).to have_content("東京都")
       expect(page).to have_content(20)
       expect(page).to have_content("テスト1")
@@ -117,7 +117,7 @@ RSpec.describe 'Users', type: :system do
     click_button '検索'
     within first('.container') do
       expect(page).to have_selector("img[src$='default.png']")
-      expect(page).to have_link("test1")
+      expect(page).to have_link("test_post1")
       expect(page).to have_content("東京都")
       expect(page).to have_content(20)
       expect(page).to have_content("テスト1")
@@ -132,7 +132,7 @@ RSpec.describe 'Users', type: :system do
     click_button '検索'
     within first('.container') do
       expect(page).to have_selector("img[src$='default.png']")
-      expect(page).to have_link("test1")
+      expect(page).to have_link("test_post1")
       expect(page).to have_content("東京都")
       expect(page).to have_content(20)
       expect(page).to have_content("テスト1")

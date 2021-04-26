@@ -14,7 +14,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def callback_from(provider)
     provider = provider.to_s
     sns_info = User.from_omniauth(request.env['omniauth.auth'])
-    @user = User.where(user_name: sns_info[:user][:user_name]).or(User.where(email: sns_info[:user][:email])).first || sns_info[:user]
+    @user = User.where(user_name: sns_info[:user][:user_name]).or(User.where(email: sns_info[:user][:email])).
+      first || sns_info[:user]
     if @user.persisted?
       log_in @user
       flash[:success] = "#{provider}アカウントによる認証に成功しました。"

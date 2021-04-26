@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe MicropostsController, type: :request do
   let(:user1) { create :user1 }
   let!(:prefecture) { create :prefecture }
-  let!(:micropost) { create :micropost, user_id: user1.id }
+  let!(:micropost) { create :micropost, user: user1 }
 
   before do
     sign_in user1
@@ -17,7 +17,7 @@ RSpec.describe MicropostsController, type: :request do
 
     it 'タイトルとジャンルが表示されていること' do
       get micropost_url micropost
-      expect(response.body).to include "test1"
+      expect(response.body).to include "test_post1"
       expect(response.body).to include "J-POP,アニメ"
     end
   end
@@ -37,7 +37,7 @@ RSpec.describe MicropostsController, type: :request do
 
     it 'タイトルが表示されていること' do
       get micropost_url micropost.id
-      expect(response.body).to include 'test1'
+      expect(response.body).to include 'test_post1'
     end
 
     context 'ユーザーが存在しない場合' do
@@ -92,9 +92,9 @@ RSpec.describe MicropostsController, type: :request do
       expect(response.status).to eq 200
     end
 
-    it 'ユーザー名が表示されていること' do
+    it 'タイトルが表示されていること' do
       get edit_micropost_url micropost
-      expect(response.body).to include 'test1'
+      expect(response.body).to include 'test_post1'
     end
 
     it 'メールアドレスが表示されていること' do
@@ -113,7 +113,7 @@ RSpec.describe MicropostsController, type: :request do
       it 'タイトルが更新されること' do
         expect do
           put micropost_url micropost, params: { micropost: attributes_for(:micropost2) }
-        end.to change { Micropost.find(micropost.id).title }.from('test1').to('test2')
+        end.to change { Micropost.find(micropost.id).title }.from('test_post1').to('test_post2')
       end
 
       it 'リダイレクトすること' do
@@ -147,7 +147,7 @@ RSpec.describe MicropostsController, type: :request do
       expect(response.status).to eq 302
     end
 
-    it 'ユーザーが削除されること' do
+    it '記事が削除されること' do
       expect do
         delete micropost_url micropost
       end.to change(Micropost, :count).by(-1)

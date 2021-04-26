@@ -7,7 +7,6 @@ RSpec.describe 'Notifications', type: :system do
   let!(:micropost) { create :micropost, user: post_user }
 
   it 'ログイン済みユーザ/投稿へのお気に入り、コメントの通知が来るか' do
-    # micropost = create(:micropost, user: post_user)
     login(comment_user)
     visit root_path
     within('.post_info') do
@@ -40,7 +39,8 @@ RSpec.describe 'Notifications', type: :system do
     expect do
       within('.users-index') do
         expect(page).to have_selector("img[src$='default.png']")
-        expect(page).to have_content(comment_user.user_name + "さんがあなたの投稿にコメントしました。コメント内容「 テストコメント」 (1分前)")
+        expect(page).to have_content(comment_user.user_name + "さんがあなたの投稿にコメントしました。
+                                     コメント内容「 テストコメント」 (1分前)")
         expect(page).to have_content(like_user.user_name + "さんがあなたの投稿をお気に入りに追加しました。(1分前)")
       end
     end.to change { micropost.comments.count }.by(1)
@@ -48,7 +48,8 @@ RSpec.describe 'Notifications', type: :system do
       click_link("全削除")
     end.to change { micropost.comments.count }.by(-2)
     expect(page).not_to have_selector("img[src$='default.png']")
-    expect(page).not_to have_content(comment_user.user_name + "さんがあなたの投稿にコメントしました。コメント内容「 テストコメント」 (1分前)")
+    expect(page).not_to have_content(comment_user.user_name + "さんがあなたの投稿にコメントしました。
+                                    コメント内容「 テストコメント」 (1分前)")
     expect(page).not_to have_content(like_user.user_name + "さんがあなたの投稿をお気に入りに追加しました。(1分前)")
   end
 end

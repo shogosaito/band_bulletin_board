@@ -34,7 +34,9 @@ RSpec.describe LikesController, type: :request do
     end
 
     it "お気に入り解除できること" do
-      expect { delete unlike_path(micropost_id: micropost2.id), params: { micropost_id: micropost2.id }, xhr: true }.to change(Like, :count).by(-1)
+      expect do
+        delete unlike_path(micropost_id: micropost2.id), params: { micropost_id: micropost2.id }, xhr: true
+      end.to change(Like, :count).by(-1)
     end
   end
 end
