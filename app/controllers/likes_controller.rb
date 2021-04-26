@@ -15,8 +15,8 @@ class LikesController < ApplicationController
   end
 
   private
-  
-  #お気に入りが紐づく投稿を事前に取得
+
+  # お気に入りが紐づく投稿を事前に取得
   def set_variables
     @micropost = Micropost.find(params[:micropost_id])
     @id_name = "#like-link-#{@micropost.id}"
